@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/onQueue/static/css/main.7c77e971.chunk.css",
-    "main.js": "/onQueue/static/js/main.b81a888c.chunk.js",
-    "main.js.map": "/onQueue/static/js/main.b81a888c.chunk.js.map",
-    "runtime-main.js": "/onQueue/static/js/runtime-main.83db286b.js",
-    "runtime-main.js.map": "/onQueue/static/js/runtime-main.83db286b.js.map",
-    "static/css/2.47e06e2e.chunk.css": "/onQueue/static/css/2.47e06e2e.chunk.css",
-    "static/js/2.bdc62822.chunk.js": "/onQueue/static/js/2.bdc62822.chunk.js",
-    "static/js/2.bdc62822.chunk.js.map": "/onQueue/static/js/2.bdc62822.chunk.js.map",
-    "index.html": "/onQueue/index.html",
-    "precache-manifest.1ce378c5ff4c23584c8a3884f54480f5.js": "/onQueue/precache-manifest.1ce378c5ff4c23584c8a3884f54480f5.js",
-    "service-worker.js": "/onQueue/service-worker.js",
-    "static/css/2.47e06e2e.chunk.css.map": "/onQueue/static/css/2.47e06e2e.chunk.css.map",
-    "static/css/main.7c77e971.chunk.css.map": "/onQueue/static/css/main.7c77e971.chunk.css.map",
-    "static/js/2.bdc62822.chunk.js.LICENSE": "/onQueue/static/js/2.bdc62822.chunk.js.LICENSE",
-    "static/media/bg.jpg": "/onQueue/static/media/bg.fe5db8e9.jpg",
-    "static/media/logo.svg": "/onQueue/static/media/logo.5d5d9eef.svg"
+    "main.css": "/static/css/main.7c77e971.chunk.css",
+    "main.js": "/static/js/main.e2918216.chunk.js",
+    "main.js.map": "/static/js/main.e2918216.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.4ec860de.js",
+    "runtime-main.js.map": "/static/js/runtime-main.4ec860de.js.map",
+    "static/css/2.47e06e2e.chunk.css": "/static/css/2.47e06e2e.chunk.css",
+    "static/js/2.bdc62822.chunk.js": "/static/js/2.bdc62822.chunk.js",
+    "static/js/2.bdc62822.chunk.js.map": "/static/js/2.bdc62822.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.97a9ca46913b8cbb76fb6e742e483717.js": "/precache-manifest.97a9ca46913b8cbb76fb6e742e483717.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.47e06e2e.chunk.css.map": "/static/css/2.47e06e2e.chunk.css.map",
+    "static/css/main.7c77e971.chunk.css.map": "/static/css/main.7c77e971.chunk.css.map",
+    "static/js/2.bdc62822.chunk.js.LICENSE": "/static/js/2.bdc62822.chunk.js.LICENSE",
+    "static/media/bg.jpg": "/static/media/bg.fe5db8e9.jpg",
+    "static/media/logo.svg": "/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.83db286b.js",
+    "static/js/runtime-main.4ec860de.js",
     "static/css/2.47e06e2e.chunk.css",
     "static/js/2.bdc62822.chunk.js",
     "static/css/main.7c77e971.chunk.css",
-    "static/js/main.b81a888c.chunk.js"
+    "static/js/main.e2918216.chunk.js"
   ]
 }
