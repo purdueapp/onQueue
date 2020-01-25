@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/purdueapp.github.io/onQueue/static/css/main.7c77e971.chunk.css",
-    "main.js": "/purdueapp.github.io/onQueue/static/js/main.a09d7be5.chunk.js",
-    "main.js.map": "/purdueapp.github.io/onQueue/static/js/main.a09d7be5.chunk.js.map",
-    "runtime-main.js": "/purdueapp.github.io/onQueue/static/js/runtime-main.26f15fb3.js",
-    "runtime-main.js.map": "/purdueapp.github.io/onQueue/static/js/runtime-main.26f15fb3.js.map",
-    "static/css/2.47e06e2e.chunk.css": "/purdueapp.github.io/onQueue/static/css/2.47e06e2e.chunk.css",
-    "static/js/2.bdc62822.chunk.js": "/purdueapp.github.io/onQueue/static/js/2.bdc62822.chunk.js",
-    "static/js/2.bdc62822.chunk.js.map": "/purdueapp.github.io/onQueue/static/js/2.bdc62822.chunk.js.map",
-    "index.html": "/purdueapp.github.io/onQueue/index.html",
-    "precache-manifest.558794af82dd5728a7025b619abe4b59.js": "/purdueapp.github.io/onQueue/precache-manifest.558794af82dd5728a7025b619abe4b59.js",
-    "service-worker.js": "/purdueapp.github.io/onQueue/service-worker.js",
-    "static/css/2.47e06e2e.chunk.css.map": "/purdueapp.github.io/onQueue/static/css/2.47e06e2e.chunk.css.map",
-    "static/css/main.7c77e971.chunk.css.map": "/purdueapp.github.io/onQueue/static/css/main.7c77e971.chunk.css.map",
-    "static/js/2.bdc62822.chunk.js.LICENSE": "/purdueapp.github.io/onQueue/static/js/2.bdc62822.chunk.js.LICENSE",
-    "static/media/bg.jpg": "/purdueapp.github.io/onQueue/static/media/bg.fe5db8e9.jpg",
-    "static/media/logo.svg": "/purdueapp.github.io/onQueue/static/media/logo.5d5d9eef.svg"
+    "main.css": "/static/css/main.7c77e971.chunk.css",
+    "main.js": "/static/js/main.e2918216.chunk.js",
+    "main.js.map": "/static/js/main.e2918216.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.4ec860de.js",
+    "runtime-main.js.map": "/static/js/runtime-main.4ec860de.js.map",
+    "static/css/2.47e06e2e.chunk.css": "/static/css/2.47e06e2e.chunk.css",
+    "static/js/2.bdc62822.chunk.js": "/static/js/2.bdc62822.chunk.js",
+    "static/js/2.bdc62822.chunk.js.map": "/static/js/2.bdc62822.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.97a9ca46913b8cbb76fb6e742e483717.js": "/precache-manifest.97a9ca46913b8cbb76fb6e742e483717.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.47e06e2e.chunk.css.map": "/static/css/2.47e06e2e.chunk.css.map",
+    "static/css/main.7c77e971.chunk.css.map": "/static/css/main.7c77e971.chunk.css.map",
+    "static/js/2.bdc62822.chunk.js.LICENSE": "/static/js/2.bdc62822.chunk.js.LICENSE",
+    "static/media/bg.jpg": "/static/media/bg.fe5db8e9.jpg",
+    "static/media/logo.svg": "/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.26f15fb3.js",
+    "static/js/runtime-main.4ec860de.js",
     "static/css/2.47e06e2e.chunk.css",
     "static/js/2.bdc62822.chunk.js",
     "static/css/main.7c77e971.chunk.css",
-    "static/js/main.a09d7be5.chunk.js"
+    "static/js/main.e2918216.chunk.js"
   ]
 }
