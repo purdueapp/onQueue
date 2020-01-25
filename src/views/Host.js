@@ -4,7 +4,7 @@ import { FaPlay, FaBackward, FaForward, FaPause } from 'react-icons/fa';
 import { Container, Row, Col, Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 
 
-let imageUrl = "https://i.scdn.co/image/8480fa22ad7eb3e83478effba242df20447ba112";//"https://i.scdn.co/image/cc4fd4d092849a8a9eb51ac159ec0951e65e27e7"; 
+let imageUrl = "https://i.scdn.co/image/cc4fd4d092849a8a9eb51ac159ec0951e65e27e7";  //"https://i.scdn.co/image/8480fa22ad7eb3e83478effba242df20447ba112";
 
 let backgroundStyle = {
   background: "linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url(" + imageUrl + ")",
@@ -99,18 +99,14 @@ let settingsDiv = {
 class Host extends Component {
   render() {
     return (
-      <Container fluid={true} style={containerStyle}>
+      <Container className="p-0" fluid={true} style={containerStyle}>
       <Navbar fixed="top" bg="clear" variant="dark">
         <Nav className="mx-auto mt-3">
-          <div style={settingsDiv} className="p-2">
-            <MdFullscreen size="1.8em" />
-            <MdSearch size="1.6rem" className="mx-1" />
-            <MdSettings size="1.6rem" />
-          </div>
+
         </Nav>
       </Navbar>
-      <Row className="w-100">
-        <Col lg={4} md={6} sm={8} className="mx-auto">
+      <Row className="w-100 h-100">
+        <Col lg={4} md={6} sm={8} className="mx-auto my-auto">
           <img className="my-3" style={albumImage} src={imageUrl} alt="logo" />
           <h3>Even So Come</h3>
           <h5 className="mb-3" style={grey}>Passion, Kristian Stanfill</h5>
@@ -125,6 +121,14 @@ class Host extends Component {
           <div className="my-2" style={progressBar}>
             <div style={filler}></div>
           </div>
+        </Col>
+        <Col lg={2} md={3} sm={4} className="m-0 p-5 h-100" style={{background: "rgba(0, 0, 0, 0.5)" , width: "100%", minWidth: "30em"}}>
+        <div style={settingsDiv} className="p-2">
+            <MdFullscreen size="1.8em" />
+            <MdSearch size="1.6rem" className="mx-1" />
+            <MdSettings size="1.6rem" />
+          </div>
+          HELLO THIIS IS THE TAB PANEL
         </Col>
       </Row>
 
