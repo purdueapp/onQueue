@@ -115,9 +115,15 @@ class Host extends Component {
       currentTime: '3:32',
       totalTime: '5:23',
       percent: 60,
-      paused: true
+      paused: true,
+      position: 112342,
+      duration: 324432
     };
 
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   componentDidMount() {
@@ -128,7 +134,6 @@ class Host extends Component {
 
       const player = new Player({
         name: 'onQueue Player',
-
         getOAuthToken: cb => { cb(accessToken); }
       });
 
@@ -147,18 +152,22 @@ class Host extends Component {
 
         this.setState({
           artists: state.track_window.current_track.artists.map(artist => artist.name).join(', '),
-          // imageURL: state.track_window.current_track.album.images[state.track_window.current_track.album.images.length - 1].url,
+          imageURL: state.track_window.current_track.album.images[state.track_window.current_track.album.images.length - 1].url,
           trackName: state.track_window.current_track.name,
-          currentTime: '3:32',
-          totalTime: '5:23',
-          percent: 60,
-          paused: true
+          currentTime: getTime(state.position),
+          totalTime: getTime(state.duration),
+          percent: 100 * state.position / state.duration,
+          paused: false,
+          position: state.position,
+          duration: state.duration
         })
+        clearInterval(this.interval);
+        this.interval = setInterval(() => this.setState({ position: this.state.position + 1000 }), 1000);
       });
 
       // Ready
       player.addListener('ready', ({ device_id }) => {
-        // this.setDevice(device_id);
+        this.setDevice(device_id);
         console.log('Ready with Device ID', device_id);
       });
 
@@ -188,8 +197,17 @@ class Host extends Component {
     });
   }
 
+  playPauseButton() {
+    if (this.state.paused) {
+      return <FaPlay size="1.6em" className="mx-4 mb-1" />
+    }
+    else {
+      return <FaPause size="1.6em" className="mx-4 mb-1" />
+    }
+  }
+
   render() {
-    let { imageURL, trackName, artists, currentTime, totalTime, percent, paused } = this.state;
+    let { imageURL, trackName, artists, currentTime, totalTime, percent, paused, position, duration} = this.state;
 
     return (
       <Container className="p-0" fluid={true} style={containerStyle}>
@@ -205,19 +223,20 @@ class Host extends Component {
             <h5 className="mb-3" style={grey}>{artists}</h5>
 
             <FaBackward size="1.6em" className="mb-1" />
-            <FaPlay size="1.6em" className="mx-4 mb-1" />
+            { this.playPauseButton() }
+
             <FaForward size="1.6em" className="mb-1" />
 
-            <h5 style={left}>{currentTime}</h5>
-            <h5 style={right}>{totalTime}</h5>
+            <h5 style={left}>{getTime(position)}</h5>
+            <h5 style={right}>{getTime(duration)}</h5>
 
             <div className="my-2" style={progressBar}>
               <div style={{
                 background: "white",
                 height: "100%",
-                width: percent + "%",
+                width: 100 * position / duration + "%",
                 borderRadius: "inherit",
-                transition: "width .2s ease-in",
+                transition: "width 1s ease",
               }}></div>
             </div>
           </Col>
