@@ -13,6 +13,10 @@ let spotifyApi = new SpotifyWebApi({
 class Callback extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      token: undefined
+    }
+
     this.fetchTokens = this.fetchTokens.bind(this);
   }
 
@@ -48,8 +52,10 @@ class Callback extends Component {
 
   render() {
     // Setup some stuff
-    return <div />
-    //return <Redirect to='/host/tobi' />
+    if (this.state.tokens === undefined) {
+      return <div />
+    }
+    return <Redirect to={`/host/tobi?accessToken=${this.state.tokens.access_token}`} />
   }
 };
 

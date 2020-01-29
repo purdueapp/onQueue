@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { MdCast, MdFullscreen, MdPalette, MdSettings, MdSearch } from 'react-icons/md';
 import { FaPlay, FaBackward, FaForward, FaPause } from 'react-icons/fa';
 import { Container, Row, Col, Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import Background from '../components/Background';
 
 
 let imageUrl = "https://i.scdn.co/image/cc4fd4d092849a8a9eb51ac159ec0951e65e27e7";  //"https://i.scdn.co/image/8480fa22ad7eb3e83478effba242df20447ba112";
@@ -96,46 +97,142 @@ let settingsDiv = {
   justifyContent: "center",
 };
 
+function getTime(millis) {
+  var minutes = Math.floor(millis / 60000);
+  var seconds = Math.floor((millis % 60000) / 1000);
+  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}
+
+
 class Host extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      artists: 'Tobi Ola',
+      trackName: 'Oh You Bring',
+      imageURL: 'https://i.scdn.co/image/cc4fd4d092849a8a9eb51ac159ec0951e65e27e7',
+      currentTime: '3:32',
+      totalTime: '5:23',
+      percent: 60,
+      paused: true
+    };
+
+  }
+
+  componentDidMount() {
+
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      let accessToken = new URLSearchParams(this.props.location.search).get('accessToken');
+      let { Player } = window.Spotify;
+
+      const player = new Player({
+        name: 'onQueue Player',
+
+        getOAuthToken: cb => { cb(accessToken); }
+      });
+
+      // Error handling
+      player.addListener('initialization_error', ({ message }) => { console.error(message); });
+      player.addListener('authentication_error', ({ message }) => { console.error(message); });
+      player.addListener('account_error', ({ message }) => { console.error(message); });
+      player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+      // Playback status updates
+      player.addListener('player_state_changed', state => {
+        if (state == null) {
+          return;
+        }
+        console.log(state)
+
+        this.setState({
+          artists: state.track_window.current_track.artists.map(artist => artist.name).join(', '),
+          // imageURL: state.track_window.current_track.album.images[state.track_window.current_track.album.images.length - 1].url,
+          trackName: state.track_window.current_track.name,
+          currentTime: '3:32',
+          totalTime: '5:23',
+          percent: 60,
+          paused: true
+        })
+      });
+
+      // Ready
+      player.addListener('ready', ({ device_id }) => {
+        // this.setDevice(device_id);
+        console.log('Ready with Device ID', device_id);
+      });
+
+      // Not Ready
+      player.addListener('not_ready', ({ device_id }) => {
+        console.log('Device ID has gone offline', device_id);
+      });
+
+      // Connect to the player!
+      player.connect();
+    };
+  }
+
+  setDevice(deviceId) {
+    let accessToken = new URLSearchParams(this.props.location.search).get('accessToken');
+
+    fetch('https://api.spotify.com/v1/me/player', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + accessToken,
+      },
+      body: JSON.stringify({
+        device_ids: [deviceId],
+        play: true,
+      }),
+    });
+  }
+
   render() {
+    let { imageURL, trackName, artists, currentTime, totalTime, percent, paused } = this.state;
+
     return (
       <Container className="p-0" fluid={true} style={containerStyle}>
-      <Navbar fixed="top" bg="clear" variant="dark">
-        <Nav className="mx-auto mt-3">
+        <Navbar fixed="top" bg="clear" variant="dark">
+          <Nav className="mx-auto mt-3">
 
-        </Nav>
-      </Navbar>
-      <Row className="w-100 h-100">
-        <Col lg={4} md={6} sm={8} className="mx-auto my-auto">
-          <img className="my-3" style={albumImage} src={imageUrl} alt="logo" />
-          <h3>Even So Come</h3>
-          <h5 className="mb-3" style={grey}>Passion, Kristian Stanfill</h5>
+          </Nav>
+        </Navbar>
+        <Row className="w-100 h-100">
+          <Col lg={4} md={6} sm={8} className="mx-auto my-auto">
+            <img className="my-3" style={albumImage} src={imageURL} alt="logo" />
+            <h3>{trackName}</h3>
+            <h5 className="mb-3" style={grey}>{artists}</h5>
 
-          <FaBackward size="1.6em" className="mb-1" />
-          <FaPlay size="1.6em" className="mx-4 mb-1" />
-          <FaForward size="1.6em" className="mb-1" />
+            <FaBackward size="1.6em" className="mb-1" />
+            <FaPlay size="1.6em" className="mx-4 mb-1" />
+            <FaForward size="1.6em" className="mb-1" />
 
-          <h5 style={left}>3:32</h5>
-          <h5 style={right}>5:53</h5>
+            <h5 style={left}>{currentTime}</h5>
+            <h5 style={right}>{totalTime}</h5>
 
-          <div className="my-2" style={progressBar}>
-            <div style={filler}></div>
-          </div>
+            <div className="my-2" style={progressBar}>
+              <div style={{
+                background: "white",
+                height: "100%",
+                width: percent + "%",
+                borderRadius: "inherit",
+                transition: "width .2s ease-in",
+              }}></div>
+            </div>
+          </Col>
+          <Col lg={2} md={3} sm={4} className="m-0 p-5 h-100" style={{ background: "rgba(0, 0, 0, 0.5)", width: "100%", minWidth: "30em" }}>
+            <div style={settingsDiv} className="p-2">
+              <MdFullscreen size="1.8em" />
+              <MdSearch size="1.6rem" className="mx-1" />
+              <MdSettings size="1.6rem" />
+            </div>
+            HELLO THIIS IS THE TAB PANEL
         </Col>
-        <Col lg={2} md={3} sm={4} className="m-0 p-5 h-100" style={{background: "rgba(0, 0, 0, 0.5)" , width: "100%", minWidth: "30em"}}>
-        <div style={settingsDiv} className="p-2">
-            <MdFullscreen size="1.8em" />
-            <MdSearch size="1.6rem" className="mx-1" />
-            <MdSettings size="1.6rem" />
-          </div>
-          HELLO THIIS IS THE TAB PANEL
-        </Col>
-      </Row>
+        </Row>
 
-      <div style={backgroundStyle}>
-        {/*<div style={darken}></div>*/}
-      </div>
-    </Container>
+        <Background url={this.state.imageURL} />
+      </Container>
     )
   }
 };

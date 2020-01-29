@@ -14,9 +14,11 @@ function App() {
       <Route exact path='/' component={Homepage} />
       <Route exact path='/callback' component={Callback} />
       <Route path='/host/:id' component={Host} />
-      <Route path='/:id' component={Host} />
     </BrowserRouter>
   );
 }
 
 export default App;
+
+
+////      {/* <Route path='/:id' component={Host} /> */}
