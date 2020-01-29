@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-
 import bg from '../images/bg.jpg'
+import { uri } from 'react-querystring-router';
+
+const { stringifyParams } = uri;
 
 let backgroundStyle = {
   background: "linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url(" + bg + ")",
@@ -20,6 +22,25 @@ let backgroundStyle = {
 };
 
 class Homepage extends Component {
+  constructor(props) {
+    super(props);
+
+    let scope = 'user-read-private user-read-email streaming user-modify-playback-state';
+    let redirectURI = 'http://data.cs.purdue.edu:7373/callback';
+    let loginURL = 'https://accounts.spotify.com/authorize' +
+      stringifyParams({
+        response_type: 'code',
+        client_id: process.env.REACT_APP_CLIENT_ID,
+        scope: scope,
+        redirect_uri: redirectURI,
+        state: 'state123'
+      });
+
+    this.state = {
+      loginURL: loginURL
+    };
+  }
+
   render() {
     return (
       <div>
@@ -64,7 +85,7 @@ class Homepage extends Component {
               <div class="col-lg-5 col-md-5 col-sm-12 mt-auto mb-auto mr-3">
                 <h1 class="welcome-heading display-4 text-white">Paux</h1>
                 <p class="text-muted">Make your Spotify queue public to you friends! <br /> Only works on Google Chrome and Firefox.</p>
-                <a href="/login" class="btn btn-success btn-pill align-self-center m-1"><i class="fa fa-spotify mr-2"></i>Host A Room</a>
+                <a href={this.state.loginURL} class="btn btn-success btn-pill align-self-center m-1"><i class="fa fa-spotify mr-2"></i>Host A Room</a>
                 <a href="#rooms" class="btn btn-primary btn-pill align-self-center m-1"><i class="fa fa-spotify mr-2"></i>Join A Room</a>
                 <div class="d-block mt-4">
                 </div>

@@ -7,13 +7,15 @@
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.4.1",
+    "cross-env": "^7.0.0",
     "gh-pages": "^2.2.0",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
     "react-icons": "^3.8.0",
+    "react-querystring-router": "^4.8.5",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.0"
+    "react-scripts": "^3.3.0"
   },
   "scripts": {
     "start": "PORT=7373 react-scripts start",
@@ -37,6 +39,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "homepage": "http://purdueapp.github.io/onQueue"
+  }
 }
