@@ -40,6 +40,9 @@ class Queue extends Component {
 
   render() {
     return <Container fluid className="mt-3">
+      <h3>Queue</h3>
+      <hr style={{backgroundColor: "gray"}} />
+
       {this.state.tracks.map(track => {
 
         return (
@@ -50,7 +53,7 @@ class Queue extends Component {
             <Col md={8}>
               <p>
                 {track.name}<br />
-                <span style={{color: "grey"}}>{track.artists.map(artist => artist.name).join(', ')}</span>
+                <span style={{ color: "grey" }}>{track.artists.map(artist => artist.name).join(', ')}</span>
               </p>
             </Col>
           </Row>

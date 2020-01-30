@@ -65,7 +65,7 @@ let albumImage = {
 
 let progressBar = {
   position: "relative",
-  height: "0.7em",
+  height: "0.5em",
   width: "100%",
   borderRadius: "3em",
   backgroundColor: "gray",
@@ -96,6 +96,7 @@ let settingsDiv = {
   borderRadius: "25px",
   alignItems: "center",
   justifyContent: "center",
+ // height: "2em",
 };
 
 function getTime(millis) {
@@ -203,10 +204,10 @@ class Host extends Component {
 
   playPauseButton() {
     if (this.state.paused) {
-      return <FaPlay size="1.6em" className="mx-4 mb-1" />
+      return <FaPlay size="1.4em" className="mx-4 mb-1" />
     }
     else {
-      return <FaPause size="1.6em" className="mx-4 mb-1" />
+      return <FaPause size="1.4em" className="mx-4 mb-1" />
     }
   }
 
@@ -226,10 +227,9 @@ class Host extends Component {
             <h3>{trackName}</h3>
             <h5 className="mb-3" style={grey}>{artists}</h5>
 
-            <FaBackward size="1.6em" className="mb-1" />
+            <FaBackward size="1.4em" className="mb-1" />
             {this.playPauseButton()}
-
-            <FaForward size="1.6em" className="mb-1" />
+            <FaForward size="1.4em" className="mb-1" />
 
             <h5 style={left}>{getTime(position)}</h5>
             <h5 style={right}>{getTime(duration)}</h5>
@@ -244,11 +244,12 @@ class Host extends Component {
               }}></div>
             </div>
           </Col>
-          <Col lg={2} md={3} sm={4} className="m-0 p-5 h-100" style={{ background: "rgba(0, 0, 0, 0.5)", width: "100%", minWidth: "24em" }}>
-            <div style={settingsDiv} className="p-2">
-              <MdFormatListNumbered size="1.6em" />
-              <MdSearch size="1.6rem" className="mx-3" />
-              <MdSettings size="1.6rem" />
+          <Col lg={2} md={3} sm={4} className="m-0 px-5 py-4 h-100" style={{ background: "rgba(0, 0, 0, 0.5)", width: "100%", minWidth: "24em" }}>
+
+            <div style={settingsDiv} className="p-1 mb-3">
+              <MdFormatListNumbered size="1.3em" />
+              <MdSearch size="1.3rem" className="mx-3" />
+              <MdSettings size="1.3rem" />
             </div>
             <Queue location={this.props.location} />
           </Col>
