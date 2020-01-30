@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import bg from '../images/bg.jpg'
 import { uri } from 'react-querystring-router';
+import { Container, Navbar, Nav, Row, Col } from 'react-bootstrap';
 
 const { stringifyParams } = uri;
 
 let backgroundStyle = {
-  background: "linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url(" + bg + ")",
+  background: "linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(" + bg + ")",
   backgrounColor: "rgba(0, 0, 0, 0.5)",
   backgroundSize: "cover",
   backgroundPosition: "center center",
@@ -14,12 +15,27 @@ let backgroundStyle = {
   top: 0,
   bottom: 0,
   position: "absolute",
-  filter: "blur(1.2em)",
-  WebkitFilter: "blur(1.2em)",
+  filter: "blur(0.5em)",
+  WebkitFilter: "blur(0.7em)",
   transform: "scale(1.2)",
   zIndex: "-1",
   transition: "background ease 2s",
 };
+
+let containerStyle = {
+  textAlign: "center",
+  backgroundColor: '#191414',
+  color: 'white',
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100%",
+  width: "100%",
+  position: 'absolute',
+  left: '50%',
+  top: '50%',
+  transform: 'translate(-50%, -50%)'
+}
 
 class Homepage extends Component {
   constructor(props) {
@@ -43,9 +59,36 @@ class Homepage extends Component {
 
   render() {
     return (
+      <Container fluid style={containerStyle}>
+        {/* 
+        <Navbar fixed="top" bg="clear" variant="dark">
+          <Nav>
+            onQueue
+          </Nav>
+        </Navbar>
+        */}
+        <Row className="w-100">
+          <Col md={6} className="mx-auto">
+            <h1 class="welcome-heading display-4 text-white">onQueue</h1>
+            <p>Make your Spotify queue public to you friends! <br /> Only works on Google Chrome and Firefox.</p>
+            <a href={this.state.loginURL} class="btn btn-success btn-pill align-self-center m-1"><i class="fa fa-spotify mr-2"></i>Host A Room</a>
+            {/*<a href="#rooms" class="btn btn-primary btn-pill align-self-center m-1"><i class="fa fa-spotify mr-2"></i>Join A Room</a> */}
+          </Col>
+        </Row>
+
+        <div style={backgroundStyle} />
+
+      </Container>
+
+    )
+  }
+}
+
+export default Homepage;
+
+/*
       <div>
-        <div class="welcome d-flex justify-content-center flex-column">
-          <div class="container">
+          <div class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-dark pt-4 px-0">
 
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
@@ -197,11 +240,5 @@ class Homepage extends Component {
           </nav>
         </footer>
         <div style={backgroundStyle}>
-        {/*<div style={darken}></div>*/}
       </div>
-      </div>
-    )
-  }
-}
-
-export default Homepage;
+    */

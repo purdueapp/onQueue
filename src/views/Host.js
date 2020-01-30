@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { MdCast, MdFullscreen, MdPalette, MdSettings, MdSearch } from 'react-icons/md';
+import { MdCast, MdFullscreen, MdPalette, MdSettings, MdSearch, MdFormatListNumbered, MdPlaylistAdd } from 'react-icons/md';
 import { FaPlay, FaBackward, FaForward, FaPause } from 'react-icons/fa';
 import { Container, Row, Col, Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 import Background from '../components/Background';
+import Queue from '../components/Queue';
+
+
 
 
 let imageUrl = "https://i.scdn.co/image/cc4fd4d092849a8a9eb51ac159ec0951e65e27e7";  //"https://i.scdn.co/image/8480fa22ad7eb3e83478effba242df20447ba112";
@@ -40,7 +43,8 @@ let darken = {
 
 let containerStyle = {
   textAlign: "center",
-  color: "white",
+  backgroundColor: '#191414',
+  color: 'white',
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -53,7 +57,7 @@ let containerStyle = {
 }
 
 let albumImage = {
-  boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+  boxShadow: "0 15px 30px 0 rgba(0, 0, 0, 0.5), 0 20px 40px 0 rgba(0, 0, 0, 0.5)",
   //  height: "25em",
   width: "100%",
   //  marginTop: "10em",
@@ -88,11 +92,8 @@ let grey = {
 };
 
 let settingsDiv = {
-  //  margin: "10px",
   backgroundColor: "#FFFFFF20",
   borderRadius: "25px",
-  zIndex: 3,
-  display: "flex",
   alignItems: "center",
   justifyContent: "center",
 };
@@ -109,7 +110,7 @@ class Host extends Component {
     super(props);
 
     this.state = {
-      artists: 'Tobi Ola',
+      artists: 'Hillsong UNITED',
       trackName: 'Oh You Bring',
       imageURL: 'https://i.scdn.co/image/cc4fd4d092849a8a9eb51ac159ec0951e65e27e7',
       currentTime: '3:32',
@@ -117,17 +118,18 @@ class Host extends Component {
       percent: 60,
       paused: true,
       position: 112342,
-      duration: 324432
+      duration: 324432,
+      tracks: []
     };
-
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
-  componentDidMount() {
 
+
+  componentDidMount() {
     window.onSpotifyWebPlaybackSDKReady = () => {
       let accessToken = new URLSearchParams(this.props.location.search).get('accessToken');
       let { Player } = window.Spotify;
@@ -157,12 +159,14 @@ class Host extends Component {
           currentTime: getTime(state.position),
           totalTime: getTime(state.duration),
           percent: 100 * state.position / state.duration,
-          paused: false,
+          paused: state.paused,
           position: state.position,
           duration: state.duration
         })
         clearInterval(this.interval);
-        this.interval = setInterval(() => this.setState({ position: this.state.position + 1000 }), 1000);
+        if (!state.paused) {
+          this.interval = setInterval(() => this.setState({ position: this.state.position + 1000 }), 1000);
+        }
       });
 
       // Ready
@@ -207,10 +211,10 @@ class Host extends Component {
   }
 
   render() {
-    let { imageURL, trackName, artists, currentTime, totalTime, percent, paused, position, duration} = this.state;
+    let { imageURL, trackName, artists, currentTime, totalTime, percent, paused, position, duration } = this.state;
 
     return (
-      <Container className="p-0" fluid={true} style={containerStyle}>
+      <Container className="p-0" fluid style={containerStyle}>
         <Navbar fixed="top" bg="clear" variant="dark">
           <Nav className="mx-auto mt-3">
 
@@ -223,7 +227,7 @@ class Host extends Component {
             <h5 className="mb-3" style={grey}>{artists}</h5>
 
             <FaBackward size="1.6em" className="mb-1" />
-            { this.playPauseButton() }
+            {this.playPauseButton()}
 
             <FaForward size="1.6em" className="mb-1" />
 
@@ -240,17 +244,16 @@ class Host extends Component {
               }}></div>
             </div>
           </Col>
-          <Col lg={2} md={3} sm={4} className="m-0 p-5 h-100" style={{ background: "rgba(0, 0, 0, 0.5)", width: "100%", minWidth: "30em" }}>
+          <Col lg={2} md={3} sm={4} className="m-0 p-5 h-100" style={{ background: "rgba(0, 0, 0, 0.5)", width: "100%", minWidth: "24em" }}>
             <div style={settingsDiv} className="p-2">
-              <MdFullscreen size="1.8em" />
-              <MdSearch size="1.6rem" className="mx-1" />
+              <MdFormatListNumbered size="1.6em" />
+              <MdSearch size="1.6rem" className="mx-3" />
               <MdSettings size="1.6rem" />
             </div>
-            HELLO THIIS IS THE TAB PANEL
-        </Col>
+            <Queue location={this.props.location} />
+          </Col>
         </Row>
-
-        <Background url={this.state.imageURL} />
+        <Background imageURL={imageURL}/>
       </Container>
     )
   }

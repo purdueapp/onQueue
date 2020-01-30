@@ -13,7 +13,8 @@ function App() {
     <BrowserRouter>
       <Route exact path='/' component={Homepage} />
       <Route exact path='/callback' component={Callback} />
-      <Route path='/host/:id' component={Host} />
+      <Route exact path='/host/:id' component={Host} />
+      <Route exact path='/:id' component={Host} />
     </BrowserRouter>
   );
 }
@@ -21,4 +22,4 @@ function App() {
 export default App;
 
 
-////      {/* <Route path='/:id' component={Host} /> */}
+////      {/*  */}
