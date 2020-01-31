@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { MdCast, MdFullscreen, MdPalette, MdSettings, MdSearch, MdFormatListNumbered, MdPlaylistAdd } from 'react-icons/md';
 import { FaPlay, FaBackward, FaForward, FaPause } from 'react-icons/fa';
 import { Container, Row, Col, Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 import Background from '../components/Background';
 import Queue from '../components/Queue';
+import Player from '../components/Player';
 
-
-
+import { getAccessToken } from '../actions/authActions';
+import { setPlaybackState } from '../actions/playbackStateActions';
 
 let imageUrl = "https://i.scdn.co/image/cc4fd4d092849a8a9eb51ac159ec0951e65e27e7";  //"https://i.scdn.co/image/8480fa22ad7eb3e83478effba242df20447ba112";
 
@@ -56,20 +58,9 @@ let containerStyle = {
   transform: 'translate(-50%, -50%)'
 }
 
-let albumImage = {
-  boxShadow: "0 15px 30px 0 rgba(0, 0, 0, 0.5), 0 20px 40px 0 rgba(0, 0, 0, 0.5)",
-  //  height: "25em",
-  width: "100%",
-  //  marginTop: "10em",
-};
 
-let progressBar = {
-  position: "relative",
-  height: "0.5em",
-  width: "100%",
-  borderRadius: "3em",
-  backgroundColor: "gray",
-};
+
+
 
 let filler = {
   background: "white",
@@ -79,17 +70,6 @@ let filler = {
   transition: "width .2s ease-in",
 };
 
-let left = {
-  float: "left",
-};
-
-let right = {
-  float: "right",
-};
-
-let grey = {
-  color: "lightgrey",
-};
 
 let settingsDiv = {
   backgroundColor: "#FFFFFF20",
@@ -107,35 +87,11 @@ function getTime(millis) {
 
 
 class Host extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      artists: 'Hillsong UNITED',
-      trackName: 'Oh You Bring',
-      imageURL: 'https://i.scdn.co/image/cc4fd4d092849a8a9eb51ac159ec0951e65e27e7',
-      currentTime: '3:32',
-      totalTime: '5:23',
-      percent: 60,
-      paused: true,
-      position: 112342,
-      duration: 324432,
-      tracks: []
-    };
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-
-
   componentDidMount() {
     window.onSpotifyWebPlaybackSDKReady = () => {
       let accessToken = new URLSearchParams(this.props.location.search).get('accessToken');
-      let { Player } = window.Spotify;
 
-      const player = new Player({
+      const player = new window.Spotify.Player({
         name: 'onQueue Player',
         getOAuthToken: cb => { cb(accessToken); }
       });
@@ -151,23 +107,8 @@ class Host extends Component {
         if (state == null) {
           return;
         }
-        console.log(state)
 
-        this.setState({
-          artists: state.track_window.current_track.artists.map(artist => artist.name).join(', '),
-          imageURL: state.track_window.current_track.album.images[state.track_window.current_track.album.images.length - 1].url,
-          trackName: state.track_window.current_track.name,
-          currentTime: getTime(state.position),
-          totalTime: getTime(state.duration),
-          percent: 100 * state.position / state.duration,
-          paused: state.paused,
-          position: state.position,
-          duration: state.duration
-        })
-        clearInterval(this.interval);
-        if (!state.paused) {
-          this.interval = setInterval(() => this.setState({ position: this.state.position + 1000 }), 1000);
-        }
+        this.props.setPlaybackState(state);
       });
 
       // Ready
@@ -202,18 +143,8 @@ class Host extends Component {
     });
   }
 
-  playPauseButton() {
-    if (this.state.paused) {
-      return <FaPlay size="1.4em" className="mx-4 mb-1" />
-    }
-    else {
-      return <FaPause size="1.4em" className="mx-4 mb-1" />
-    }
-  }
 
   render() {
-    let { imageURL, trackName, artists, currentTime, totalTime, percent, paused, position, duration } = this.state;
-
     return (
       <Container className="p-0" fluid style={containerStyle}>
         <Navbar fixed="top" bg="clear" variant="dark">
@@ -223,26 +154,7 @@ class Host extends Component {
         </Navbar>
         <Row className="w-100 h-100">
           <Col lg={4} md={6} sm={8} className="mx-auto my-auto">
-            <img className="my-3" style={albumImage} src={imageURL} alt="logo" />
-            <h3>{trackName}</h3>
-            <h5 className="mb-3" style={grey}>{artists}</h5>
-
-            <FaBackward size="1.4em" className="mb-1" />
-            {this.playPauseButton()}
-            <FaForward size="1.4em" className="mb-1" />
-
-            <h5 style={left}>{getTime(position)}</h5>
-            <h5 style={right}>{getTime(duration)}</h5>
-
-            <div className="my-2" style={progressBar}>
-              <div style={{
-                background: "white",
-                height: "100%",
-                width: 100 * position / duration + "%",
-                borderRadius: "inherit",
-                transition: "width 1s ease",
-              }}></div>
-            </div>
+            <Player />
           </Col>
           <Col lg={2} md={3} sm={4} className="m-0 px-5 py-4 h-100" style={{ background: "rgba(0, 0, 0, 0.5)", width: "100%", minWidth: "24em" }}>
 
@@ -254,10 +166,17 @@ class Host extends Component {
             <Queue location={this.props.location} />
           </Col>
         </Row>
-        <Background imageURL={imageURL}/>
       </Container>
     )
   }
 };
 
-export default Host;
+const mapStateToProps = state => ({
+  playbackState: state.playbackState
+})
+
+const mapDispatchToProps = {
+  setPlaybackState
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Host);

@@ -27,7 +27,6 @@ class Queue extends Component {
 
     spotifyApi.searchTracks("housefires")
       .then(results => {
-        console.log(results.body.tracks.items)
         this.setState({
           tracks: results.body.tracks.items
         })
