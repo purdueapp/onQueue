@@ -19,7 +19,7 @@ class Callback extends Component {
 
   fetchTokens() {
     let code = new URLSearchParams(this.props.location.search).get('code');
-    let redirectURI = 'http://data.cs.purdue.edu:7373/callback';
+    let redirectURI = `${window.location.origin}/callback`;
     fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
       headers: {

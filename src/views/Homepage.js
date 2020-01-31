@@ -37,49 +37,31 @@ let containerStyle = {
   transform: 'translate(-50%, -50%)'
 }
 
+let scope = 'user-read-private user-read-email streaming user-modify-playback-state';
+let redirectURI = `${window.location.origin}/callback`;
+let loginURL = 'https://accounts.spotify.com/authorize' +
+  stringifyParams({
+    response_type: 'code',
+    client_id: process.env.REACT_APP_CLIENT_ID,
+    scope: scope,
+    redirect_uri: redirectURI,
+    state: 'state123'
+  });
+
 class Homepage extends Component {
-  constructor(props) {
-    super(props);
-
-    let scope = 'user-read-private user-read-email streaming user-modify-playback-state';
-    let redirectURI = 'http://data.cs.purdue.edu:7373/callback';
-    let loginURL = 'https://accounts.spotify.com/authorize' +
-      stringifyParams({
-        response_type: 'code',
-        client_id: process.env.REACT_APP_CLIENT_ID,
-        scope: scope,
-        redirect_uri: redirectURI,
-        state: 'state123'
-      });
-
-    this.state = {
-      loginURL: loginURL
-    };
-  }
-
   render() {
     return (
       <Container fluid style={containerStyle}>
-        {/* 
-        <Navbar fixed='top' bg='clear' variant='dark'>
-          <Nav>
-            onQueue
-          </Nav>
-        </Navbar>
-        */}
         <Row className='w-100'>
           <Col md={6} className='mx-auto'>
             <h1 class='welcome-heading display-4 text-white'>onQueue</h1>
             <p>Make your Spotify queue public to you friends! <br /> Only works on Google Chrome and Firefox.</p>
-            <a href={this.state.loginURL} class='btn btn-success btn-pill align-self-center m-1'><i class='fa fa-spotify mr-2'></i>Host A Room</a>
+            <a href={loginURL} class='btn btn-success btn-pill align-self-center m-1'><i class='fa fa-spotify mr-2'></i>Host A Room</a>
             {/*<a href='#rooms' class='btn btn-primary btn-pill align-self-center m-1'><i class='fa fa-spotify mr-2'></i>Join A Room</a> */}
           </Col>
         </Row>
-
         <div style={backgroundStyle} />
-
       </Container>
-
     )
   }
 }

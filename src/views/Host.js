@@ -5,6 +5,7 @@ import { FaQrcode } from 'react-icons/fa';
 import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import Queue from '../components/Queue';
 import Player from '../components/Player';
+import Search from '../components/Search';
 
 import { getAccessToken } from '../actions/authActions';
 import { setPlaybackState } from '../actions/playbackStateActions';
@@ -40,7 +41,9 @@ let sideBarStyle = {
 class Host extends Component {
   componentDidMount() {
     window.onSpotifyWebPlaybackSDKReady = () => {
-      let accessToken = new URLSearchParams(this.props.location.search).get('accessToken');
+      let accessToken = new URLSearchParams(window.location.search).get('accessToken');
+      console.log(window.origin)
+
 
       const player = new window.Spotify.Player({
         name: 'onQueue Player',
@@ -113,7 +116,7 @@ class Host extends Component {
               <FaQrcode size='1.3rem' className='mx-2' />
               <MdSettings size='1.3rem' className='mx-2' />
             </div>
-            <Queue location={this.props.location} />
+            <Search />
           </Col>
         </Row>
       </Container>

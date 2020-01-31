@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import SpotifyWebApi from 'spotify-web-api-node';
-import { Container, Row, Col, Image } from 'react-bootstrap';
-
+import { connect } from 'react-redux';
+import { Container } from 'react-bootstrap';
+import Track from './Track';
 
 class Queue extends Component {
   constructor(props) {
@@ -11,54 +11,39 @@ class Queue extends Component {
       tracks: []
     }
 
-    this.searchTracks = this.searchTracks.bind(this);
+    this.setQueueState = this.setQueueState.bind(this);
   }
 
-  searchTracks() {
-    let accessToken = new URLSearchParams(this.props.location.search).get('accessToken');
-    console.log('accessToken: ' + accessToken)
-    let spotifyApi = new SpotifyWebApi({
-      clientId: process.env.REACT_APP_CLIENT_ID,
-      clientSecret: process.env.REACT_APP_CLIENT_SECRET,
-      redirectUri: 'http://data.cs.purdue.edu:7373/callback'
-    });
+  componentWillReceiveProps(nextProps) {
+    this.setQueueState(nextProps.playbackState)
+  }
 
-    spotifyApi.setAccessToken(accessToken);
-
-    spotifyApi.searchTracks('housefires')
-      .then(results => {
-        this.setState({
-          tracks: results.body.tracks.items
-        })
+  setQueueState(playbackState) {
+    if (playbackState.track_window) {
+      this.setState({
+        tracks: playbackState.track_window.next_tracks
       })
-  }
-
-  componentDidMount() {
-    this.searchTracks();
+    }
   }
 
   render() {
+    let { tracks } = this.state;
+
     return <Container fluid className='mt-3'>
       <h3>Queue</h3>
-      <hr style={{backgroundColor: 'gray'}} />
+      <hr style={{ backgroundColor: 'gray' }} />
 
-      {this.state.tracks.map(track => {
+      {tracks.map(track => {
         return (
-          <Row className='text-left my-3'>
-            <Col md={4}>
-              <Image fluid src={track.album.images[0].url} />
-            </Col>
-            <Col md={8}>
-              <p>
-                {track.name}<br />
-                <span style={{ color: 'grey' }}>{track.artists.map(artist => artist.name).join(', ')}</span>
-              </p>
-            </Col>
-          </Row>
+          <Track track={track} />
         )
       })}
     </Container>
   }
 }
 
-export default Queue;
+const mapStateToProps = state => ({
+  playbackState: state.playbackState
+})
+
+export default connect(mapStateToProps, null)(Queue);

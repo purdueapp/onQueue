@@ -20,6 +20,3 @@ function App() {
 }
 
 export default connect()(App);
-
-
-////      {/*  */}

@@ -53,11 +53,10 @@ class Player extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setPlayerState()
+    this.setPlayerState(nextProps.playbackState)
   }
 
-  setPlayerState() {
-    let { playbackState } = this.props;
+  setPlayerState(playbackState) {
     let playerState = {};
 
     if (playbackState.track_window) {
@@ -142,4 +141,4 @@ const mapStateToProps = state => ({
   playbackState: state.playbackState
 })
 
-export default connect(mapStateToProps, {})(Player);
+export default connect(mapStateToProps, null)(Player);
