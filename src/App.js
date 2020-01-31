@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import logo from './logo.svg';
 import { BrowserRouter, Route } from 'react-router-dom'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';

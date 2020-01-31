@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import qs from 'qs';
-let SpotifyWebApi = require('spotify-web-api-node');
-
-let spotifyApi = new SpotifyWebApi({
-  clientId: process.env.REACT_APP_CLIENT_ID,
-  clientSecret: process.env.REACT_APP_CLIENT_SECRET,
-  redirectUri: 'http://data.cs.purdue.edu:7373/callback'
-});
-
 
 class Callback extends Component {
   constructor(props) {

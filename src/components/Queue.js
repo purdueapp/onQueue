@@ -43,7 +43,6 @@ class Queue extends Component {
       <hr style={{backgroundColor: "gray"}} />
 
       {this.state.tracks.map(track => {
-
         return (
           <Row className="text-left my-3">
             <Col md={4}>

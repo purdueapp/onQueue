@@ -1,26 +1,32 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { MdCast, MdFullscreen, MdPalette, MdSettings, MdSearch, MdFormatListNumbered, MdPlaylistAdd } from 'react-icons/md';
 import { FaPlay, FaBackward, FaForward, FaPause } from 'react-icons/fa';
 import Background from './Background';
 
 let progressBar = {
-  position: "relative",
-  height: "0.5em",
-  width: "100%",
-  borderRadius: "3em",
-  backgroundColor: "gray",
+  position: 'relative',
+  height: '0.5em',
+  width: '100%',
+  borderRadius: '3em',
+  backgroundColor: 'gray',
+};
+
+let progressBarFiller = {
+  background: 'white',
+  height: '100%',
+  borderRadius: 'inherit',
+  transition: 'width 1s ease',
 };
 
 let albumImage = {
-  boxShadow: "0 15px 30px 0 rgba(0, 0, 0, 0.5), 0 20px 40px 0 rgba(0, 0, 0, 0.5)",
-  width: "100%",
+  boxShadow: '0 15px 30px 0 rgba(0, 0, 0, 0.5), 0 20px 40px 0 rgba(0, 0, 0, 0.5)',
+  width: '100%',
 };
 
 function getTime(millis) {
   var minutes = Math.floor(millis / 60000);
   var seconds = Math.floor((millis % 60000) / 1000);
-  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+  return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 }
 
 class Player extends Component {
@@ -42,27 +48,6 @@ class Player extends Component {
     this.setPlayerState = this.setPlayerState.bind(this);
   }
 
-  playbackButtons() {
-    if (this.state.paused) {
-      return (
-        <>
-          <FaBackward size="1.4em" className="mb-1" />
-          <FaPlay size="1.4em" className="mx-4 mb-1" />
-          <FaForward size="1.4em" className="mb-1" />
-        </>
-      )
-    }
-    else {
-      return (
-        <>
-          <FaBackward size="1.4em" className="mb-1" />
-          <FaPause size="1.4em" className="mx-4 mb-1" />
-          <FaForward size="1.4em" className="mb-1" />
-        </>
-      )
-    }
-  }
-
   componentWillUnmount() {
     clearInterval(this.interval);
   }
@@ -73,7 +58,6 @@ class Player extends Component {
 
   setPlayerState() {
     let { playbackState } = this.props;
-
     let playerState = {};
 
     if (playbackState.track_window) {
@@ -111,28 +95,42 @@ class Player extends Component {
     }
   }
 
+  playbackButtons() {
+    if (this.state.paused) {
+      return (
+        <Fragment>
+          <FaBackward size='1.4em' className='mb-1' />
+          <FaPlay size='1.4em' className='mx-4 mb-1' />
+          <FaForward size='1.4em' className='mb-1' />
+        </ Fragment>
+      )
+    }
+    else {
+      return (
+        <Fragment>
+          <FaBackward size='1.4em' className='mb-1' />
+          <FaPause size='1.4em' className='mx-4 mb-1' />
+          <FaForward size='1.4em' className='mb-1' />
+        </ Fragment>
+      )
+    }
+  }
+
   render() {
-    let { imageURL, trackName, artists, currentTime, totalTime, percent, paused, position, duration } = this.state;
+    let { imageURL, trackName, artists, position, duration } = this.state;
 
     return (
       <div>
-        <img className="my-3" style={albumImage} src={imageURL} alt="logo" />
+        <img className='my-3' style={albumImage} src={imageURL} alt='logo' />
         <h3>{trackName}</h3>
-        <h5 className="mb-3" style={{ color: 'lightGrey' }}>{artists}</h5>
-
+        <h5 className='mb-3' style={{ color: 'lightGrey' }}>{artists}</h5>
 
         <h5 style={{ float: 'left' }}>{getTime(position)}</h5>
         {this.playbackButtons()}
         <h5 style={{ float: 'right' }}>{getTime(duration)}</h5>
 
-        <div className="my-2" style={progressBar}>
-          <div style={{
-            background: "white",
-            height: "100%",
-            width: 100 * position / duration + "%",
-            borderRadius: "inherit",
-            transition: "width 1s ease",
-          }}></div>
+        <div className='my-2' style={progressBar}>
+          <div style={{ ...progressBarFiller, width: `${100 * position / duration}%` }}></div>
         </div>
         <Background imageURL={imageURL} />
       </div>

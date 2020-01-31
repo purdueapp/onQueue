@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import bg from '../images/bg.jpg'
 import { uri } from 'react-querystring-router';
-import { Container, Navbar, Nav, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const { stringifyParams } = uri;
 
