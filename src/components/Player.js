@@ -142,10 +142,4 @@ const mapStateToProps = state => ({
   playbackState: state.playbackState
 })
 
-/*
-const mapDispatchToProps = dispatch => ({
-  simpleAction: () => dispatch(simpleAction())
-})
-*/
-
 export default connect(mapStateToProps, {})(Player);

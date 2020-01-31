@@ -16,7 +16,7 @@ class Queue extends Component {
 
   searchTracks() {
     let accessToken = new URLSearchParams(this.props.location.search).get('accessToken');
-    console.log("accessToken: " + accessToken)
+    console.log('accessToken: ' + accessToken)
     let spotifyApi = new SpotifyWebApi({
       clientId: process.env.REACT_APP_CLIENT_ID,
       clientSecret: process.env.REACT_APP_CLIENT_SECRET,
@@ -25,7 +25,7 @@ class Queue extends Component {
 
     spotifyApi.setAccessToken(accessToken);
 
-    spotifyApi.searchTracks("housefires")
+    spotifyApi.searchTracks('housefires')
       .then(results => {
         this.setState({
           tracks: results.body.tracks.items
@@ -38,20 +38,20 @@ class Queue extends Component {
   }
 
   render() {
-    return <Container fluid className="mt-3">
+    return <Container fluid className='mt-3'>
       <h3>Queue</h3>
-      <hr style={{backgroundColor: "gray"}} />
+      <hr style={{backgroundColor: 'gray'}} />
 
       {this.state.tracks.map(track => {
         return (
-          <Row className="text-left my-3">
+          <Row className='text-left my-3'>
             <Col md={4}>
               <Image fluid src={track.album.images[0].url} />
             </Col>
             <Col md={8}>
               <p>
                 {track.name}<br />
-                <span style={{ color: "grey" }}>{track.artists.map(artist => artist.name).join(', ')}</span>
+                <span style={{ color: 'grey' }}>{track.artists.map(artist => artist.name).join(', ')}</span>
               </p>
             </Col>
           </Row>
