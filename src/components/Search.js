@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SpotifyWebApi from 'spotify-web-api-node';
 import { Container, Row, Col, Image, InputGroup, FormControl } from 'react-bootstrap';
+import { getAccessToken } from '../actions/authActions';
 import Track from './Track';
 
 class Search extends Component {
@@ -18,8 +19,7 @@ class Search extends Component {
   }
 
   searchTracks(query) {
-    let accessToken = new URLSearchParams(window.location.search).get('accessToken');
-    console.log('accessToken: ' + accessToken)
+    let accessToken = this.props.getAccessToken();
     let spotifyApi = new SpotifyWebApi({
       clientId: process.env.REACT_APP_CLIENT_ID,
       clientSecret: process.env.REACT_APP_CLIENT_SECRET,
@@ -69,7 +69,7 @@ class Search extends Component {
         placeholder="Search For Tracks To Add Here"
         name="searchInput"
         value={query}
-        style={{ backgroundColor: 'inherit', borderRadius: '1em', height: '2em' }}
+        style={{ backgroundColor: 'inherit', borderRadius: '1em', height: '2em', color: 'white' }}
         onChange={this.handleChangeQuery}
         id='query'
       />
@@ -89,4 +89,4 @@ const mapStateToProps = state => ({
 })
 */
 
-export default connect(null, null)(Search);
+export default connect(null, { getAccessToken })(Search);

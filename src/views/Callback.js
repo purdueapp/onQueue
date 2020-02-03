@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { setAccessToken, setRefreshToken } from '../actions/authActions';
 import qs from 'qs';
 
 class Callback extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: undefined
+      token: null
     }
 
     this.fetchTokens = this.fetchTokens.bind(this);
@@ -34,21 +36,22 @@ class Callback extends Component {
     })
       .then(res => { console.log(res); return res.json() })
       .then(tokens => {
+        this.props.setAccessToken(tokens.access_token);
+        this.props.setRefreshToken(tokens.refresh_token);
+
         this.setState({
           tokens: tokens
         })
-        console.log(tokens)
       })
-
   }
 
   render() {
     // Setup some stuff
-    if (this.state.tokens === undefined) {
+    if (this.state.tokens === null) {
       return <div />
     }
-    return <Redirect to={`/host/tobi?accessToken=${this.state.tokens.access_token}`} />
+    return <Redirect to={`/host/tobi`} />
   }
 };
 
-export default Callback;
+export default connect(null, { setAccessToken, setRefreshToken })(Callback);

@@ -44,19 +44,18 @@ class Player extends Component {
       position: 102340,
       duration: 432343
     }
-
-    this.setPlayerState = this.setPlayerState.bind(this);
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setPlayerState(nextProps.playbackState)
-  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.playbackState === this.props.playbackState) {
+      return;
+    }
 
-  setPlayerState(playbackState) {
+    let { playbackState } = this.props;
     let playerState = {};
 
     if (playbackState.track_window) {

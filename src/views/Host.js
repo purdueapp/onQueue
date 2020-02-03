@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { MdSettings, MdSearch, MdFormatListNumbered } from 'react-icons/md';
 import { FaQrcode } from 'react-icons/fa';
@@ -39,11 +39,19 @@ let sideBarStyle = {
 };
 
 class Host extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      tab: 'search'
+    };
+
+    this.content = this.content.bind(this);
+  }
+
   componentDidMount() {
     window.onSpotifyWebPlaybackSDKReady = () => {
-      let accessToken = new URLSearchParams(window.location.search).get('accessToken');
-      console.log(window.origin)
-
+      let accessToken = this.props.getAccessToken();
 
       const player = new window.Spotify.Player({
         name: 'onQueue Player',
@@ -82,7 +90,7 @@ class Host extends Component {
   }
 
   setDevice(deviceId) {
-    let accessToken = new URLSearchParams(this.props.location.search).get('accessToken');
+    let accessToken = this.props.getAccessToken();
 
     fetch('https://api.spotify.com/v1/me/player', {
       method: 'PUT',
@@ -95,6 +103,17 @@ class Host extends Component {
         play: true,
       }),
     });
+  }
+
+  content() {
+    let { tab } = this.state;
+    if (tab === 'search') {
+      return <Search />
+    }
+    else if (tab === 'queue') {
+      return <Queue />
+    }
+    return <Fragment />
   }
 
   render() {
@@ -111,12 +130,12 @@ class Host extends Component {
           </Col>
           <Col lg={2} md={3} sm={4} className='m-0 px-5 py-4 h-100' style={sideBarStyle}>
             <div style={settingsDiv} className='p-1 mb-3'>
-              <MdFormatListNumbered size='1.3em' className='mx-2' />
-              <MdSearch size='1.3rem' className='mx-2' />
+              <MdFormatListNumbered size='1.3em' className='mx-2' onClick={() => {this.setState({ tab: 'queue'})}} />
+              <MdSearch size='1.3rem' className='mx-2' onClick={() => {this.setState({ tab: 'search'})}} />
               <FaQrcode size='1.3rem' className='mx-2' />
               <MdSettings size='1.3rem' className='mx-2' />
             </div>
-            <Search />
+            {this.content()}
           </Col>
         </Row>
       </Container>
