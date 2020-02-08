@@ -11,9 +11,9 @@ class Tracks extends Component {
           <Image fluid src={track.album.images[0].url} />
         </Col>
         <Col md={8}>
-          <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto' }}>
+          <p className='mt-1' style={{/*whiteSpace: 'nowrap',*/ overflow: 'auto' }}>
             {track.name}<br />
-            <span style={{ color: 'grey', whiteSpace: 'nowrap', overflow: 'hidden' }}>{track.artists.map(artist => artist.name).join(', ')}</span>
+            <span style={{ color: 'grey', /*whiteSpace: 'nowrap',*/ overflow: 'auto' }}>{track.artists.map(artist => artist.name).join(', ')}</span>
           </p>
         </Col>
       </Row>

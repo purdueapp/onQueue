@@ -44,6 +44,12 @@ class Player extends Component {
       position: 102340,
       duration: 432343
     }
+
+    this.playbackButtons = this.playbackButtons.bind(this);
+    this.play = this.play.bind(this);
+    this.pause = this.pause.bind(this);
+    this.nextTrack = this.nextTrack.bind(this);
+    this.previousTrack = this.previousTrack.bind(this);
   }
 
   componentWillUnmount() {
@@ -93,23 +99,51 @@ class Player extends Component {
     }
   }
 
+  play() {
+    let { player } = this.props;
+    if (player) {
+      player.resume();
+    }
+  }
+
+  pause() {
+    let { player } = this.props;
+    if (player) {
+      player.pause();
+    }
+  }
+
+  nextTrack() {
+    let { player } = this.props;
+    if (player) {
+      player.nextTrack();
+    }
+  }
+
+  previousTrack() {
+    let { player } = this.props;
+    if (player) {
+      player.previousTrack();
+    }
+  }
+
   playbackButtons() {
     if (this.state.paused) {
       return (
         <Fragment>
-          <FaBackward size='1.4em' className='mb-1' />
-          <FaPlay size='1.4em' className='mx-4 mb-1' />
-          <FaForward size='1.4em' className='mb-1' />
-        </ Fragment>
+          <FaBackward size='1.4em' className='mb-1' onClick={this.previousTrack} />
+          <FaPlay size='1.4em' className='mx-4 mb-1' onClick={this.play} />
+          <FaForward size='1.4em' className='mb-1' onClick={this.nextTrack} />
+        </Fragment>
       )
     }
     else {
       return (
         <Fragment>
-          <FaBackward size='1.4em' className='mb-1' />
-          <FaPause size='1.4em' className='mx-4 mb-1' />
-          <FaForward size='1.4em' className='mb-1' />
-        </ Fragment>
+          <FaBackward size='1.4em' className='mb-1' onClick={this.previousTrack} />
+          <FaPause size='1.4em' className='mx-4 mb-1' onClick={this.pause} />
+          <FaForward size='1.4em' className='mb-1' onClick={this.nextTrack} />
+        </Fragment>
       )
     }
   }
@@ -137,7 +171,9 @@ class Player extends Component {
 }
 
 const mapStateToProps = state => ({
-  playbackState: state.playbackState
+  playbackState: state.playbackState,
+  player: state.player,
+  spotifyApi: state.spotifyApi
 })
 
 export default connect(mapStateToProps, null)(Player);

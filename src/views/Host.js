@@ -1,14 +1,13 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MdSettings, MdSearch, MdFormatListNumbered } from 'react-icons/md';
-import { FaQrcode } from 'react-icons/fa';
 import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
-import Queue from '../components/Queue';
 import Player from '../components/Player';
-import Search from '../components/Search';
+import Sidebar from '../components/Sidebar';
 
 import { getAccessToken } from '../actions/authActions';
 import { setPlaybackState } from '../actions/playbackStateActions';
+import { setPlayer } from '../actions/playerActions';
+import { setSpotifyApi } from '../actions/spotifyApiActions';
 
 let containerStyle = {
   textAlign: 'center',
@@ -23,13 +22,6 @@ let containerStyle = {
   left: '50%',
   top: '50%',
   transform: 'translate(-50%, -50%)'
-}
-
-let settingsDiv = {
-  backgroundColor: '#FFFFFF20',
-  borderRadius: '25px',
-  alignItems: 'center',
-  justifyContent: 'center',
 };
 
 let sideBarStyle = {
@@ -39,81 +31,14 @@ let sideBarStyle = {
 };
 
 class Host extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      tab: 'search'
-    };
 
-    this.content = this.content.bind(this);
-  }
-
-  componentDidMount() {
+  componentWillMount() {
     window.onSpotifyWebPlaybackSDKReady = () => {
       let accessToken = this.props.getAccessToken();
-
-      const player = new window.Spotify.Player({
-        name: 'onQueue Player',
-        getOAuthToken: cb => { cb(accessToken); }
-      });
-
-      // Error handling
-      player.addListener('initialization_error', ({ message }) => { console.error(message); });
-      player.addListener('authentication_error', ({ message }) => { console.error(message); });
-      player.addListener('account_error', ({ message }) => { console.error(message); });
-      player.addListener('playback_error', ({ message }) => { console.error(message); });
-
-      // Playback status updates
-      player.addListener('player_state_changed', state => {
-        if (state == null) {
-          return;
-        }
-
-        this.props.setPlaybackState(state);
-      });
-
-      // Ready
-      player.addListener('ready', ({ device_id }) => {
-        this.setDevice(device_id);
-        console.log('Ready with Device ID', device_id);
-      });
-
-      // Not Ready
-      player.addListener('not_ready', ({ device_id }) => {
-        console.log('Device ID has gone offline', device_id);
-      });
-
-      // Connect to the player!
-      player.connect();
+      this.props.setSpotifyApi(accessToken);
+      this.props.setPlayer(accessToken);
     };
-  }
-
-  setDevice(deviceId) {
-    let accessToken = this.props.getAccessToken();
-
-    fetch('https://api.spotify.com/v1/me/player', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + accessToken,
-      },
-      body: JSON.stringify({
-        device_ids: [deviceId],
-        play: true,
-      }),
-    });
-  }
-
-  content() {
-    let { tab } = this.state;
-    if (tab === 'search') {
-      return <Search />
-    }
-    else if (tab === 'queue') {
-      return <Queue />
-    }
-    return <Fragment />
   }
 
   render() {
@@ -129,13 +54,7 @@ class Host extends Component {
             <Player />
           </Col>
           <Col lg={2} md={3} sm={4} className='m-0 px-5 py-4 h-100' style={sideBarStyle}>
-            <div style={settingsDiv} className='p-1 mb-3'>
-              <MdFormatListNumbered size='1.3em' className='mx-2' onClick={() => {this.setState({ tab: 'queue'})}} />
-              <MdSearch size='1.3rem' className='mx-2' onClick={() => {this.setState({ tab: 'search'})}} />
-              <FaQrcode size='1.3rem' className='mx-2' />
-              <MdSettings size='1.3rem' className='mx-2' />
-            </div>
-            {this.content()}
+            <Sidebar />
           </Col>
         </Row>
       </Container>
@@ -149,7 +68,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setPlaybackState,
-  getAccessToken
+  getAccessToken,
+  setPlayer,
+  setSpotifyApi
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Host);
