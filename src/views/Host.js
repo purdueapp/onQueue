@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { MdSettings, MdSearch, MdFormatListNumbered } from 'react-icons/md';
+import { MdSettings, MdSearch, MdGroup, MdFormatListNumbered } from 'react-icons/md';
 import { FaQrcode } from 'react-icons/fa';
 import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import Queue from '../components/Queue';
 import Player from '../components/Player';
 import Search from '../components/Search';
+import Settings from '../components/Settings';
+import Users from '../components/Users';
 
 import { getAccessToken } from '../actions/authActions';
 import { setPlaybackState } from '../actions/playbackStateActions';
@@ -113,6 +115,12 @@ class Host extends Component {
     else if (tab === 'queue') {
       return <Queue />
     }
+    else if (tab === 'settings') {
+      return <Settings />
+    }
+    else if (tab === 'users') {
+      return <Users />
+    }
     return <Fragment />
   }
 
@@ -133,7 +141,8 @@ class Host extends Component {
               <MdFormatListNumbered size='1.3em' className='mx-2' onClick={() => {this.setState({ tab: 'queue'})}} />
               <MdSearch size='1.3rem' className='mx-2' onClick={() => {this.setState({ tab: 'search'})}} />
               <FaQrcode size='1.3rem' className='mx-2' />
-              <MdSettings size='1.3rem' className='mx-2' />
+              <MdGroup size='1.3rem' className='mx-2' onClick={() => {this.setState({ tab: 'users'})}} />
+              <MdSettings size='1.3rem' className='mx-2' onClick={() => {this.setState({ tab: 'settings'})}} />
             </div>
             {this.content()}
           </Col>
