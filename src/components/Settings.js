@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row} from 'react-bootstrap';
 
 class Settings extends Component {
     constructor(props) {
