@@ -11,11 +11,7 @@ class Settings extends Component {
         }
       }
 
-  componentDidMount() {
-  }
 
-  componentWillReceiveProps(nextProps) {
-  }
 
   render() {
 
@@ -23,13 +19,10 @@ class Settings extends Component {
       <h3>Settings</h3>
       <hr style={{ backgroundColor: 'gray' }} />
       <Row className='text-left my-3'>
-        <Col >
             <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto' }}>
                 Host: {this.state.owner}
             </p>
-        </Col>
       </Row>
-
     </Container>
   }
 }

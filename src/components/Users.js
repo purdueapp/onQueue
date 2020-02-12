@@ -1,28 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
+import User from './User';
 
-class Settings extends Component {
+class Users extends Component {
     constructor(props) {
         super(props);
-    
-        this.state = {
-          users: [],
-        }
       }
-
-  componentDidMount() {
-  }
-
-  componentWillReceiveProps(nextProps) {
-  }
 
   render() {
 
     return <Container fluid className='mt-3'>
       <h3>Users</h3>
       <hr style={{ backgroundColor: 'gray' }} />
+      <User/>
     </Container>
   }
 }
- export default (Settings);
+ export default (Users);
