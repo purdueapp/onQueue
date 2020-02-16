@@ -31,8 +31,6 @@ let sideBarStyle = {
 };
 
 class Host extends Component {
-
-
   componentWillMount() {
     window.onSpotifyWebPlaybackSDKReady = () => {
       let accessToken = this.props.getAccessToken();

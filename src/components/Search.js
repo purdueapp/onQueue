@@ -23,8 +23,6 @@ class Search extends Component {
       return;
     }
 
-    console.log(spotifyApi);
-
     spotifyApi.searchTracks(query)
       .then(results => {
         this.setState({

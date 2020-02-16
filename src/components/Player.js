@@ -154,7 +154,10 @@ class Player extends Component {
     
     const handleChange = (event) => {
       let newPosition = event.target.value;
-      this.setState({position: duration * newPosition / 100});
+      if (this.props.player) {
+        this.props.player.seek(newPosition * duration / 100);
+        this.setState({position: duration * newPosition / 100});
+      }
     }
 
     return (

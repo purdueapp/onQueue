@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { setAccessToken, setRefreshToken } from '../actions/authActions';
+import { setAccessToken, setRefreshToken, getAccessToken } from '../actions/authActions';
 import qs from 'qs';
 
 class Callback extends Component {
@@ -15,7 +15,6 @@ class Callback extends Component {
   }
 
   componentDidMount() {
-    console.log('hello');
     this.fetchTokens();
   }
 
@@ -34,11 +33,11 @@ class Callback extends Component {
         'grant_type': 'authorization_code'
       })
     })
-      .then(res => { console.log(res); return res.json() })
+      .then(res => { return res.json() })
       .then(tokens => {
         this.props.setAccessToken(tokens.access_token);
         this.props.setRefreshToken(tokens.refresh_token);
-
+        console.log(this.props.getAccessToken());
         this.setState({
           tokens: tokens
         })
@@ -54,4 +53,4 @@ class Callback extends Component {
   }
 };
 
-export default connect(null, { setAccessToken, setRefreshToken })(Callback);
+export default connect(null, { setAccessToken, setRefreshToken, getAccessToken })(Callback);
