@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { FaPlay, FaBackward, FaForward, FaPause } from 'react-icons/fa';
 import Background from './Background';
+import './Player.css';
 
 let progressBar = {
   position: 'relative',
@@ -150,6 +151,11 @@ class Player extends Component {
 
   render() {
     let { imageURL, trackName, artists, position, duration } = this.state;
+    
+    const handleChange = (event) => {
+      let newPosition = event.target.value;
+      this.setState({position: duration * newPosition / 100});
+    }
 
     return (
       <div>
@@ -161,9 +167,11 @@ class Player extends Component {
         {this.playbackButtons()}
         <h5 style={{ float: 'right' }}>{getTime(duration)}</h5>
 
-        <div className='my-2' style={progressBar}>
+        <input type="range" min="0" max="100" value={100 * position / duration} 
+              className="slider" id="myRange" onChange={handleChange}/>
+        {/* <div className='my-2' style={progressBar}>
           <div style={{ ...progressBarFiller, width: `${100 * position / duration}%` }}></div>
-        </div>
+        </div> */}
         <Background imageURL={imageURL} />
       </div>
     )
