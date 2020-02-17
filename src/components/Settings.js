@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col} from 'react-bootstrap';
+import { Container, Row} from 'react-bootstrap';
 import RoomType from './Options/RoomType';
 import NewUserType from './Options/NewUserType';
 import MaxSongsDJ from './Options/MaxSongsDJ';

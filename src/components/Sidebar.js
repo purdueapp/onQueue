@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { MdSettings, MdSearch, MdFormatListNumbered } from 'react-icons/md';
-import { FaQrcode } from 'react-icons/fa';
+import { FaQrcode, FaUsers } from 'react-icons/fa';
 
 import Search from '../components/Search';
 import Queue from '../components/Queue';
+import Users from '../components/Users';
+import Settings from '../components/Settings';
 
 let settingsDiv = {
   backgroundColor: '#FFFFFF20',
@@ -31,6 +33,12 @@ class Sidebar extends Component {
     else if (tab === 'queue') {
       return <Queue />
     }
+    else if (tab === 'users') {
+      return <Users />
+    }
+    else if (tab === 'settings') {
+      return <Settings />
+    }
     return <Fragment />
   }
 
@@ -41,7 +49,8 @@ class Sidebar extends Component {
           <MdFormatListNumbered size='1.3em' className='mx-2' onClick={() => { this.setState({ tab: 'queue' }) }} />
           <MdSearch size='1.3rem' className='mx-2' onClick={() => { this.setState({ tab: 'search' }) }} />
           <FaQrcode size='1.3rem' className='mx-2' />
-          <MdSettings size='1.3rem' className='mx-2' />
+          <FaUsers size='1.3rem' className='mx-2' onClick={() => { this.setState({ tab: 'users' }) }}/>
+          <MdSettings size='1.3rem' className='mx-2' onClick={() => { this.setState({ tab: 'settings' }) }} />
         </div>
         {this.content()}
       </Fragment>

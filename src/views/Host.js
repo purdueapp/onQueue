@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MdSettings, MdSearch, MdGroup, MdFormatListNumbered } from 'react-icons/md';
-import { FaQrcode } from 'react-icons/fa';
 import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import Player from '../components/Player';
-import Search from '../components/Search';
-import Settings from '../components/Settings';
-import Users from '../components/Users';
 import Sidebar from '../components/Sidebar';
 import { getAccessToken } from '../actions/authActions';
 import { setPlaybackState } from '../actions/playbackStateActions';
