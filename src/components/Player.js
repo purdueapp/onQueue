@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { FaPlay, FaBackward, FaForward, FaPause } from 'react-icons/fa';
+import { FaPlay, FaBackward, FaForward, FaPause, FaVolumeUp, FaVolume} from 'react-icons/fa';
 import Background from './Background';
 import './Player.css';
 
@@ -176,6 +176,7 @@ class Player extends Component {
           <div style={{ ...progressBarFiller, width: `${100 * position / duration}%` }}></div>
         </div> */}
         <Background imageURL={imageURL} />
+        <div><FaVolumeUp size='1.4em' className='mb-1' /></div>
       </div>
     )
   }
