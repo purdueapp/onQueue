@@ -19,14 +19,10 @@ class Search extends Component {
   }
 
   searchTracks(query) {
-    let accessToken = this.props.getAccessToken();
-    let spotifyApi = new SpotifyWebApi({
-      clientId: process.env.REACT_APP_CLIENT_ID,
-      clientSecret: process.env.REACT_APP_CLIENT_SECRET,
-      redirectUri: `${window.location.origin}/callback`
-    });
-
-    spotifyApi.setAccessToken(accessToken);
+    let { spotifyApi } = this.props;
+    if (!spotifyApi.searchTracks) {
+      return;
+    }
 
     spotifyApi.searchTracks(query)
       .then(results => {
@@ -83,10 +79,9 @@ class Search extends Component {
   }
 }
 
-/*
-const mapStateToProps = state => ({
-  playbackState: state.playbackState
-})
-*/
 
-export default connect(null, { getAccessToken })(Search);
+const mapStateToProps = state => ({
+  spotifyApi: state.spotifyApi
+})
+
+export default connect(mapStateToProps, { getAccessToken })(Search);

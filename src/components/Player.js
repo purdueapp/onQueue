@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { FaPlay, FaBackward, FaForward, FaPause, FaVolumeUp, FaVolume} from 'react-icons/fa';
 import Background from './Background';
+import './Player.css';
 
 let progressBar = {
   position: 'relative',
@@ -44,6 +45,12 @@ class Player extends Component {
       position: 102340,
       duration: 432343
     }
+
+    this.playbackButtons = this.playbackButtons.bind(this);
+    this.play = this.play.bind(this);
+    this.pause = this.pause.bind(this);
+    this.nextTrack = this.nextTrack.bind(this);
+    this.previousTrack = this.previousTrack.bind(this);
   }
 
   componentWillUnmount() {
@@ -93,29 +100,65 @@ class Player extends Component {
     }
   }
 
+  play() {
+    let { player } = this.props;
+    if (player) {
+      player.resume();
+    }
+  }
+
+  pause() {
+    let { player } = this.props;
+    if (player) {
+      player.pause();
+    }
+  }
+
+  nextTrack() {
+    let { player } = this.props;
+    if (player) {
+      player.nextTrack();
+    }
+  }
+
+  previousTrack() {
+    let { player } = this.props;
+    if (player) {
+      player.previousTrack();
+    }
+  }
+
   playbackButtons() {
     if (this.state.paused) {
       return (
         <Fragment>
-          <FaBackward size='1.4em' className='mb-1' />
-          <FaPlay size='1.4em' className='mx-4 mb-1' />
-          <FaForward size='1.4em' className='mb-1' />
-        </ Fragment>
+          <FaBackward size='1.4em' className='mb-1' onClick={this.previousTrack} />
+          <FaPlay size='1.4em' className='mx-4 mb-1' onClick={this.play} />
+          <FaForward size='1.4em' className='mb-1' onClick={this.nextTrack} />
+        </Fragment>
       )
     }
     else {
       return (
         <Fragment>
-          <FaBackward size='1.4em' className='mb-1' />
-          <FaPause size='1.4em' className='mx-4 mb-1' />
-          <FaForward size='1.4em' className='mb-1' />
-        </ Fragment>
+          <FaBackward size='1.4em' className='mb-1' onClick={this.previousTrack} />
+          <FaPause size='1.4em' className='mx-4 mb-1' onClick={this.pause} />
+          <FaForward size='1.4em' className='mb-1' onClick={this.nextTrack} />
+        </Fragment>
       )
     }
   }
 
   render() {
     let { imageURL, trackName, artists, position, duration } = this.state;
+    
+    const handleChange = (event) => {
+      let newPosition = event.target.value;
+      if (this.props.player) {
+        this.props.player.seek(newPosition * duration / 100);
+        this.setState({position: duration * newPosition / 100});
+      }
+    }
 
     return (
       <div>
@@ -127,10 +170,11 @@ class Player extends Component {
         {this.playbackButtons()}
         <h5 style={{ float: 'right' }}>{getTime(duration)}</h5>
 
-        <div className='my-2' style={progressBar}>
+        <input type="range" min="0" max="100" value={100 * position / duration} 
+              className="slider" id="myRange" onChange={handleChange}/>
+        {/* <div className='my-2' style={progressBar}>
           <div style={{ ...progressBarFiller, width: `${100 * position / duration}%` }}></div>
-        </div>
-        
+        </div> */}
         <Background imageURL={imageURL} />
         <div><FaVolumeUp size='1.4em' className='mb-1' /></div>
       </div>
@@ -139,7 +183,9 @@ class Player extends Component {
 }
 
 const mapStateToProps = state => ({
-  playbackState: state.playbackState
+  playbackState: state.playbackState,
+  player: state.player,
+  spotifyApi: state.spotifyApi
 })
 
 export default connect(mapStateToProps, null)(Player);

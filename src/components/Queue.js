@@ -18,8 +18,12 @@ class Queue extends Component {
     this.setQueueState(this.props.playbackState);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setQueueState(nextProps.playbackState)
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.playbackState === this.props.playbackState) {
+      return;
+    }
+
+    this.setQueueState(this.props.playbackState);
   }
 
   setQueueState(playbackState) {
