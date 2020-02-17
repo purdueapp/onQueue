@@ -4,10 +4,6 @@ import User from './User';
 import propTypes from "prop-types";
 
 class Users extends Component {
-    constructor(props) {
-        super(props);
-        //this.setType = this.setType.bind(this)
-      }
 
   render() {
     return <Container fluid className='mt-3'>
