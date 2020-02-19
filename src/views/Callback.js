@@ -46,11 +46,15 @@ class Callback extends Component {
 
   render() {
     // Setup some stuff
-    if (this.state.tokens === null) {
+    if (this.props.auth.refreshToken === null) {
       return <div />
     }
     return <Redirect to={`/host/tobi`} />
   }
 };
 
-export default connect(null, { setAccessToken, setRefreshToken, getAccessToken })(Callback);
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, { setAccessToken, setRefreshToken, getAccessToken })(Callback);

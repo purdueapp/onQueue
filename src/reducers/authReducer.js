@@ -5,18 +5,18 @@ export default (state = {}, action) => {
     case SET_ACCESS_TOKEN:
       localStorage.setItem('accessToken', action.payload);
       return {
-        tokens: state
+        accessToken: action.payload,
+        refreshToken: state.refreshToken
       }
     case SET_REFRESH_TOKEN:
       localStorage.setItem('refreshToken', action.payload);
       return {
-        tokens: state
+        accessToken: state.accessToken,
+        refreshToken: action.payload
       }
     case CLEAR_TOKENS:
       localStorage.clear();
-      return {
-        tokens: state
-      }
+      return { }
     default:
       return state
   }
