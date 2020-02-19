@@ -173,9 +173,6 @@ class Player extends Component {
 
         <input type="range" min="0" max="100" value={100 * position / duration} 
               className="slider" id="myRange" onChange={handleChange}/>
-        {/* <div className='my-2' style={progressBar}>
-          <div style={{ ...progressBarFiller, width: `${100 * position / duration}%` }}></div>
-        </div> */}
         <Background imageURL={imageURL} />
         <div><VolumeSlider /></div>
       </div>
