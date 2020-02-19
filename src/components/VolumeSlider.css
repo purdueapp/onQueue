@@ -1,0 +1,48 @@
+.volumeSlider {
+  -webkit-appearance: none;
+  width: 40%;
+  height: 0.4em;
+  border-radius: 5px;
+  background: #aaaaaa;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  margin-right: 3rem;
+}
+
+.volumeSlider::-webkit-slider-thumb:hover {
+  width: 1em;
+  height: 1em;
+  opacity: 1;
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0.4em;
+  height: 0.4em;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.volumeContainer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.volumeButton {
+  border: none;
+  background: transparent;
+  color: white;
+  opacity: 1;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.volumeButton:hover {
+  opacity: 0.8;
+}

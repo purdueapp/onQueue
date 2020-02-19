@@ -5,21 +5,6 @@ import Background from './Background';
 import VolumeSlider from '../components/VolumeSlider';
 import './Player.css';
 
-let progressBar = {
-  position: 'relative',
-  height: '0.5em',
-  width: '100%',
-  borderRadius: '3em',
-  backgroundColor: 'gray',
-};
-
-let progressBarFiller = {
-  background: 'white',
-  height: '100%',
-  borderRadius: 'inherit',
-  transition: 'width 1s ease',
-};
-
 let albumImage = {
   boxShadow: '0 15px 30px 0 rgba(0, 0, 0, 0.5), 0 20px 40px 0 rgba(0, 0, 0, 0.5)',
   width: '100%',
@@ -76,7 +61,7 @@ class Player extends Component {
         percent: 100 * playbackState.position / playbackState.duration,
         paused: playbackState.paused,
         position: playbackState.position,
-        duration: playbackState.duration
+        duration: playbackState.duration,
       }
     }
     else {
@@ -174,7 +159,7 @@ class Player extends Component {
         <input type="range" min="0" max="100" value={100 * position / duration} 
               className="slider" id="myRange" onChange={handleChange}/>
         <Background imageURL={imageURL} />
-        <div><VolumeSlider /></div>
+        <VolumeSlider />
       </div>
     )
   }
