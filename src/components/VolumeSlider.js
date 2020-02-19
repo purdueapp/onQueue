@@ -7,31 +7,9 @@ class VolumeSlider extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
-      volume: 20,
+      volume: 100,
       mute: false
     }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.playbackState === this.props.playbackState) {
-      return;
-    }
-
-    let { playbackState } = this.props;
-    let playerState = {};
-
-    if (playbackState.track_window) {
-      playerState = {
-        volume: playbackState.volume,
-      }
-    }
-    else {
-      playerState = {
-        volume: 0.2
-      }
-    }
-
-    this.setState(playerState);
   }
  
   handleChange = (event) => {

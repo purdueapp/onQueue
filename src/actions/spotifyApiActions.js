@@ -1,20 +1,13 @@
-import SpotifyWebApi from 'spotify-web-api-node';
+import SpotifyWebApi from 'spotify-web-api-js';
 
 export const SET_SPOTIFY_API = 'SET_SPOTIFY_API';
+export const SET_SPOTIFY_API_ACCESS_TOKEN = 'SET_SPOTIFY_API_ACCESS_TOKEN';
 export const CLEAR_SPOTIFY_API = 'CLEAR_SPOTIFY_API';
 
 export const setSpotifyApi = (accessToken) => dispatch => {
-    let spotifyApi = new SpotifyWebApi({
-        clientId: process.env.REACT_APP_CLIENT_ID,
-        clientSecret: process.env.REACT_APP_CLIENT_SECRET,
-        redirectUri: `${window.location.origin}/callback`
-      });
-
-      spotifyApi.setAccessToken(accessToken);
-
   dispatch({
-    type: SET_SPOTIFY_API,
-    payload: spotifyApi
+    type: SET_SPOTIFY_API_ACCESS_TOKEN,
+    payload: accessToken
   })
 }
 

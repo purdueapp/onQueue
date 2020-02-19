@@ -24,12 +24,11 @@ class Search extends Component {
       return;
     }
 
-    spotifyApi.searchTracks(query)
-      .then(results => {
-        this.setState({
-          tracks: results.body.tracks.items
-        })
+    spotifyApi.searchTracks(query, (err, res) => {
+      this.setState({
+        tracks: res.tracks.items
       })
+    })
   }
 
   componentDidMount() {
@@ -65,6 +64,7 @@ class Search extends Component {
         placeholder="Search For Tracks To Add Here"
         name="searchInput"
         value={query}
+        className="mb-3"
         style={{ backgroundColor: 'inherit', borderRadius: '1em', height: '2em', color: 'white' }}
         onChange={this.handleChangeQuery}
         id='query'
