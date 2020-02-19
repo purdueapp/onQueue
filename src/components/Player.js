@@ -169,7 +169,7 @@ class Player extends Component {
     }
 
     return (
-      <div>
+      <div className="mx-5">
         <img className='my-3' style={albumImage} src={imageURL} alt='logo' />
         <h3>{trackName}</h3>
         <h5 className='mb-3' style={{ color: 'lightGrey' }}>{artists}</h5>

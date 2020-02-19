@@ -36,7 +36,7 @@ class Host extends Component {
     super(props);
     this.state = {
       accessToken: null,
-      mobile: window.innerWidth <= 760
+      mobile: window.innerWidth <= 768
     }
 
     this.script = this.script.bind(this);
@@ -48,7 +48,7 @@ class Host extends Component {
   }
 
   resize() {
-    let currentMobile = (window.innerWidth <= 760);
+    let currentMobile = (window.innerWidth <= 768);
     if (currentMobile !== this.state.hidePlayer) {
       this.setState({ mobile: currentMobile });
     }
@@ -108,7 +108,7 @@ class Host extends Component {
           </Nav>
         </Navbar>
         <Row className='w-100 h-100'>
-          <Col lg={4} md={6} className='mx-auto my-auto'>
+          <Col lg={4} md={6} sm={8} className='mx-auto my-auto'>
             <Player />
           </Col>
           <Col lg={2} md={3} sm={4} className='m-0 px-5 py-4 h-100' style={sideBarStyle}>
