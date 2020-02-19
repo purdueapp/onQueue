@@ -16,9 +16,9 @@ class User extends Component {
               {this.props.user.type}
             </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Admin</a>
-                <a class="dropdown-item" href="#">DJ</a>
-                <a class="dropdown-item" href="#">Listener</a>
+                <button class="dropdown-item">Admin</button>
+                <button class="dropdown-item">DJ</button>
+                <button class="dropdown-item">Listener</button>
               </div>
             </div>
           </Col>

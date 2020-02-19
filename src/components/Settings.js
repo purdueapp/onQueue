@@ -3,6 +3,7 @@ import { Container, Row} from 'react-bootstrap';
 import RoomType from './Options/RoomType';
 import NewUserType from './Options/NewUserType';
 import MaxSongsDJ from './Options/MaxSongsDJ';
+import MaxSongsQueue from './Options/MaxSongsQueue';
 
 class Settings extends Component {
     constructor(props) {
@@ -34,19 +35,10 @@ class Settings extends Component {
       <Row>
         <MaxSongsDJ/>
       </Row>
-      {/*<Row className='text-left my-3'>
-            <Col>
-              <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto' }}>Max Songs In Queue</p>
-            </Col>
-            <div align='right'>
-              <Col>
-              
-                
-              </Col>
-            </div>
-            <div align='right'>
-          </div>
+      <Row>
+        <MaxSongsQueue/>
       </Row>
+      {/*
       <div align='left' margin='10px'>
           <button button class="btn btn-secondary btn-sm" type="button" class="btn btn-light">Logout</button>
       </div>
