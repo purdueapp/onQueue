@@ -5,21 +5,6 @@ import Background from './Background';
 import VolumeSlider from '../components/VolumeSlider';
 import './Player.css';
 
-let progressBar = {
-  position: 'relative',
-  height: '0.5em',
-  width: '100%',
-  borderRadius: '3em',
-  backgroundColor: 'gray',
-};
-
-let progressBarFiller = {
-  background: 'white',
-  height: '100%',
-  borderRadius: 'inherit',
-  transition: 'width 1s ease',
-};
-
 let albumImage = {
   boxShadow: '0 15px 30px 0 rgba(0, 0, 0, 0.5), 0 20px 40px 0 rgba(0, 0, 0, 0.5)',
   width: '100%',
@@ -35,17 +20,37 @@ class Player extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      artists: 'Vertical Worship',
-      imageURL: 'https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b',
-      trackName: 'Yes I Will',
-      currentTime: getTime(102340),
-      totalTime: getTime(432343),
-      percent: 100 * 102340 / 432343,
-      paused: true,
-      position: 102340,
-      duration: 432343
+    let { playbackState } = this.props;
+    let playerState = {};
+
+    if (playbackState.track_window) {
+      playerState = {
+        artists: playbackState.track_window.current_track.artists.map(artist => artist.name).join(', '),
+        imageURL: playbackState.track_window.current_track.album.images[playbackState.track_window.current_track.album.images.length - 1].url,
+        trackName: playbackState.track_window.current_track.name,
+        currentTime: getTime(playbackState.position),
+        totalTime: getTime(playbackState.duration),
+        percent: 100 * playbackState.position / playbackState.duration,
+        paused: playbackState.paused,
+        position: playbackState.position,
+        duration: playbackState.duration,
+      }
     }
+    else {
+      playerState = {
+        artists: 'Vertical Worship',
+        imageURL: 'https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b',
+        trackName: 'Yes I Will',
+        currentTime: getTime(102340),
+        totalTime: getTime(432343),
+        percent: 100 * 102340 / 432343,
+        paused: true,
+        position: 102340,
+        duration: 432343
+      }
+    }
+
+    this.state = playerState;
 
     this.playbackButtons = this.playbackButtons.bind(this);
     this.play = this.play.bind(this);
@@ -57,6 +62,8 @@ class Player extends Component {
   componentWillUnmount() {
     clearInterval(this.interval);
   }
+
+
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.playbackState === this.props.playbackState) {
@@ -76,7 +83,7 @@ class Player extends Component {
         percent: 100 * playbackState.position / playbackState.duration,
         paused: playbackState.paused,
         position: playbackState.position,
-        duration: playbackState.duration
+        duration: playbackState.duration,
       }
     }
     else {
@@ -162,7 +169,7 @@ class Player extends Component {
     }
 
     return (
-      <div>
+      <div className="mx-5">
         <img className='my-3' style={albumImage} src={imageURL} alt='logo' />
         <h3>{trackName}</h3>
         <h5 className='mb-3' style={{ color: 'lightGrey' }}>{artists}</h5>
@@ -173,11 +180,8 @@ class Player extends Component {
 
         <input type="range" min="0" max="100" value={100 * position / duration} 
               className="slider" id="myRange" onChange={handleChange}/>
-        {/* <div className='my-2' style={progressBar}>
-          <div style={{ ...progressBarFiller, width: `${100 * position / duration}%` }}></div>
-        </div> */}
         <Background imageURL={imageURL} />
-        <div><VolumeSlider /></div>
+        <VolumeSlider />
       </div>
     )
   }

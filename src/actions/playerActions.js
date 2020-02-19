@@ -3,6 +3,7 @@ import { SET_STATE } from '../actions/playbackStateActions';
 export const SET_PLAYER = 'SET_PLAYER';
 export const CLEAR_PLAYER = 'CLEAR_PLAYER';
 
+
 function setDevice(deviceId, accessToken) {
   fetch('https://api.spotify.com/v1/me/player', {
     method: 'PUT',
@@ -20,7 +21,12 @@ function setDevice(deviceId, accessToken) {
 export const setPlayer = (accessToken) => dispatch => {
   let player = new window.Spotify.Player({
     name: 'onQueue Player',
-    getOAuthToken: cb => { cb(accessToken); }
+
+    getOAuthToken: cb => {
+      
+      cb(accessToken);
+    },
+    volume: 0.5
   });
 
   // Error handling
@@ -34,6 +40,7 @@ export const setPlayer = (accessToken) => dispatch => {
     if (state == null) {
       return;
     }
+    console.log('hello')
 
     // setPlaybackState(state);
     dispatch({
@@ -55,6 +62,7 @@ export const setPlayer = (accessToken) => dispatch => {
 
   // Connect to the player!
   player.connect();
+  console.log('we in bois:' + accessToken);
 
   dispatch({
     type: SET_PLAYER,

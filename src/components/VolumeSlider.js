@@ -1,34 +1,78 @@
-import React, { Component } from 'react'
-import Slider from 'react-rangeslider'
-import {FaVolumeUp, FaVolumeOff, FaVolumeMute} from 'react-icons/fa';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {FaVolumeUp, FaVolumeMute} from 'react-icons/fa';
+import './VolumeSlider.css';
  
 class VolumeSlider extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
-      volume: 0,
+      volume: 20,
       mute: false
     }
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.playbackState === this.props.playbackState) {
+      return;
+    }
+
+    let { playbackState } = this.props;
+    let playerState = {};
+
+    if (playbackState.track_window) {
+      playerState = {
+        volume: playbackState.volume,
+      }
+    }
+    else {
+      playerState = {
+        volume: 0.2
+      }
+    }
+
+    this.setState(playerState);
+  }
  
-  handleOnChange = (value) => {
+  handleChange = (event) => {
+    let volume = event.target.value;
+    let { mute } = this.state
+    this.props.player.setVolume((mute ? 0.0 : volume / 100.0));
     this.setState({
-      volume: value
+      volume: event.target.value
+    })
+  }
+  
+  handleClick = () => {
+    let { volume, mute } = this.state;
+    mute = !mute;
+    this.props.player.setVolume((mute ? 0.0 : volume / 100.0));
+    this.setState({
+      mute: !this.state.mute
     })
   }
  
   render() {
-    let { volume } = this.state
+    let { volume, mute } = this.state
     return (
-      <div>
-        <div><FaVolumeMute size='1.3rem' className='mx-2'/>
-        <FaVolumeUp size='1.3rem' className='mx-2'/> <FaVolumeOff size='1.3rem' className='mx-2'/></div>
-        <Slider
-          value={volume}
-          orientation="vertical"
-          onChange={this.handleOnChange}
-        />
+      <div className="volumeContainer">
+        <button className="volumeButton" onClick={this.handleClick}>
+        {(mute || volume === 0) ? (
+            <FaVolumeMute size='1.3rem' className='mx-2'/>
+        ) : (
+            <FaVolumeUp size='1.3rem' className='mx-2'/>
+        )}
+        </button>
+        <input type="range" min="0" max="100" value={mute ? 0 : volume} 
+              className="volumeSlider" id="myRange" onChange={this.handleChange}/>
       </div>
     )
   }
-} export default VolumeSlider
+}
+
+const mapStateToProps = state => ({
+  playbackState: state.playbackState,
+  player: state.player,
+})
+
+export default connect(mapStateToProps, null)(VolumeSlider);
