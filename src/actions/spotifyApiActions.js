@@ -1,5 +1,3 @@
-import SpotifyWebApi from 'spotify-web-api-js';
-
 export const SET_SPOTIFY_API = 'SET_SPOTIFY_API';
 export const SET_SPOTIFY_API_ACCESS_TOKEN = 'SET_SPOTIFY_API_ACCESS_TOKEN';
 export const CLEAR_SPOTIFY_API = 'CLEAR_SPOTIFY_API';

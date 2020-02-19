@@ -62,8 +62,6 @@ class Host extends Component {
         this.props.setPlayer(accessToken);
       };
 
-      console.log(this.props.auth);
-
       return (<Script
         url="https://sdk.scdn.co/spotify-player.js"
       //onError={this.handleScriptError}

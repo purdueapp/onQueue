@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Image } from 'react-bootstrap';
 import Media from 'react-bootstrap/Media';
 
 class Track extends Component {
@@ -27,7 +26,9 @@ class Track extends Component {
   playTrack() {
     if (this.props.spotifyApi) {
       this.props.spotifyApi.play({uris: [this.props.track.uri]}, (err, res) => {
-
+        if (err) {
+          console.log(err);
+        }
       });
     }
   }
