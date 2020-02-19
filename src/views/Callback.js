@@ -37,18 +37,18 @@ class Callback extends Component {
       .then(tokens => {
         this.props.setAccessToken(tokens.access_token);
         this.props.setRefreshToken(tokens.refresh_token);
-        console.log(this.props.getAccessToken());
-        this.setState({
-          tokens: tokens
-        })
       })
   }
 
   render() {
     // Setup some stuff
-    if (this.props.auth.refreshToken === null) {
+
+    // if (this.state.tokens === null || this.props.getAccessToken() === null) {
+    if (this.props.auth.refreshToken === undefined) {
+      console.log(this.props.auth);
       return <div />
     }
+    
     return <Redirect to={`/host/tobi`} />
   }
 };

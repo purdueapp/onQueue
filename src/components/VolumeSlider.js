@@ -35,7 +35,8 @@ class VolumeSlider extends Component {
   }
  
   handleChange = (event) => {
-    let { volume, mute } = this.state
+    let volume = event.target.value;
+    let { mute } = this.state
     this.props.player.setVolume((mute ? 0.0 : volume / 100.0));
     this.setState({
       volume: event.target.value
@@ -43,6 +44,9 @@ class VolumeSlider extends Component {
   }
   
   handleClick = () => {
+    let { volume, mute } = this.state;
+    mute = !mute;
+    this.props.player.setVolume((mute ? 0.0 : volume / 100.0));
     this.setState({
       mute: !this.state.mute
     })

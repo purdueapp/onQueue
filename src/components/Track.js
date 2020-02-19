@@ -1,22 +1,27 @@
 import React, { Component } from 'react';
 import { Row, Col, Image } from 'react-bootstrap';
+import Media from 'react-bootstrap/Media';
 
 class Tracks extends Component {
   render() {
     let { track } = this.props;
 
     return (
-      <Row className='text-left my-3'>
-        <Col md={4}>
-          <Image fluid src={track.album.images[0].url} />
-        </Col>
-        <Col md={8}>
-          <p className='mt-1' style={{/*whiteSpace: 'nowrap',*/ overflow: 'auto' }}>
+      <Media >
+        <img
+          width={64}
+          height={64}
+          className="mr-3 my-2"
+          src={track.album.images[0].url}
+          alt="Generic placeholder"
+        />
+        <Media.Body>
+          <p className='mt-1 text-center' style={{ overflow: 'auto' }}>
             {track.name}<br />
-            <span style={{ color: 'grey', /*whiteSpace: 'nowrap',*/ overflow: 'auto' }}>{track.artists.map(artist => artist.name).join(', ')}</span>
+            <span style={{ color: 'grey', overflow: 'auto' }}>{track.artists.map(artist => artist.name).join(', ')}</span>
           </p>
-        </Col>
-      </Row>
+        </Media.Body>
+      </Media >
     )
   }
 }
