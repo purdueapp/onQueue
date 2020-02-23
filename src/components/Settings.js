@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row} from 'react-bootstrap';
+import { Container, Row, Col} from 'react-bootstrap';
 import RoomType from './Options/RoomType';
 import NewUserType from './Options/NewUserType';
 import MaxSongsDJ from './Options/MaxSongsDJ';
@@ -21,30 +21,34 @@ class Settings extends Component {
     return <Container fluid className='mt-3'>
       <h3>Settings</h3>
       <hr style={{ backgroundColor: 'gray' }} />
-      <div className='text-left my-3'>
-            <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto' }}>
-                <b>Host: </b> {this.state.owner}
-            </p>
-      </div>
       <Row>
-        <RoomType/>
+              <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto' }}>
+                  <b>Host: </b> {this.state.owner}
+              </p>
       </Row>
+      <RoomType/>
+      <NewUserType/>
+      <MaxSongsDJ/>
+      <MaxSongsQueue/>
       <Row>
-        <NewUserType/>
+        <Col className = 'px-0' align='left'>
+            <button className="btn-pill btn-sm" type="button" align='left'
+              style={{
+                color:"#fff",
+                background: "#6C757D",
+                borderColor: "#6C757D"
+
+              }}>Logout</button>
+        </Col>
+        <Col className = 'px-0' align='right'>
+            <button type="button" className="btn-pill btn-sm " align='right'style={{
+                color:"#fff",
+                background: "#6C757D",
+                borderColor: "#6C757D"
+
+              }}>Close Room</button>
+        </Col>       
       </Row>
-      <Row>
-        <MaxSongsDJ/>
-      </Row>
-      <Row>
-        <MaxSongsQueue/>
-      </Row>
-      {/*
-      <div align='left' margin='10px'>
-          <button button class="btn btn-secondary btn-sm" type="button" class="btn btn-light">Logout</button>
-      </div>
-      <div align='left'>
-        <button type="button" class="btn btn-light">Close Room</button>
-  </div>*/}
 
     </Container>
   }

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment} from 'react';
 import { MdSettings, MdSearch, MdFormatListNumbered } from 'react-icons/md';
 import { FaQrcode, FaUsers } from 'react-icons/fa';
 
@@ -55,7 +55,7 @@ class Sidebar extends Component {
           <FaUsers size='1.3rem' className='mx-2' onClick={() => { this.setState({ tab: 'users' }) }}/>
           <MdSettings size='1.3rem' className='mx-2' onClick={() => { this.setState({ tab: 'settings' }) }} />
         </div>
-        {this.content()}
+        {this.content()}  
       </Fragment>
     )
   }
