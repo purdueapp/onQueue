@@ -46,8 +46,8 @@ class Track extends Component {
         style={{background: hover ? '#AAAAAA20' : '#00000000'}}
       >
         <img
-          width={64}
-          height={64}
+          width={48}
+          height={48}
           className="mr-3 my-2"
           src={track.album.images[0].url}
           alt="Generic placeholder"

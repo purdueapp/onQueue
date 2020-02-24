@@ -62,11 +62,9 @@ class Host extends Component {
         this.props.setPlayer(accessToken);
       };
 
-      return (<Script
-        url="https://sdk.scdn.co/spotify-player.js"
-      //onError={this.handleScriptError}
-      //onLoad={this.handleScriptLoad}
-      />)
+      return (
+        <Script url="https://sdk.scdn.co/spotify-player.js" />
+      )
     }
     else {
       if (this.props.getAccessToken() !== undefined && this.props.getAccessToken() !== "undefined") {
@@ -83,38 +81,38 @@ class Host extends Component {
     if (this.state.mobile) {
       return (
         <Container className='p-0' fluid style={containerStyle}>
-        <Navbar fixed='top' bg='clear' variant='dark'>
-          <Nav className='mx-auto mt-3'>
+          <Navbar fixed='top' bg='clear' variant='dark'>
+            <Nav className='mx-auto mt-3'>
 
-          </Nav>
-        </Navbar>
-        <Row className='w-100 h-100'>
-          <Col md={12} className='m-0 px-5 py-4 h-100' style={sideBarStyle}>
-            <Sidebar />
-          </Col>
-        </Row>
-        {this.script()}
-      </Container>
+            </Nav>
+          </Navbar>
+          <Row className='w-100 h-100'>
+            <Col md={12} className='m-0 px-3 py-4 h-100' style={sideBarStyle}>
+              <Sidebar />
+            </Col>
+          </Row>
+          {this.script()}
+        </Container>
       )
     }
     else {
       return (
         <Container className='p-0' fluid style={containerStyle}>
-        <Navbar fixed='top' bg='clear' variant='dark'>
-          <Nav className='mx-auto mt-3'>
+          <Navbar fixed='top' bg='clear' variant='dark'>
+            <Nav className='mx-auto mt-3'>
 
-          </Nav>
-        </Navbar>
-        <Row className='w-100 h-100'>
-          <Col lg={4} md={6} sm={8} className='mx-auto my-auto'>
-            <Player />
-          </Col>
-          <Col lg={2} md={3} sm={4} className='m-0 px-5 py-4 h-100' style={sideBarStyle}>
-            <Sidebar />
-          </Col>
-        </Row>
-        {this.script()}
-      </Container>
+            </Nav>
+          </Navbar>
+          <Row className='w-100 h-100'>
+            <Col lg={4} md={6} sm={8} className='mx-auto my-auto'>
+              <Player />
+            </Col>
+            <Col lg={2} md={3} sm={4} className='m-0 px-5 py-4 h-100' style={sideBarStyle}>
+              <Sidebar />
+            </Col>
+          </Row>
+          {this.script()}
+        </Container>
       )
     }
   }

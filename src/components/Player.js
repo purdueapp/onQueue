@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { FaPlay, FaBackward, FaForward, FaPause} from 'react-icons/fa';
+import { FaPlay, FaBackward, FaForward, FaPause } from 'react-icons/fa';
 import Background from './Background';
 import VolumeSlider from '../components/VolumeSlider';
 import './Player.css';
@@ -8,6 +8,21 @@ import './Player.css';
 let albumImage = {
   boxShadow: '0 15px 30px 0 rgba(0, 0, 0, 0.5), 0 20px 40px 0 rgba(0, 0, 0, 0.5)',
   width: '100%',
+};
+
+let progressBar = {
+  position: 'relative',
+  height: '0.5em',
+  width: '100%',
+  borderRadius: '3em',
+  backgroundColor: 'gray',
+};
+
+let progressBarFiller = {
+  background: 'white',
+  height: '100%',
+  borderRadius: 'inherit',
+  transition: 'width 1s ease',
 };
 
 function getTime(millis) {
@@ -62,8 +77,6 @@ class Player extends Component {
   componentWillUnmount() {
     clearInterval(this.interval);
   }
-
-
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.playbackState === this.props.playbackState) {
@@ -159,17 +172,17 @@ class Player extends Component {
 
   render() {
     let { imageURL, trackName, artists, position, duration } = this.state;
-    
+
     const handleChange = (event) => {
       let newPosition = event.target.value;
       if (this.props.player) {
         this.props.player.seek(newPosition * duration / 100);
-        this.setState({position: duration * newPosition / 100});
+        this.setState({ position: duration * newPosition / 100 });
       }
     }
 
     return (
-      <div className="mx-5">
+      <div className="">
         <img className='my-3' style={albumImage} src={imageURL} alt='logo' />
         <h3>{trackName}</h3>
         <h5 className='mb-3' style={{ color: 'lightGrey' }}>{artists}</h5>
@@ -178,8 +191,8 @@ class Player extends Component {
         {this.playbackButtons()}
         <h5 style={{ float: 'right' }}>{getTime(duration)}</h5>
 
-        <input type="range" min="0" max="100" value={100 * position / duration} 
-              className="slider" id="myRange" onChange={handleChange}/>
+        <input type="range" min="0" max="100" value={100 * position / duration}
+          className="slider" id="myRange" onChange={handleChange} />
         <Background imageURL={imageURL} />
         <VolumeSlider />
       </div>

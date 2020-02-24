@@ -41,9 +41,9 @@ class Queue extends Component {
       <h3>Queue</h3>
       <hr style={{ backgroundColor: 'gray' }} />
 
-      {tracks.map(track => {
+      {tracks.map((track, index) => {
         return (
-          <Track track={track} />
+          <Track key={index} track={track} />
         )
       })}
     </Container>

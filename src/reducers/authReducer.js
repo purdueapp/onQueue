@@ -1,6 +1,9 @@
 import { SET_ACCESS_TOKEN, SET_REFRESH_TOKEN, CLEAR_TOKENS } from '../actions/authActions';
 
 export default (state = {}, action) => {
+  if (!action.payload) {
+    return state;
+  }
   switch (action.type) {
     case SET_ACCESS_TOKEN:
       localStorage.setItem('accessToken', action.payload);
