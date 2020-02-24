@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Col} from 'react-bootstrap';
+import {Col, Row} from 'react-bootstrap';
 import NumericInput from 'react-numeric-input';
 
 class MaxSongsQueue extends Component{
@@ -12,14 +12,33 @@ class MaxSongsQueue extends Component{
 
     render(){
       return(
-        <div className='text-left my-3'>
-            <Col>
+        <Row className = 'my-2'>
+            <Col className = 'px-0' align='left'>
               <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto' }}>Max Songs in Queue</p>
             </Col>
-              <Col>
-                <NumericInput min={0} max={100} value={100}/>
+              <Col className = 'px-0' align='right'>
+                <NumericInput min={0} max={100} value={100} 
+                  size={3}
+                  style={{
+                    span: {
+                      color: '#6C757D'
+                    },
+                    input: {
+                      borderRadius: '4px 2px 2px 4px',
+                      borderColor: "#6C757D",
+                      color: '#fff',
+                      class: "w3-input w3-border w3-round-large",
+                      background: "#6C757D"
+                  },
+                  arrowUp: {
+                    borderBottomColor: '#dddddd'
+                  },
+                  arrowDown: {
+                      borderTopColor: '#dddddd'
+                  }
+                  }}/>
             </Col>
-        </div>
+        </Row>
         )
 
     }

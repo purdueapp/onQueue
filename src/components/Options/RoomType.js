@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Col, Button, ButtonGroup} from 'react-bootstrap';
+import {Col, Row, Button, ButtonGroup} from 'react-bootstrap';
 
 class RoomType extends Component{
     constructor(props) {
@@ -11,19 +11,17 @@ class RoomType extends Component{
 
     render(){
         return(
-        <div className='text-left my-3'>
-            <Col>
-            <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto' }}>Room Type</p>
-            </Col>
-            <div align='right'>
-                <Col>
-                <ButtonGroup aria-label="Room types">
-                     <Button variant="secondary" size='sm' onClick={() => {this.setState({ type: 'Public'})}}>Public</Button>
-                     <Button variant="secondary" size='sm' onClick={() => {this.setState({ type: 'Private'})}}> Private</Button>
-                </ButtonGroup>
+            <Row className = 'my-2'>
+                <Col className = 'px-0' align='left'>
+                    <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto' }}>Room Type</p>
                 </Col>
-            </div>
-        </div>
+                <Col className = 'px-0' align='right'>
+                    <ButtonGroup aria-label="Room types">
+                        <Button variant="secondary" size='sm' onClick={() => {this.setState({ type: 'Public'})}}>Public</Button>
+                        <Button variant="secondary" size='sm' onClick={() => {this.setState({ type: 'Private'})}}> Private</Button>
+                    </ButtonGroup>
+                </Col>        
+            </Row>
         )
     }
 }
