@@ -49,19 +49,21 @@ class Player extends Component {
         paused: playbackState.paused,
         position: playbackState.position,
         duration: playbackState.duration,
+        lowQualityImageURL: playbackState.track_window.current_track.album.images[0].url
       }
     }
     else {
       playerState = {
-        artists: 'Vertical Worship',
-        imageURL: 'https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b',
-        trackName: 'Yes I Will',
+        artists: 'Loading',
+        imageURL: '',// 'https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b',
+        trackName: 'Loading',
         currentTime: getTime(102340),
         totalTime: getTime(432343),
         percent: 100 * 102340 / 432343,
         paused: true,
         position: 102340,
-        duration: 432343
+        duration: 432343,
+        lowQualityImageURL: 'https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b',
       }
     }
 
@@ -97,19 +99,21 @@ class Player extends Component {
         paused: playbackState.paused,
         position: playbackState.position,
         duration: playbackState.duration,
+        lowQualityImageURL: playbackState.track_window.current_track.album.images[0].url
       }
     }
     else {
       playerState = {
-        artists: 'Vertical Worship',
-        imageURL: 'https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b',
-        trackName: 'Yes I Will',
+        artists: 'Loading',
+        imageURL: '',// 'https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b',
+        trackName: 'Loading',
         currentTime: getTime(102340),
         totalTime: getTime(432343),
         percent: 100 * 102340 / 432343,
         paused: true,
         position: 102340,
-        duration: 432343
+        duration: 432343,
+        lowQualityImageURL: 'https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b'
       }
     }
 
@@ -171,7 +175,7 @@ class Player extends Component {
   }
 
   render() {
-    let { imageURL, trackName, artists, position, duration } = this.state;
+    let { imageURL, trackName, artists, position, duration, lowQualityImageURL } = this.state;
 
     const handleChange = (event) => {
       let newPosition = event.target.value;
@@ -183,7 +187,7 @@ class Player extends Component {
 
     return (
       <div className="">
-        <img className='my-3' style={albumImage} src={imageURL} alt='logo' />
+        <img className='my-3' style={albumImage} src={imageURL} />
         <h3>{trackName}</h3>
         <h5 className='mb-3' style={{ color: 'lightGrey' }}>{artists}</h5>
 
@@ -193,7 +197,7 @@ class Player extends Component {
 
         <input type="range" min="0" max="100" value={100 * position / duration}
           className="slider" id="myRange" onChange={handleChange} />
-        <Background imageURL={imageURL} />
+        <Background imageURL={lowQualityImageURL} />
         <VolumeSlider />
       </div>
     )

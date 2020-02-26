@@ -38,22 +38,10 @@
 .slider::-moz-range-progress {
   background-color: #CCCCCC;
   border-radius: 5px;
-  margin-right: 2px;
-  margin-left: 2px;
+  height: 100%;
 }
 .slider::-moz-range-track {  
-  background-color: #333333; 
+  background-color: #555555; 
   border-radius: 5px;
-  margin-right: 2px;
-  margin-left: 2px;
-}
-
-/* IE*/
-.slider::-ms-fill-lower {
-  background-color: #CCCCCC;
-  border-radius: 5px;
-}
-.slider::-ms-fill-upper {  
-  background-color: #333333;
-  border-radius: 5px;
+  height: 100%;
 }

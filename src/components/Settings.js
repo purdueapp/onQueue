@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Container, Row, Col} from 'react-bootstrap';
 import RoomType from './Options/RoomType';
 import NewUserType from './Options/NewUserType';
@@ -32,6 +33,13 @@ class Settings extends Component {
       <MaxSongsQueue/>
       <Row>
         <Col className = 'px-0' align='left'>
+          <Link to="/" className="btn ptn-pill btn-sm" type="button" style={{
+                color:"#fff",
+                background: "#6C757D",
+                borderColor: "#6C757D"
+
+              }}>Logout</Link>
+              {/* 
             <button className="btn-pill btn-sm" type="button" align='left'
               style={{
                 color:"#fff",
@@ -39,6 +47,7 @@ class Settings extends Component {
                 borderColor: "#6C757D"
 
               }}>Logout</button>
+              */}
         </Col>
         <Col className = 'px-0' align='right'>
             <button type="button" className="btn-pill btn-sm " align='right'style={{

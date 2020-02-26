@@ -46,3 +46,14 @@
 .volumeButton:hover {
   opacity: 0.8;
 }
+
+.volumeButton::-moz-range-progress {
+  background-color: #CCCCCC;
+  border-radius: 5px;
+  height: 100%;
+}
+.volumeButton::-moz-range-track {  
+  background-color: #555555; 
+  border-radius: 5px;
+  height: 100%;
+}
