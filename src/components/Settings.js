@@ -37,10 +37,18 @@ class Settings extends Component {
       <h3>Settings</h3>
       <hr style={{ backgroundColor: 'gray' }} />
       <Row>
-        <p className='mt-1' style={{ whiteSpace: 'nowrap', overflow: 'auto' }}>
-          <img src={this.state.hostImage} />
-          <b>Host: </b> {this.state.hostDisplayName}
-        </p>
+        <Col className='px-0 py-0' align='left' >
+          <p className='mt-1 py-3' style={{ whiteSpace: 'nowrap', overflow: 'auto' }}>
+            <b>Host:  </b> {this.state.hostDisplayName}
+          </p>
+        </Col>
+        <Col className='px-0 py-1' align='right'>
+          <img height={60} width={60} style={{
+              borderRadius: "1px",
+            }}
+            src={this.state.hostImage} 
+            alt="profile pic"/>  
+        </Col>
       </Row>
       <RoomType />
       <NewUserType />

@@ -11,14 +11,14 @@ class User extends Component {
         </Col>
         <div align='right'>
           <Col>
-            <div class="btn-group">
+            <div className="btn-group">
             <button className="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {this.props.user.type}
             </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <button class="dropdown-item">Admin</button>
-                <button class="dropdown-item">DJ</button>
-                <button class="dropdown-item">Listener</button>
+                <button className="dropdown-item">Admin</button>
+                <button className="dropdown-item">DJ</button>
+                <button className="dropdown-item">Listener</button>
               </div>
             </div>
           </Col>
