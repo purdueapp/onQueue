@@ -9,6 +9,23 @@ import MaxSongsQueue from './Options/MaxSongsQueue';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
+let logout = {
+  color:"#fff",
+  background: "#6C757D",
+  borderColor: "#6C757D",
+  position: "fixed",
+  bottom: "10%",
+  right: "19%"
+}
+let closeRoom = {
+  color: "#fff",
+  background: "#6C757D",
+  borderColor: "#6C757D",
+  position: "fixed",
+  bottom: "10%",
+  right: "3%"
+
+}
 class Settings extends Component {
   constructor(props) {
     super(props);
@@ -90,7 +107,7 @@ class Settings extends Component {
         </Col>
         <Col className='px-0 py-1' align='right'>
           <img height={60} width={60} style={{
-              borderRadius: "1px",
+              borderRadius: "3px",
             }}
             src={this.state.hostImage} 
             alt="profile pic"/>  
@@ -100,39 +117,16 @@ class Settings extends Component {
       <NewUserType />
       <MaxSongsDJ />
       <MaxSongsQueue />
-      <Row>
-        <Col className='px-0' align='left'>
-          {/*<Link to="/" className="btn ptn-pill btn-sm" type="button" style={{
-            color: "#fff",
-            background: "#6C757D",
-            borderColor: "#6C757D"
-
-          }}>Logout</Link>*/}
-           
-          <button className="btn-pill btn-sm" type="button" align='left'
-              style={{
-                color:"#fff",
-                background: "#6C757D",
-                borderColor: "#6C757D"
-
-              }}
+      <button className="btn-pill btn-sm" type="button" align='left'
+              style={logout}
               onClick={this.submitlogout}>
               Logout
-          </button>
-        </Col>
-        <Col className='px-0' align='right'>
-          <button type="button" className="btn-pill btn-sm " align='right' style={{
-            color: "#fff",
-            background: "#6C757D",
-            borderColor: "#6C757D"
-
-          }}
+      </button>
+      <button type="button" className="btn-pill btn-sm " align='right' 
+          style={closeRoom}
           onClick={this.submitCloseRoom}>
           Close Room
-          </button>
-        </Col>
-      </Row>
-
+      </button>
     </Container>
   }
 }
