@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import RoomType from './Options/RoomType';
@@ -8,6 +8,7 @@ import MaxSongsDJ from './Options/MaxSongsDJ';
 import MaxSongsQueue from './Options/MaxSongsQueue';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import Code from './Options/Code';
 
 let logout = {
   color:"#fff",
@@ -26,6 +27,7 @@ let closeRoom = {
   right: "3%"
 
 }
+
 class Settings extends Component {
   constructor(props) {
     super(props);
@@ -117,6 +119,7 @@ class Settings extends Component {
       <NewUserType />
       <MaxSongsDJ />
       <MaxSongsQueue />
+      <Code/>
       <button className="btn-pill btn-sm" type="button" align='left'
               style={logout}
               onClick={this.submitlogout}>
@@ -127,6 +130,7 @@ class Settings extends Component {
           onClick={this.submitCloseRoom}>
           Close Room
       </button>
+      
     </Container>
   }
 }

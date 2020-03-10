@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Container, Row, Col} from 'react-bootstrap';
+import { Container} from 'react-bootstrap';
 import Track from './Track';
 import {FaHistory} from 'react-icons/fa';
 import {MdQueueMusic} from 'react-icons/md';
