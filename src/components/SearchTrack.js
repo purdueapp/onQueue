@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Media from 'react-bootstrap/Media';
+import { MdPlaylistAdd } from 'react-icons/md';
 
 class Track extends Component {
   constructor(props) {
@@ -13,6 +14,11 @@ class Track extends Component {
     this.hoverOn = this.hoverOn.bind(this);
     this.hoverOff = this.hoverOff.bind(this);
     this.playTrack = this.playTrack.bind(this);
+    this.addtoQueue = this.addtoQueue.bind(this);
+  }
+
+  addtoQueue(){
+
   }
 
   hoverOn() {
@@ -58,6 +64,7 @@ class Track extends Component {
             <span style={{ color: 'grey', overflow: 'auto' }}>{track.artists.map(artist => artist.name).join(', ')}</span>
           </p>
         </Media.Body>
+        {this.state.hover && <MdPlaylistAdd size={25} className='my-2' align='center' onClick={this.addtoQueue}/>}
         </Media >
     )
   }
