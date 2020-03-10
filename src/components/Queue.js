@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container} from 'react-bootstrap';
-import Track from './Track';
+import Track from './QueuedTracks';
 import {FaHistory} from 'react-icons/fa';
 import {MdQueueMusic} from 'react-icons/md';
 
