@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Media from 'react-bootstrap/Media';
+import { TiDeleteOutline } from 'react-icons/ti';
+
 
 class Track extends Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class Track extends Component {
     this.hoverOn = this.hoverOn.bind(this);
     this.hoverOff = this.hoverOff.bind(this);
     this.playTrack = this.playTrack.bind(this);
+    this.deleteTrack = this.deleteTrack.bind(this);
   }
 
   hoverOn() {
@@ -21,6 +24,10 @@ class Track extends Component {
 
   hoverOff() {
     this.setState({ hover: false });
+  }
+
+  deleteTrack(){
+
   }
 
   playTrack() {
@@ -59,6 +66,7 @@ class Track extends Component {
             {this.state.hover && <div><span style={{ color: 'grey', overflow: 'auto' }}>Queued by: User1</span></div>}
           </p>
         </Media.Body>
+        {this.state.hover && <TiDeleteOutline className='my-2' size={25} color='grey' onClick={this.state.deleteTrack}/>}
         </Media >
     )
   }
