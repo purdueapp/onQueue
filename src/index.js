@@ -3,7 +3,7 @@ import { AppContainer } from 'react-hot-loader'
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 import './index.css';
-import './product-sans.css';
+import './montserrat.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import configureStore, { history } from './store';

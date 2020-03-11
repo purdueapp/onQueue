@@ -186,7 +186,7 @@ class Player extends Component {
     }
 
     return (
-      <div className="">
+      <div className="p-3">
         <img className='my-3' style={albumImage} src={imageURL} />
         <h3>{trackName}</h3>
         <h5 className='mb-3' style={{ color: 'lightGrey' }}>{artists}</h5>
@@ -197,8 +197,8 @@ class Player extends Component {
 
         <input type="range" min="0" max="100" value={100 * position / duration}
           className="slider" id="myRange" onChange={handleChange} />
-        <Background imageURL={lowQualityImageURL} />
         <VolumeSlider />
+        <Background imageURL={lowQualityImageURL} />
       </div>
     )
   }

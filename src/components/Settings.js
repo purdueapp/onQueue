@@ -11,7 +11,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import Code from './Options/Code';
 
 let logout = {
-  color:"#fff",
+  color: "#fff",
   background: "#6C757D",
   borderColor: "#6C757D",
   position: "fixed",
@@ -72,8 +72,8 @@ class Settings extends Component {
     });
   };
 
-  logout(){
-    
+  logout() {
+
   }
 
   submitCloseRoom = () => {
@@ -92,7 +92,7 @@ class Settings extends Component {
     });
   };
 
-  closeRoom(){
+  closeRoom() {
 
   }
 
@@ -102,35 +102,41 @@ class Settings extends Component {
       <h3>Settings</h3>
       <hr style={{ backgroundColor: 'gray' }} />
       <Row>
+        {/*
+      <p className='mt-1' style={{ whiteSpace: 'nowrap', overflow: 'auto' }}>
+        <b>Host: </b> {this.state.hostDisplayName}
+        <img style={{ width: '26px', height: '26px', borderRadius: '13px', marginLeft: '5px' }} src={this.state.hostImage} />
+      </p>
+      */}
         <Col className='px-0 py-0' align='left' >
-          <p className='mt-1 py-3' style={{ whiteSpace: 'nowrap', overflow: 'auto' }}>
+          <p className='mt-0 py-3' style={{ whiteSpace: 'nowrap', overflow: 'auto' }}>
             <b>Host:  </b> {this.state.hostDisplayName}
           </p>
         </Col>
         <Col className='px-0 py-1' align='right'>
           <img height={60} width={60} style={{
-              borderRadius: "3px",
-            }}
-            src={this.state.hostImage} 
-            alt="profile pic"/>  
+            borderRadius: "1px",
+          }}
+            src={this.state.hostImage}
+            alt="profile pic" />
         </Col>
       </Row>
       <RoomType />
       <NewUserType />
       <MaxSongsDJ />
       <MaxSongsQueue />
-      <Code/>
+      <Code />
       <button className="btn-pill btn-sm" type="button" align='left'
-              style={logout}
-              onClick={this.submitlogout}>
-              Logout
+        style={logout}
+        onClick={this.submitlogout}>
+        Logout
       </button>
-      <button type="button" className="btn-pill btn-sm " align='right' 
-          style={closeRoom}
-          onClick={this.submitCloseRoom}>
-          Close Room
+      <button type="button" className="btn-pill btn-sm " align='right'
+        style={closeRoom}
+        onClick={this.submitCloseRoom}>
+        Close Room
       </button>
-      
+
     </Container>
   }
 }

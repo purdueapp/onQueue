@@ -24,6 +24,10 @@
   background: #4CAF50;
   cursor: pointer;
 }
+
+.slider::-webkit-progress-value {
+  background-color: #CCCCCC;
+}
 /*
 .slider::-moz-placeholder {
   appearance: none;
