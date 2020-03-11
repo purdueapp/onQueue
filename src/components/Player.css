@@ -18,16 +18,20 @@
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 25px;
-  height: 25px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: #4CAF50;
   cursor: pointer;
 }
 
-.slider::-webkit-progress-value {
-  background-color: #CCCCCC;
+/*
+.slider::-webkit-progress-bar {
+  color: #000000;
+  background-color: #000000;
 }
+*/
+
 /*
 .slider::-moz-placeholder {
   appearance: none;

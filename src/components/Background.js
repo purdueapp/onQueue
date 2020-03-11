@@ -8,8 +8,7 @@ let backgroundStyle = {
   width: '100%',
   height: '100%',
   position: 'absolute',
-  WebkitFilter: 'blur(60em)',
-  transform: 'scale(3)',
+  transform: 'scale(4)',
   zIndex: '-1',
   transition: 'background ease 2s',
 };

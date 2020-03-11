@@ -45,6 +45,19 @@ class Host extends Component {
   componentDidMount() {
     window.addEventListener("resize", this.resize.bind(this));
     this.resize();
+
+    this.interval = setInterval(() => {
+      let { playbackState, setPlaybackState } = this.props;
+
+      if (playbackState.track_window && !playbackState.paused) {
+        playbackState.position += 1000;
+        setPlaybackState(playbackState);
+      }
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   resize() {
