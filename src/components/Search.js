@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+//import SpotifyWebApi from 'spotify-web-api-node';
 import { Container, FormControl } from 'react-bootstrap';
 import { getAccessToken } from '../actions/authActions';
-import Track from './Track';
+import Track from './SearchTrack';
 
 class Search extends Component {
   constructor(props) {
@@ -23,14 +24,11 @@ class Search extends Component {
       return;
     }
 
-    console.log(spotifyApi);
-
-    spotifyApi.searchTracks(query)
-      .then(results => {
-        this.setState({
-          tracks: results.body.tracks.items
-        })
+    spotifyApi.searchTracks(query, (err, res) => {
+      this.setState({
+        tracks: res.tracks.items
       })
+    })
   }
 
   componentDidMount() {
@@ -66,6 +64,7 @@ class Search extends Component {
         placeholder="Search For Tracks To Add Here"
         name="searchInput"
         value={query}
+        className="mb-3"
         style={{ backgroundColor: 'inherit', borderRadius: '1em', height: '2em', color: 'white' }}
         onChange={this.handleChangeQuery}
         id='query'

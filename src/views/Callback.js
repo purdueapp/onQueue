@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { setAccessToken, setRefreshToken } from '../actions/authActions';
+import { setAccessToken, setRefreshToken, getAccessToken } from '../actions/authActions';
 import qs from 'qs';
 
 class Callback extends Component {
@@ -15,7 +15,6 @@ class Callback extends Component {
   }
 
   componentDidMount() {
-    console.log('hello');
     this.fetchTokens();
   }
 
@@ -34,24 +33,28 @@ class Callback extends Component {
         'grant_type': 'authorization_code'
       })
     })
-      .then(res => { console.log(res); return res.json() })
+      .then(res => { return res.json() })
       .then(tokens => {
         this.props.setAccessToken(tokens.access_token);
         this.props.setRefreshToken(tokens.refresh_token);
-
-        this.setState({
-          tokens: tokens
-        })
       })
   }
 
   render() {
     // Setup some stuff
-    if (this.state.tokens === null) {
+
+    // if (this.state.tokens === null || this.props.getAccessToken() === null) {
+    if (this.props.auth.refreshToken === undefined) {
+      console.log(this.props.auth);
       return <div />
     }
+    
     return <Redirect to={`/host/tobi`} />
   }
 };
 
-export default connect(null, { setAccessToken, setRefreshToken })(Callback);
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, { setAccessToken, setRefreshToken, getAccessToken })(Callback);

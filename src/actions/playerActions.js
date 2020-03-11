@@ -1,7 +1,11 @@
 import { SET_STATE } from '../actions/playbackStateActions';
+import { SET_ACCESS_TOKEN, SET_REFRESH_TOKEN } from './authActions';
+import { SET_SPOTIFY_API_ACCESS_TOKEN } from './spotifyApiActions';
+import qs from 'qs';
 
 export const SET_PLAYER = 'SET_PLAYER';
 export const CLEAR_PLAYER = 'CLEAR_PLAYER';
+
 
 function setDevice(deviceId, accessToken) {
   fetch('https://api.spotify.com/v1/me/player', {
@@ -20,7 +24,40 @@ function setDevice(deviceId, accessToken) {
 export const setPlayer = (accessToken) => dispatch => {
   let player = new window.Spotify.Player({
     name: 'onQueue Player',
-    getOAuthToken: cb => { cb(accessToken); }
+
+    getOAuthToken: cb => {
+      fetch('https://accounts.spotify.com/api/token', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Basic ' + (new Buffer(process.env.REACT_APP_CLIENT_ID + ':' + process.env.REACT_APP_CLIENT_SECRET).toString('base64')),
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: qs.stringify({
+          grant_type: 'refresh_token',
+          refresh_token: localStorage.getItem('refreshToken'),
+        }),
+      })
+        .then(res => res.json())
+        .then(tokens => {
+          dispatch({
+            type: SET_ACCESS_TOKEN,
+            payload: tokens.access_token
+          })
+
+          dispatch({
+            type: SET_REFRESH_TOKEN,
+            payload: tokens.refresh_token
+          })
+
+          dispatch({
+            type: SET_SPOTIFY_API_ACCESS_TOKEN,
+            payload: tokens.access_token
+          })
+
+          cb(accessToken);
+        })
+    },
+    volume: 0.5
   });
 
   // Error handling

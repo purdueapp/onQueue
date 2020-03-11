@@ -1,19 +1,26 @@
 import React from 'react';
+import { AppContainer } from 'react-hot-loader'
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 import './index.css';
 import './product-sans.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter as Router } from 'react-router-dom';
-import configureStore from './store';
+import configureStore, { history } from './store';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
+import { ConnectedRouter } from 'connected-react-router';
+//const render = () => {
 
 ReactDOM.render(
-  <Router basename={process.env.PUBLIC_URL}>
+  <AppContainer>
     <Provider store={configureStore()}>
-      <App />
+      <ConnectedRouter history={history} basename={process.env.PUBLIC_URL}>
+        <App />
+      </ConnectedRouter>
     </Provider>
-  </Router>,
+  </AppContainer>,
   document.getElementById('root')
 );
 
