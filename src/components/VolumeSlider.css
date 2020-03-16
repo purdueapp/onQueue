@@ -12,8 +12,8 @@
 }
 
 .volumeSlider::-webkit-slider-thumb:hover {
-  width: 1em;
-  height: 1em;
+  width: .8em;
+  height: .8em;
   opacity: 1;
 }
 
@@ -25,6 +25,8 @@
   border-radius: 50%;
   background: #ffffff;
   cursor: pointer;
+  -webkit-transition: .2s;
+  transition: width .2s, height .2s;
 }
 
 .volumeContainer {
