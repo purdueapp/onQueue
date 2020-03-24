@@ -32,7 +32,7 @@ class VolumeSlider extends Component {
   }
  
   render() {
-    let { volume, mute } = this.state
+    let { volume, mute } = this.state;
     return (
       <div className="volumeContainer">
         <button className="volumeButton" onClick={this.handleClick}>
