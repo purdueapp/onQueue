@@ -66,7 +66,7 @@ class Track extends Component {
             {this.state.hover && <div><span style={{ color: 'grey', overflow: 'auto' }}>Queued by: User1</span></div>}
           </p>
         </Media.Body>
-        {this.state.hover && <TiDeleteOutline className='my-2' size={25} color='grey' onClick={this.state.deleteTrack}/>}
+        {this.state.hover && <TiDeleteOutline className='my-2' size={25} color='grey' style={{cursor: 'pointer'}} onClick={this.state.deleteTrack}/>}
         </Media >
     )
   }

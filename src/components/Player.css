@@ -25,24 +25,6 @@
   cursor: pointer;
 }
 
-/*
-.slider::-webkit-progress-bar {
-  color: #000000;
-  background-color: #000000;
-}
-*/
-
-/*
-.slider::-moz-placeholder {
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #4CAF50;
-  cursor: pointer;
-}
-*/
-
 .slider::-moz-range-progress {
   background-color: #CCCCCC;
   border-radius: 5px;

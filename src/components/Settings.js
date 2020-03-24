@@ -34,12 +34,9 @@ class Settings extends Component {
 
     this.state = {
       hostDisplayName: 'Tobi',
+      hostID: 'tobi',
       hostImage: 'https://i.scdn.co/image/ab67616d0000b273e56c05d7ef8ffbd828d0bd40'
     }
-    this.submitlogout = this.submitlogout.bind(this);
-    this.submitCloseRoom = this.submitCloseRoom.bind(this);
-    this.logout = this.logout.bind(this);
-    this.closeRoom = this.closeRoom.bind(this);
   }
 
   componentDidMount() {
@@ -51,6 +48,7 @@ class Settings extends Component {
 
       this.setState({
         hostDisplayName: res.display_name,
+        hostID: res.id,
         hostImage: res.images[0].url
       });
     })
@@ -72,7 +70,7 @@ class Settings extends Component {
     });
   };
 
-  logout() {
+  logout = () => {
 
   }
 
@@ -92,7 +90,7 @@ class Settings extends Component {
     });
   };
 
-  closeRoom() {
+  closeRoom = () => {
 
   }
 
@@ -125,7 +123,7 @@ class Settings extends Component {
       <NewUserType />
       <MaxSongsDJ />
       <MaxSongsQueue />
-      <Code />
+      <Code hostID={this.state.hostID} />
       <button className="btn-pill btn-sm" type="button" align='left'
         style={logout}
         onClick={this.submitlogout}>
