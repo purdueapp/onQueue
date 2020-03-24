@@ -9,6 +9,7 @@ import { setPlaybackState } from '../actions/playbackStateActions';
 import { setPlayer } from '../actions/playerActions';
 import { setSpotifyApi } from '../actions/spotifyApiActions';
 import Script from 'react-load-script';
+import { nextTrack, previousTrack } from '../actions/queueActions';
 
 let containerStyle = {
   textAlign: 'center',
@@ -47,12 +48,36 @@ class Host extends Component {
     this.resize();
 
     this.interval = setInterval(() => {
-      let { playbackState, setPlaybackState } = this.props;
+      let { setPlaybackState, player, queue, nextTrack, spotifyApi } = this.props;
 
-      if (playbackState.track_window && !playbackState.paused) {
-        playbackState.position += 1000;
-        setPlaybackState(playbackState);
-      }
+      player.getCurrentState().then(state => {
+        if (!state || !state.track_window) {
+          return;
+        }
+
+        if (state.track_window.current_track.uri === 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C') {
+          if (queue.nextTracks.length !== 0) {
+            spotifyApi.play({ uris: [queue.nextTracks[0].uri, 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C'] }, (err, res) => {
+              if (err) {
+                console.log(err);
+              }
+            });
+            nextTrack();
+          }
+        }
+        else if (state.track_window.next_tracks.length !== 1) {
+          this.props.spotifyApi.play({ uris: ['spotify:track:5xW6Gs4ZKePJOZguvG6RV8', 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C'] }, (err, res) => {
+            if (err) {
+              console.log(err);
+            }
+          });
+        }
+
+        if (state.track_window.current_track.uri === 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C') {
+          return;
+        }
+        setPlaybackState(state);
+      })
     }, 1000);
   }
 
@@ -134,7 +159,9 @@ class Host extends Component {
 const mapStateToProps = state => ({
   playbackState: state.playbackState,
   auth: state.auth,
-  player: state.player
+  queue: state.queue,
+  player: state.player,
+  spotifyApi: state.spotifyApi
 })
 
 const mapDispatchToProps = {
@@ -142,7 +169,8 @@ const mapDispatchToProps = {
   getAccessToken,
   setAccessToken,
   setPlayer,
-  setSpotifyApi
+  setSpotifyApi,
+  nextTrack
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Host);

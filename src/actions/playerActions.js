@@ -73,10 +73,12 @@ export const setPlayer = (accessToken) => dispatch => {
     }
 
     // setPlaybackState(state);
+/*
     dispatch({
       type: SET_STATE,
       payload: state
     })
+    */
   });
 
   // Ready

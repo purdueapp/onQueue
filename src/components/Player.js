@@ -75,12 +75,15 @@ class Player extends Component {
     this.nextTrack = this.nextTrack.bind(this);
     this.previousTrack = this.previousTrack.bind(this);
   }
-
+/*
   componentWillMount() {
     this.interval = setInterval(() => {
       let { playbackState } = this.props;
+      if (playbackState.track_window && playbackState.track_window.current_track.uri == 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C') {
+        return;
+      }
       let playerState = {};
-  
+
       if (playbackState.track_window) {
         playerState = {
           artists: playbackState.track_window.current_track.artists.map(artist => artist.name).join(', '),
@@ -113,6 +116,7 @@ class Player extends Component {
       this.setState(playerState);
     }, 100);
   }
+  */
 
   componentWillUnmount() {
     clearInterval(this.interval);
@@ -146,8 +150,8 @@ class Player extends Component {
     }
   }
 
-  playbackButtons() {
-    if (this.state.paused) {
+  playbackButtons(paused) {
+    if (paused) {
       return (
         <Fragment>
           <FaBackward size='1.4em' className='mb-1' onClick={this.previousTrack} />
@@ -168,7 +172,40 @@ class Player extends Component {
   }
 
   render() {
-    let { imageURL, trackName, artists, position, duration, lowQualityImageURL } = this.state;
+    let { playbackState } = this.props;
+
+    let playerState = {};
+
+    if (playbackState.track_window) {
+      playerState = {
+        artists: playbackState.track_window.current_track.artists.map(artist => artist.name).join(', '),
+        imageURL: playbackState.track_window.current_track.album.images[playbackState.track_window.current_track.album.images.length - 1].url,
+        trackName: playbackState.track_window.current_track.name,
+        currentTime: getTime(playbackState.position),
+        totalTime: getTime(playbackState.duration),
+        percent: 100 * playbackState.position / playbackState.duration,
+        paused: playbackState.paused,
+        position: playbackState.position,
+        duration: playbackState.duration,
+        lowQualityImageURL: playbackState.track_window.current_track.album.images[0].url
+      }
+    }
+    else {
+      playerState = {
+        artists: 'Try Refreshing The Page...',
+        imageURL: '',// 'https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b',
+        trackName: 'Loading',
+        currentTime: getTime(102340),
+        totalTime: getTime(432343),
+        percent: 100 * 102340 / 432343,
+        paused: true,
+        position: 102340,
+        duration: 432343,
+        lowQualityImageURL: 'https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b'
+      }
+    }
+
+    let { imageURL, trackName, artists, position, duration, lowQualityImageURL, paused } = playerState;
 
     const handleChange = (event) => {
       let newPosition = event.target.value;
@@ -185,7 +222,7 @@ class Player extends Component {
         <h5 className='mb-3' style={{ color: 'lightGrey' }}>{artists}</h5>
 
         <h5 style={{ float: 'left' }}>{getTime(position)}</h5>
-        {this.playbackButtons()}
+        {this.playbackButtons(paused)}
         <h5 style={{ float: 'right' }}>{getTime(duration)}</h5>
 
         <input type="range" min="0" max="100" value={100 * position / duration}
