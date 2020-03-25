@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Media from 'react-bootstrap/Media';
 import { MdPlaylistAdd } from 'react-icons/md';
-import { setNextTracks } from '../actions/hostActions';
+import { setNextTracks } from '../actions/spotifyActions';
+import { TiDeleteOutline } from 'react-icons/ti';
 
 class Track extends Component {
   constructor(props) {
@@ -14,7 +15,9 @@ class Track extends Component {
 
     this.hoverOn = this.hoverOn.bind(this);
     this.hoverOff = this.hoverOff.bind(this);
-    this.queueTrack = this.queueTrack.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.hoverIcon = this.hoverIcon.bind(this);
+    this.deleteTrack = this.deleteTrack.bind(this);
   }
 
   hoverOn() {
@@ -25,18 +28,40 @@ class Track extends Component {
     this.setState({ hover: false });
   }
 
-  queueTrack() {
+  onClick() {
+    let { type } = this.props;
+    console.log(type)
+
+
+    if (type === 'search') {
       let { nextTracks, setNextTracks } = this.props;
       nextTracks.push(this.props.track);
-
+  
       setNextTracks(nextTracks);
-      /*
-      this.props.spotifyApi.play({uris: [this.props.track.uri, 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C']}, (err, res) => {
-        if (err) {
-          console.log(err);
-        }
-      });
-      */
+    }
+  }
+
+  deleteTrack(){
+
+  }
+
+  hoverIcon() {
+    let { hover } = this.state;
+    let { type } = this.props;
+
+    if (!hover) {
+      return <Fragment />
+    }
+    if (type === 'search') {
+      return (
+        <MdPlaylistAdd size={25} className='my-2' align='center' onClick={this.addtoQueue} />
+      )
+    }
+    else if (type === 'nextTrack') {
+      return (
+        <TiDeleteOutline className='my-2' size={25} color='grey' style={{cursor: 'pointer'}} onClick={this.state.deleteTrack}/>
+      )
+    }
   }
 
   render() {
@@ -47,9 +72,9 @@ class Track extends Component {
       <Media
         onMouseEnter={this.hoverOn}
         onMouseLeave={this.hoverOff}
-        onClick={this.queueTrack}
+        onClick={this.onClick}
         className="px-3"
-        style={{background: hover ? '#AAAAAA20' : '#00000000'}}
+        style={{ background: hover ? '#AAAAAA20' : '#00000000' }}
       >
         <img
           width={48}
@@ -62,16 +87,21 @@ class Track extends Component {
           <p className='mt-1 text-center' style={{ overflow: 'auto' }}>
             {track.name}<br />
             <span style={{ color: 'grey', overflow: 'auto' }}>{track.artists.map(artist => artist.name).join(', ')}</span>
+            {/* this.state.hover && <span style={{ color: 'grey', overflow: 'auto' }}>Queued by: User1</span> */}
+
           </p>
         </Media.Body>
-        {this.state.hover && <MdPlaylistAdd size={25} className='my-2' align='center' onClick={this.addtoQueue}/>}
-        </Media >
+        {this.hoverIcon()}
+      </Media >
     )
   }
 }
 
-const mapStateToProps = state => ({
-  nextTracks: state.host.nextTracks
+const mapStateToProps = (state, ownProps) => ({
+  nextTracks: state.spotify.trackWindow.nextTracks,
+  type: ownProps.type,
+  key: ownProps.key,
+  track: ownProps.track
 })
 
 export default connect(mapStateToProps, { setNextTracks })(Track);

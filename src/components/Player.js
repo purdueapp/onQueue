@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { FaPlay, FaBackward, FaForward, FaPause } from 'react-icons/fa';
 import Background from './Background';
 import VolumeSlider from '../components/VolumeSlider';
+import { nextTrack, previousTrack } from '../actions/spotifyActions';
 import './Player.css';
 
 let albumImage = {
@@ -20,7 +21,7 @@ class Player extends Component {
   constructor(props) {
     super(props);
 
-    let { playbackState } = this.props.host;
+    let { playbackState } = this.props;
     let playerState = {};
 
     if (playbackState.track_window) {
@@ -54,48 +55,6 @@ class Player extends Component {
 
     this.state = playerState;
   }
-/*
-  componentWillMount() {
-    this.interval = setInterval(() => {
-      let { playbackState } = this.props;
-      if (playbackState.track_window && playbackState.track_window.current_track.uri == 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C') {
-        return;
-      }
-      let playerState = {};
-
-      if (playbackState.track_window) {
-        playerState = {
-          artists: playbackState.track_window.current_track.artists.map(artist => artist.name).join(', '),
-          imageURL: playbackState.track_window.current_track.album.images[playbackState.track_window.current_track.album.images.length - 1].url,
-          trackName: playbackState.track_window.current_track.name,
-          currentTime: getTime(playbackState.position),
-          totalTime: getTime(playbackState.duration),
-          percent: 100 * playbackState.position / playbackState.duration,
-          paused: playbackState.paused,
-          position: playbackState.position,
-          duration: playbackState.duration,
-          lowQualityImageURL: playbackState.track_window.current_track.album.images[0].url
-        }
-      }
-      else {
-        playerState = {
-          artists: 'Try Refreshing The Page...',
-          imageURL: '',// 'https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b',
-          trackName: 'Loading',
-          currentTime: getTime(102340),
-          totalTime: getTime(432343),
-          percent: 100 * 102340 / 432343,
-          paused: true,
-          position: 102340,
-          duration: 432343,
-          lowQualityImageURL: 'https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b'
-        }
-      }
-  
-      this.setState(playerState);
-    }, 100);
-  }
-  */
 
   componentWillUnmount() {
     clearInterval(this.interval);
@@ -116,17 +75,13 @@ class Player extends Component {
   }
 
   nextTrack = () => {
-    let { player } = this.props;
-    if (player) {
-      player.nextTrack();
-    }
+    let { nextTrack } = this.props;
+    nextTrack();
   }
 
   previousTrack = () => {
-    let { player } = this.props;
-    if (player) {
-      player.previousTrack();
-    }
+    let { previousTrack } = this.props;
+    previousTrack();
   }
 
   playbackButtons = (paused) => {
@@ -151,21 +106,22 @@ class Player extends Component {
   }
 
   render() {
-    let { playbackState } = this.props.host;
+    let { playbackState, trackWindow } = this.props.spotify;
+    let { currentTrack } = trackWindow;
     let playerState = {};
 
     if (playbackState.track_window) {
       playerState = {
-        artists: playbackState.track_window.current_track.artists.map(artist => artist.name).join(', '),
-        imageURL: playbackState.track_window.current_track.album.images[playbackState.track_window.current_track.album.images.length - 1].url,
-        trackName: playbackState.track_window.current_track.name,
+        artists: currentTrack.artists.map(artist => artist.name).join(', '),
+        imageURL: currentTrack.album.images[0].url,
+        trackName: currentTrack.name,
         currentTime: getTime(playbackState.position),
         totalTime: getTime(playbackState.duration),
         percent: 100 * playbackState.position / playbackState.duration,
         paused: playbackState.paused,
         position: playbackState.position,
         duration: playbackState.duration,
-        lowQualityImageURL: playbackState.track_window.current_track.album.images[0].url
+        lowQualityImageURL: currentTrack.album.images[currentTrack.album.images.length - 1].url
       }
     }
     else {
@@ -187,7 +143,7 @@ class Player extends Component {
 
     const handleChange = (event) => {
       let newPosition = event.target.value;
-      let { player } = this.props.host;
+      let { player } = this.props;
       if (player) {
         player.seek(newPosition * duration / 100);
         this.setState({ position: duration * newPosition / 100 });
@@ -214,8 +170,10 @@ class Player extends Component {
 }
 
 const mapStateToProps = state => ({
-  host: state.host,
-  player: state.host.player
+  spotify: state.spotify,
+  player: state.spotify.player,
+  playbackState: state.spotify.playbackState,
+  trackWindow: state.spotify.trackWindow
 })
 
-export default connect(mapStateToProps, null)(Player);
+export default connect(mapStateToProps, { nextTrack, previousTrack })(Player);

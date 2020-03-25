@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
-import host from './hostReducer';
+import spotify from './spotifyReducer';
 
 const createRootReducer = (history) => combineReducers({
   router: connectRouter(history),
-  host
+  spotify: spotify
 });
 
 export default createRootReducer

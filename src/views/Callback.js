@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { setTokens, getAccessToken } from '../actions/hostActions';
+import { setTokens, getAccessToken } from '../actions/spotifyActions';
 import qs from 'qs';
 
 class Callback extends Component {

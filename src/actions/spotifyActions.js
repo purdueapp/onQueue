@@ -10,6 +10,9 @@ export const NEXT_TRACK = 'NEXT_TRACK';
 export const PREVIOUS_TRACK = 'PREVIOUS_TRACK';
 export const SET_NEXT_TRACKS = 'SET_NEXT_TRACKS';
 
+export const SIGNAL_TRACK = 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C';
+export const DEFAULT_TRACK = 'spotify:track:6gQEzbiJgaTxi4NiVdKjdW';
+
 export const setTokens = (tokens) => dispatch => {
   dispatch({
     type: SET_TOKENS,
@@ -29,20 +32,6 @@ export const getAccessToken = () => dispatch => {
 
 export const getRefreshToken = () => dispatch => {
   return localStorage.getItem('getRefreshToken');
-}
-
-function setDevice(deviceId, accessToken) {
-  fetch('https://api.spotify.com/v1/me/player', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + accessToken,
-    },
-    body: JSON.stringify({
-      device_ids: [deviceId],
-      play: true,
-    }),
-  });
 }
 
 export const setPlayer = () => dispatch => {
@@ -88,7 +77,6 @@ export const setPlayer = () => dispatch => {
 
   // Playback status updates
   player.addListener('player_state_changed', state => {
-    console.log(state);
     dispatch({
       type: SET_PLAYBACK_STATE,
       payload: state

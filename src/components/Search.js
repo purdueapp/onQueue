@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 //import SpotifyWebApi from 'spotify-web-api-node';
 import { Container, FormControl } from 'react-bootstrap';
-import { getAccessToken } from '../actions/hostActions';
-import Track from './SearchTrack';
+import { getAccessToken } from '../actions/spotifyActions';
+import Track from './Track';
 
 class Search extends Component {
   constructor(props) {
@@ -19,12 +19,12 @@ class Search extends Component {
   }
 
   searchTracks(query) {
-    let { spotifyApi } = this.props;
-    if (!spotifyApi.searchTracks) {
+    let { api } = this.props;
+    if (!api.searchTracks) {
       return;
     }
 
-    spotifyApi.searchTracks(query, (err, res) => {
+    api.searchTracks(query, (err, res) => {
       this.setState({
         tracks: res.tracks.items
       })
@@ -72,7 +72,7 @@ class Search extends Component {
 
       {this.state.tracks.map((track, key) => {
         return (
-          <Track track={track} key={key}/>
+          <Track track={track} type="search" key={key}/>
         )
       })}
     </Container>
@@ -81,7 +81,7 @@ class Search extends Component {
 
 
 const mapStateToProps = state => ({
-  spotifyApi: state.host.api
+  api: state.spotify.api
 })
 
 export default connect(mapStateToProps, { getAccessToken })(Search);

@@ -11,7 +11,6 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 import { ConnectedRouter } from 'connected-react-router';
-//const render = () => {
 
 ReactDOM.render(
   <AppContainer>

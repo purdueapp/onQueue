@@ -1,42 +1,32 @@
 import SpotifyWebApi from 'spotify-web-api-js';
-import { SIGNAL_TRACK, DEFAULT_TRACK } from '../constants';
-import { CLEAR_TOKENS, SET_PLAYER, SET_PLAYBACK_STATE, NEXT_TRACK, PREVIOUS_TRACK, SET_TOKENS, SET_NEXT_TRACKS } from '../actions/hostActions';
+import { CLEAR_TOKENS, SET_PLAYER, SET_PLAYBACK_STATE, NEXT_TRACK, PREVIOUS_TRACK, SET_TOKENS, SET_NEXT_TRACKS, DEFAULT_TRACK, SIGNAL_TRACK } from '../actions/spotifyActions';
 
-function setDevice(deviceId, accessToken) {
-  fetch('https://api.spotify.com/v1/me/player', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + accessToken,
-    },
-    body: JSON.stringify({
-      device_ids: [deviceId],
-      play: true,
-    }),
-  });
-}
+let initialCurrentTrack = {
+  uri: DEFAULT_TRACK, // Spotify URI
+  id: "5xW6Gs4ZKePJOZguvG6RV8",                // Spotify ID from URI (can be null)
+  type: "track",             // Content type: can be "track", "episode" or "ad"
+  media_type: "audio",       // Type of file: can be "audio" or "video"
+  name: "Rylynn",         // Name of content
+  is_playable: true,         // Flag indicating whether it can be played
+  album: {
+    uri: 'spotify:album:0CLCgSt8wDFmoDpLLN09X2', // Spotify Album URI
+    name: 'Without Words: Genesis',
+    images: [
+      { url: "https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b" }
+    ]
+  },
+  artists: [
+    { uri: 'spotify:artist:xxxx', name: "Andy Mckee" }
+  ]
+
+};
 
 let initialState = {
   player: undefined,
-  nextTracks: [],
-  previousTracks: [],
-  currentTrack: {
-    uri: DEFAULT_TRACK, // Spotify URI
-    id: "5xW6Gs4ZKePJOZguvG6RV8",                // Spotify ID from URI (can be null)
-    type: "track",             // Content type: can be "track", "episode" or "ad"
-    media_type: "audio",       // Type of file: can be "audio" or "video"
-    name: "Song Name",         // Name of content
-    is_playable: true,         // Flag indicating whether it can be played
-    album: {
-      uri: 'spotify:album:0CLCgSt8wDFmoDpLLN09X2', // Spotify Album URI
-      name: 'Without Words: Genesis',
-      images: [
-        { url: "https://image/xxxx" }
-      ]
-    },
-    artists: [
-      { uri: 'spotify:artist:xxxx', name: "Artist Name" }
-    ]
+  trackWindow: {
+    nextTracks: [],
+    previousTracks: [],
+    currentTrack: initialCurrentTrack,
   },
   tokens: {
     accessToken: localStorage.getItem('accessToken'),
@@ -56,6 +46,7 @@ export default (state = initialState, action) => {
       state.tokens.refreshToken = action.payload.refreshToken;
       state.api.setAccessToken(action.payload.accessToken);
       return state;
+
     case CLEAR_TOKENS:
       localStorage.clear();
       state.tokens.accessToken = undefined;
@@ -64,29 +55,27 @@ export default (state = initialState, action) => {
       return state;
 
     case NEXT_TRACK:
-      var { currentTrack, nextTracks, previousTracks } = state;
+      var { currentTrack, nextTracks, previousTracks } = state.trackWindow;
 
-      if (nextTracks.length > 0) {
-        previousTracks.push(currentTrack);
-        currentTrack = nextTracks.shift();
-        state.api.play({ uris: [currentTrack.uri, SIGNAL_TRACK] }, (err, res) => {
-          if (err) {
-            console.log(err);
-          }
-        });
+      currentTrack = nextTracks.length > 0 ? nextTracks.shift() : initialCurrentTrack;
 
-        return Object.assign({}, state, {
+      previousTracks.push(currentTrack);
+      state.api.play({ uris: [currentTrack.uri, SIGNAL_TRACK] }, (err, res) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+
+      return Object.assign({}, state, {
+        trackWindow: {
           nextTracks: nextTracks,
           previousTracks: previousTracks,
           currentTrack: currentTrack
-        });
-      }
-      else {
-        return state;
-      }
+        }
+      });
 
     case PREVIOUS_TRACK:
-      var { currentTrack, nextTracks, previousTracks } = state;
+      var { currentTrack, nextTracks, previousTracks } = state.trackWindow;
 
       if (previousTracks.length > 0) {
         nextTracks = [currentTrack, ...nextTracks];
@@ -97,24 +86,32 @@ export default (state = initialState, action) => {
           }
         });
         return Object.assign({}, state, {
-          nextTracks: nextTracks,
-          previousTracks: previousTracks,
-          currentTrack: currentTrack
+          trackWindow: {
+            nextTracks: nextTracks,
+            previousTracks: previousTracks,
+            currentTrack: currentTrack
+          }
         });
       }
       else {
         return state;
       }
     case SET_NEXT_TRACKS:
+      var { currentTrack, previousTracks } = state.trackWindow;
+
       return Object.assign({}, state, {
-        nextTracks: action.payload,
+        trackWindow: {
+          nextTracks: action.payload,
+          previousTracks: previousTracks,
+          currentTrack: currentTrack
+        }
       });
     case SET_PLAYER:
       state.player = action.payload;
       state.player.addListener('ready', ({ device_id }) => {
         //setDevice(device_id, localStorage.getItem('accessToken'));
         state.api.play({
-          uris: ['spotify:track:5xW6Gs4ZKePJOZguvG6RV8', 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C'],
+          uris: [DEFAULT_TRACK, SIGNAL_TRACK],
           device_id: device_id
         }, (err, res) => {
           if (err) {

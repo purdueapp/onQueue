@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'react-bootstrap';
-import Track from './QueuedTracks';
+import Track from './Track';
 import { FaHistory } from 'react-icons/fa';
 import { MdQueueMusic } from 'react-icons/md';
-import { nextTrack } from '../actions/hostActions';
+import { nextTrack } from '../actions/spotifyActions';
 
 let historyButton = {
   position: 'fixed',
@@ -18,24 +18,11 @@ class Queue extends Component {
     super(props);
 
     this.state = {
-      nextTracks: [],
       history: false
     }
 
     this.historyClicked = this.historyClicked.bind(this);
     this.renderTracks = this.renderTracks.bind(this);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.queue === this.props.queue) {
-      return;
-    }
-
-    if (this.props.queue) {
-      this.setState({
-        nextTracks: this.props.queue.nextTracks
-      })
-    }
   }
 
   historyClicked() {
@@ -45,18 +32,19 @@ class Queue extends Component {
   }
 
   renderTracks() {
-    let { nextTracks, previousTracks } = this.props;
+    let { nextTracks, previousTracks } = this.props.trackWindow;
+    let { history } = this.state;
 
     if (!nextTracks || !previousTracks) {
       return (<Fragment />)
     }
 
-    if (this.state.history) {
+    if (history) {
       return (
         <Fragment>
           {previousTracks.map((track, index) => {
             return (
-              <Track key={index} track={track} />
+              <Track key={index} type="search" track={track} />
             )
           })}
         </Fragment>
@@ -67,7 +55,7 @@ class Queue extends Component {
       <Fragment>
         {nextTracks.map((track, index) => {
           return (
-            <Track key={index} track={track} />
+            <Track key={index} type="nextTrack" track={track} />
           )
         })}
       </Fragment>
@@ -77,10 +65,13 @@ class Queue extends Component {
   render() {
     return <Container fluid className='mt-3'>
       <div>
-        <h3 align='center' className='w-80 d-inline'>{this.state.history ? 'History' : 'Queue'}</h3>
-        <div style={historyButton}>
-          {this.state.history ? (<MdQueueMusic onClick={this.historyClicked} />) : (<FaHistory onClick={this.historyClicked} />)}
-        </div>
+        <h3 align='center' className='w-80 d-inline'>
+          {this.state.history ? 'History' : 'Queue'}
+          <span>
+            &nbsp;
+            {this.state.history ? (<MdQueueMusic onClick={this.historyClicked} />) : (<FaHistory onClick={this.historyClicked} />)}
+          </span>
+        </h3>
       </div>
       <hr style={{ backgroundColor: 'gray' }} />
 
@@ -90,9 +81,7 @@ class Queue extends Component {
 }
 
 const mapStateToProps = state => ({
-  previousTracks: state.host.previousTracks,
-  nextTracks: state.host.nextTracks,
-  playbackState: state.host.playbackState,
+  trackWindow: state.spotify.trackWindow,
 })
 
 export default connect(mapStateToProps, null)(Queue);

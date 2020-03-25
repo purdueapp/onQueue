@@ -5,8 +5,9 @@ import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import Player from '../components/Player';
 import Sidebar from '../components/Sidebar';
 import Script from 'react-load-script';
+import { DEFAULT_TRACK, SIGNAL_TRACK } from '../actions/spotifyActions';
 
-import { nextTrack, previousTrack, setPlayer, setPlaybackState, getAccessToken, getRefreshToken, setTokens } from '../actions/hostActions';
+import { nextTrack, previousTrack, setPlayer, setPlaybackState, getAccessToken, getRefreshToken, setTokens } from '../actions/spotifyActions';
 
 let containerStyle = {
   textAlign: 'center',
@@ -45,41 +46,23 @@ class Host extends Component {
     this.resize();
 
     this.interval = setInterval(() => {
-      let { player, nextTracks, api, playbackState } = this.props.host;
-      let { setPlaybackState, nextTrack } = this.props;
+      let { player, api, playbackState, trackWindow, setPlaybackState } = this.props;
+      let { nextTracks } = trackWindow;
 
-      if (!player.getCurrentState) {
+      if (!player || !player.getCurrentState || !playbackState || !playbackState.track_window) {
         return;
       }
 
-      //player.getCurrentState().then(state => {
-        if (!playbackState || !playbackState.track_window) {
-          return;
-        }
+      if (playbackState.track_window.current_track.uri === SIGNAL_TRACK ||
+        playbackState.track_window.next_tracks.length !== 1) {
+        nextTrack();
+      }
 
-        if (playbackState.track_window.current_track.uri === 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C') {
-          if (nextTracks.length !== 0) {
-            nextTrack();
-          }
-        }
-        else if (playbackState.track_window.next_tracks.length !== 1) {
-          api.play({ uris: ['spotify:track:5xW6Gs4ZKePJOZguvG6RV8', 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C'] }, (err, res) => {
-            if (err) {
-              console.log(err);
-            }
-          });
-        }
+      if (!playbackState.paused) {
+        playbackState.position += 1000;
+        setPlaybackState(playbackState);
+      }
 
-        if (playbackState.track_window.current_track.uri === 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C') {
-          return;
-        }
-
-        if (!playbackState.paused) {
-          playbackState.position += 1000;
-          setPlaybackState(playbackState);
-        }
-        
-      //})
     }, 1000);
   }
 
@@ -160,12 +143,11 @@ class Host extends Component {
 };
 
 const mapStateToProps = state => ({
-  host: state.host,
-  playbackState: state.host.playbackState,
-  tokens: state.host.tokens,
-  queue: state.host.queue,
-  player: state.host.player,
-  spotifyApi: state.host.spotifyApi
+  playbackState: state.spotify.playbackState,
+  tokens: state.spotify.tokens,
+  player: state.spotify.player,
+  api: state.spotify.api,
+  trackWindow: state.spotify.trackWindow
 })
 
 const mapDispatchToProps = {
