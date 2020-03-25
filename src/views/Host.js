@@ -4,12 +4,9 @@ import { Redirect } from 'react-router-dom';
 import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import Player from '../components/Player';
 import Sidebar from '../components/Sidebar';
-import { getAccessToken, setAccessToken } from '../actions/authActions';
-import { setPlaybackState } from '../actions/playbackStateActions';
-import { setPlayer } from '../actions/playerActions';
-import { setSpotifyApi } from '../actions/spotifyApiActions';
 import Script from 'react-load-script';
-import { nextTrack, previousTrack } from '../actions/queueActions';
+
+import { nextTrack, previousTrack, setPlayer, setPlaybackState, getAccessToken, getRefreshToken, setTokens } from '../actions/hostActions';
 
 let containerStyle = {
   textAlign: 'center',
@@ -37,7 +34,7 @@ class Host extends Component {
     super(props);
     this.state = {
       accessToken: null,
-      mobile: window.innerWidth <= 768
+      mobile: window.innerWidth <= 768,
     }
 
     this.script = this.script.bind(this);
@@ -48,36 +45,41 @@ class Host extends Component {
     this.resize();
 
     this.interval = setInterval(() => {
-      let { setPlaybackState, player, queue, nextTrack, spotifyApi } = this.props;
+      let { player, nextTracks, api, playbackState } = this.props.host;
+      let { setPlaybackState, nextTrack } = this.props;
 
-      player.getCurrentState().then(state => {
-        if (!state || !state.track_window) {
+      if (!player.getCurrentState) {
+        return;
+      }
+
+      //player.getCurrentState().then(state => {
+        if (!playbackState || !playbackState.track_window) {
           return;
         }
 
-        if (state.track_window.current_track.uri === 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C') {
-          if (queue.nextTracks.length !== 0) {
-            spotifyApi.play({ uris: [queue.nextTracks[0].uri, 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C'] }, (err, res) => {
-              if (err) {
-                console.log(err);
-              }
-            });
+        if (playbackState.track_window.current_track.uri === 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C') {
+          if (nextTracks.length !== 0) {
             nextTrack();
           }
         }
-        else if (state.track_window.next_tracks.length !== 1) {
-          this.props.spotifyApi.play({ uris: ['spotify:track:5xW6Gs4ZKePJOZguvG6RV8', 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C'] }, (err, res) => {
+        else if (playbackState.track_window.next_tracks.length !== 1) {
+          api.play({ uris: ['spotify:track:5xW6Gs4ZKePJOZguvG6RV8', 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C'] }, (err, res) => {
             if (err) {
               console.log(err);
             }
           });
         }
 
-        if (state.track_window.current_track.uri === 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C') {
+        if (playbackState.track_window.current_track.uri === 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C') {
           return;
         }
-        setPlaybackState(state);
-      })
+
+        if (!playbackState.paused) {
+          playbackState.position += 1000;
+          setPlaybackState(playbackState);
+        }
+        
+      //})
     }, 1000);
   }
 
@@ -93,11 +95,9 @@ class Host extends Component {
   }
 
   script() {
-    if (this.props.auth.accessToken !== undefined) {
+    if (this.props.tokens.accessToken !== undefined) {
       window.onSpotifyWebPlaybackSDKReady = () => {
-        let accessToken = this.props.auth.accessToken;
-        this.props.setSpotifyApi(accessToken);
-        this.props.setPlayer(accessToken);
+        this.props.setPlayer();
       };
 
       return (
@@ -106,7 +106,10 @@ class Host extends Component {
     }
     else {
       if (this.props.getAccessToken() !== undefined && this.props.getAccessToken() !== "undefined") {
-        this.props.setAccessToken(this.props.getAccessToken());
+        this.props.setTokens({
+          accessToken: this.props.getAccessToken(),
+          refreshToken: this.props.getRefreshToken()
+        });
         return <Fragment />
       }
       else {
@@ -157,19 +160,20 @@ class Host extends Component {
 };
 
 const mapStateToProps = state => ({
-  playbackState: state.playbackState,
-  auth: state.auth,
-  queue: state.queue,
-  player: state.player,
-  spotifyApi: state.spotifyApi
+  host: state.host,
+  playbackState: state.host.playbackState,
+  tokens: state.host.tokens,
+  queue: state.host.queue,
+  player: state.host.player,
+  spotifyApi: state.host.spotifyApi
 })
 
 const mapDispatchToProps = {
   setPlaybackState,
   getAccessToken,
-  setAccessToken,
+  getRefreshToken,
+  setTokens,
   setPlayer,
-  setSpotifyApi,
   nextTrack
 }
 

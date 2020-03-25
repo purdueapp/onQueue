@@ -51,7 +51,7 @@ class VolumeSlider extends Component {
 
 const mapStateToProps = state => ({
   playbackState: state.playbackState,
-  player: state.player,
+  player: state.host.player,
 })
 
 export default connect(mapStateToProps, null)(VolumeSlider);

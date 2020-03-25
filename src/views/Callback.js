@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { setAccessToken, setRefreshToken, getAccessToken } from '../actions/authActions';
+import { setTokens, getAccessToken } from '../actions/hostActions';
 import qs from 'qs';
 
 class Callback extends Component {
@@ -34,9 +34,13 @@ class Callback extends Component {
       })
     })
       .then(res => { return res.json() })
-      .then(tokens => {
-        this.props.setAccessToken(tokens.access_token);
-        this.props.setRefreshToken(tokens.refresh_token);
+      .then(data => {
+        let tokens = {
+          accessToken: data.access_token,
+          refreshToken: data.refresh_token
+        };
+
+        this.props.setTokens(tokens);
       })
   }
 
@@ -44,17 +48,19 @@ class Callback extends Component {
     // Setup some stuff
 
     // if (this.state.tokens === null || this.props.getAccessToken() === null) {
-    if (this.props.auth.refreshToken === undefined) {
-      console.log(this.props.auth);
+    if (this.props.host.tokens.refreshToken === undefined) {
+      console.log(this.props.host.tokens);
       return <div />
     }
+    console.log('redirecting to host')
     
     return <Redirect to={`/host/tobi`} />
   }
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  tokens: state.host.tokens,
+  host: state.host
 })
 
-export default connect(mapStateToProps, { setAccessToken, setRefreshToken, getAccessToken })(Callback);
+export default connect(mapStateToProps, { setTokens, getAccessToken })(Callback);

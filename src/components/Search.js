@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 //import SpotifyWebApi from 'spotify-web-api-node';
 import { Container, FormControl } from 'react-bootstrap';
-import { getAccessToken } from '../actions/authActions';
+import { getAccessToken } from '../actions/hostActions';
 import Track from './SearchTrack';
 
 class Search extends Component {
@@ -81,7 +81,7 @@ class Search extends Component {
 
 
 const mapStateToProps = state => ({
-  spotifyApi: state.spotifyApi
+  spotifyApi: state.host.api
 })
 
 export default connect(mapStateToProps, { getAccessToken })(Search);

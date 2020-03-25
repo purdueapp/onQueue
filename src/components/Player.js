@@ -35,7 +35,7 @@ class Player extends Component {
   constructor(props) {
     super(props);
 
-    let { playbackState } = this.props;
+    let { playbackState } = this.props.host;
     let playerState = {};
 
     if (playbackState.track_window) {
@@ -172,8 +172,7 @@ class Player extends Component {
   }
 
   render() {
-    let { playbackState } = this.props;
-
+    let { playbackState } = this.props.host;
     let playerState = {};
 
     if (playbackState.track_window) {
@@ -209,8 +208,9 @@ class Player extends Component {
 
     const handleChange = (event) => {
       let newPosition = event.target.value;
-      if (this.props.player) {
-        this.props.player.seek(newPosition * duration / 100);
+      let { player } = this.props.host;
+      if (player) {
+        player.seek(newPosition * duration / 100);
         this.setState({ position: duration * newPosition / 100 });
       }
     }
@@ -235,9 +235,8 @@ class Player extends Component {
 }
 
 const mapStateToProps = state => ({
-  playbackState: state.playbackState,
-  player: state.player,
-  spotifyApi: state.spotifyApi
+  host: state.host,
+  player: state.host.player
 })
 
 export default connect(mapStateToProps, null)(Player);

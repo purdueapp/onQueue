@@ -1,11 +1,35 @@
-import { SET_STATE } from '../actions/playbackStateActions';
-import { SET_ACCESS_TOKEN, SET_REFRESH_TOKEN } from './authActions';
-import { SET_SPOTIFY_API_ACCESS_TOKEN } from './spotifyApiActions';
 import qs from 'qs';
 
-export const SET_PLAYER = 'SET_PLAYER';
-export const CLEAR_PLAYER = 'CLEAR_PLAYER';
+export const SET_TOKENS = 'SET_TOKENS';
+export const CLEAR_TOKENS = 'CLEAR_TOKENS';
 
+export const SET_PLAYER = 'SET_PLAYER';
+export const SET_PLAYBACK_STATE = 'SET_STATE';
+
+export const NEXT_TRACK = 'NEXT_TRACK';
+export const PREVIOUS_TRACK = 'PREVIOUS_TRACK';
+export const SET_NEXT_TRACKS = 'SET_NEXT_TRACKS';
+
+export const setTokens = (tokens) => dispatch => {
+  dispatch({
+    type: SET_TOKENS,
+    payload: tokens
+  })
+}
+
+export const clearTokens = () => dispatch => {
+  dispatch({
+    type: CLEAR_TOKENS
+  })
+}
+
+export const getAccessToken = () => dispatch => {
+  return localStorage.getItem('accessToken');
+}
+
+export const getRefreshToken = () => dispatch => {
+  return localStorage.getItem('getRefreshToken');
+}
 
 function setDevice(deviceId, accessToken) {
   fetch('https://api.spotify.com/v1/me/player', {
@@ -21,11 +45,12 @@ function setDevice(deviceId, accessToken) {
   });
 }
 
-export const setPlayer = (accessToken) => dispatch => {
+export const setPlayer = () => dispatch => {
   let player = new window.Spotify.Player({
     name: 'onQueue Player',
 
     getOAuthToken: cb => {
+      console.log(localStorage.getItem('refreshToken'));
       fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         headers: {
@@ -38,23 +63,18 @@ export const setPlayer = (accessToken) => dispatch => {
         }),
       })
         .then(res => res.json())
-        .then(tokens => {
-          dispatch({
-            type: SET_ACCESS_TOKEN,
-            payload: tokens.access_token
-          })
+        .then(data => {
+          let tokens = {
+            accessToken: data.access_token,
+            refreshToken: data.refresh_token ? data.refresh_token : localStorage.getItem('refreshToken')
+          };
 
           dispatch({
-            type: SET_REFRESH_TOKEN,
-            payload: tokens.refresh_token
+            type: SET_TOKENS,
+            payload: tokens
           })
 
-          dispatch({
-            type: SET_SPOTIFY_API_ACCESS_TOKEN,
-            payload: tokens.access_token
-          })
-
-          cb(accessToken);
+          cb(tokens.accessToken);
         })
     },
     volume: 0.5
@@ -68,23 +88,11 @@ export const setPlayer = (accessToken) => dispatch => {
 
   // Playback status updates
   player.addListener('player_state_changed', state => {
-    if (state == null) {
-      return;
-    }
-
-    // setPlaybackState(state);
-/*
+    console.log(state);
     dispatch({
-      type: SET_STATE,
+      type: SET_PLAYBACK_STATE,
       payload: state
-    })
-    */
-  });
-
-  // Ready
-  player.addListener('ready', ({ device_id }) => {
-    setDevice(device_id, accessToken);
-    console.log('Ready with Device ID', device_id);
+    });
   });
 
   // Not Ready
@@ -98,5 +106,31 @@ export const setPlayer = (accessToken) => dispatch => {
   dispatch({
     type: SET_PLAYER,
     payload: player
+  })
+}
+
+export const setPlaybackState = (state) => dispatch => {
+  dispatch({
+    type: SET_PLAYBACK_STATE,
+    payload: state
+  })
+}
+
+export const nextTrack = () => dispatch => {
+  dispatch({
+    type: NEXT_TRACK
+  })
+}
+
+export const previousTrack = () => dispatch => {
+  dispatch({
+    type: NEXT_TRACK
+  })
+}
+
+export const setNextTracks = (nextTracks) => dispatch => {
+  dispatch({
+    type: SET_NEXT_TRACKS,
+    payload: nextTracks
   })
 }

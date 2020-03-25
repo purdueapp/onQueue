@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Media from 'react-bootstrap/Media';
 import { MdPlaylistAdd } from 'react-icons/md';
-import { setNextTracks } from '../actions/queueActions';
+import { setNextTracks } from '../actions/hostActions';
 
 class Track extends Component {
   constructor(props) {
@@ -14,12 +14,7 @@ class Track extends Component {
 
     this.hoverOn = this.hoverOn.bind(this);
     this.hoverOff = this.hoverOff.bind(this);
-    this.playTrack = this.playTrack.bind(this);
-    this.addtoQueue = this.addtoQueue.bind(this);
-  }
-
-  addtoQueue(){
-
+    this.queueTrack = this.queueTrack.bind(this);
   }
 
   hoverOn() {
@@ -30,12 +25,11 @@ class Track extends Component {
     this.setState({ hover: false });
   }
 
-  playTrack() {
-    if (this.props.spotifyApi && this.props.queue) {
-      let { nextTracks } = this.props.queue;
+  queueTrack() {
+      let { nextTracks, setNextTracks } = this.props;
       nextTracks.push(this.props.track);
 
-      this.props.setNextTracks(nextTracks);
+      setNextTracks(nextTracks);
       /*
       this.props.spotifyApi.play({uris: [this.props.track.uri, 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C']}, (err, res) => {
         if (err) {
@@ -43,7 +37,6 @@ class Track extends Component {
         }
       });
       */
-    }
   }
 
   render() {
@@ -54,7 +47,7 @@ class Track extends Component {
       <Media
         onMouseEnter={this.hoverOn}
         onMouseLeave={this.hoverOff}
-        onClick={this.playTrack}
+        onClick={this.queueTrack}
         className="px-3"
         style={{background: hover ? '#AAAAAA20' : '#00000000'}}
       >
@@ -78,9 +71,7 @@ class Track extends Component {
 }
 
 const mapStateToProps = state => ({
-  player: state.player,
-  spotifyApi: state.spotifyApi,
-  queue: state.queue
+  nextTracks: state.host.nextTracks
 })
 
 export default connect(mapStateToProps, { setNextTracks })(Track);

@@ -4,6 +4,7 @@ import { Container } from 'react-bootstrap';
 import Track from './QueuedTracks';
 import { FaHistory } from 'react-icons/fa';
 import { MdQueueMusic } from 'react-icons/md';
+import { nextTrack } from '../actions/hostActions';
 
 let historyButton = {
   position: 'fixed',
@@ -44,13 +45,27 @@ class Queue extends Component {
   }
 
   renderTracks() {
-    if (!this.props.queue) {
-      return <Fragment />
+    let { nextTracks, previousTracks } = this.props;
+
+    if (!nextTracks || !previousTracks) {
+      return (<Fragment />)
+    }
+
+    if (this.state.history) {
+      return (
+        <Fragment>
+          {previousTracks.map((track, index) => {
+            return (
+              <Track key={index} track={track} />
+            )
+          })}
+        </Fragment>
+      )
     }
 
     return (
       <Fragment>
-        {this.props.queue.nextTracks.map((track, index) => {
+        {nextTracks.map((track, index) => {
           return (
             <Track key={index} track={track} />
           )
@@ -75,8 +90,9 @@ class Queue extends Component {
 }
 
 const mapStateToProps = state => ({
-  playbackState: state.playbackState,
-  queue: state.queue
+  previousTracks: state.host.previousTracks,
+  nextTracks: state.host.nextTracks,
+  playbackState: state.host.playbackState,
 })
 
 export default connect(mapStateToProps, null)(Queue);
