@@ -45,14 +45,10 @@ class Callback extends Component {
   }
 
   render() {
-    // Setup some stuff
-
-    // if (this.state.tokens === null || this.props.getAccessToken() === null) {
-    if (this.props.host.tokens.refreshToken === undefined) {
-      console.log(this.props.host.tokens);
+    if (this.props.spotify.tokens.refreshToken === undefined) {
+      console.log(this.props.spotify.tokens);
       return <div />
     }
-    console.log('redirecting to host')
     
     return <Redirect to={`/host/tobi`} />
   }
@@ -60,7 +56,7 @@ class Callback extends Component {
 
 const mapStateToProps = state => ({
   tokens: state.spotify.tokens,
-  host: state.spotify
+  spotify: state.spotify
 })
 
 export default connect(mapStateToProps, { setTokens, getAccessToken })(Callback);
