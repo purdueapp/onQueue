@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Host from './views/Host';
 import Homepage from './views/Homepage';
 import Callback from './views/Callback';
+import Rooms from './views/Rooms';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       <Route exact path='/' component={Homepage} />
       <Route exact path='/callback' component={Callback} />
       <Route exact path='/host/:id' component={Host} />
-      <Route exact path='/:id' component={Host} />
+      <Route exact path='/rooms' component={Rooms} />
     </BrowserRouter>
   );
 }

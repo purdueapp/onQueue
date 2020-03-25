@@ -17,14 +17,14 @@ class Code extends Component {
       <Row>
           <Col className = 'px-0 '  align='left'>
             <p>
-              Code: <b>{this.props.hostID}</b>
+              Host ID: <b>{this.props.hostID}</b>
             </p>
             <p>
               QR Code
             </p>
             <QRCode 
               value={window.location.href} 
-              size='50'
+              size={50}
             />
           </Col>
       </Row>
