@@ -10,21 +10,6 @@ let albumImage = {
   width: '100%',
 };
 
-let progressBar = {
-  position: 'relative',
-  height: '0.5em',
-  width: '100%',
-  borderRadius: '3em',
-  backgroundColor: 'gray',
-};
-
-let progressBarFiller = {
-  background: 'white',
-  height: '100%',
-  borderRadius: 'inherit',
-  transition: 'width 1s ease',
-};
-
 function getTime(millis) {
   var minutes = Math.floor(millis / 60000);
   var seconds = Math.floor((millis % 60000) / 1000);
@@ -68,15 +53,9 @@ class Player extends Component {
     }
 
     this.state = playerState;
-
-    this.playbackButtons = this.playbackButtons.bind(this);
-    this.play = this.play.bind(this);
-    this.pause = this.pause.bind(this);
-    this.nextTrack = this.nextTrack.bind(this);
-    this.previousTrack = this.previousTrack.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.interval = setInterval(() => {
       let { playbackState } = this.props;
       let playerState = {};
@@ -118,35 +97,35 @@ class Player extends Component {
     clearInterval(this.interval);
   }
 
-  play() {
+  play = () => {
     let { player } = this.props;
     if (player) {
       player.resume();
     }
   }
 
-  pause() {
+  pause = () => {
     let { player } = this.props;
     if (player) {
       player.pause();
     }
   }
 
-  nextTrack() {
+  nextTrack = () => {
     let { player } = this.props;
     if (player) {
       player.nextTrack();
     }
   }
 
-  previousTrack() {
+  previousTrack = () => {
     let { player } = this.props;
     if (player) {
       player.previousTrack();
     }
   }
 
-  playbackButtons() {
+  playbackButtons = () => {
     if (this.state.paused) {
       return (
         <Fragment>
@@ -180,7 +159,7 @@ class Player extends Component {
 
     return (
       <div className="p-3">
-        <img className='my-3' style={albumImage} src={imageURL} />
+        <img className='my-3' style={albumImage} src={imageURL} alt={`${trackName} Album Cover`} />
         <h3>{trackName}</h3>
         <h5 className='mb-3' style={{ color: 'lightGrey' }}>{artists}</h5>
 

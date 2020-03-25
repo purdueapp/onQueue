@@ -24,7 +24,7 @@ class Code extends Component {
             </p>
             <QRCode 
               value={window.location.href} 
-              size='50'
+              size={50}
             />
           </Col>
       </Row>

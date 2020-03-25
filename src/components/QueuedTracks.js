@@ -63,7 +63,7 @@ class Track extends Component {
           <p className='mt-1 text-center' style={{ overflow: 'auto' }}>
             {track.name}<br />
             <span style={{ color: 'grey', overflow: 'auto' }}>{track.artists.map(artist => artist.name).join(', ')}</span>
-            {this.state.hover && <div><span style={{ color: 'grey', overflow: 'auto' }}>Queued by: User1</span></div>}
+            {this.state.hover && <span style={{ color: 'grey', overflow: 'auto' }}>Queued by: User1</span>}
           </p>
         </Media.Body>
         {this.state.hover && <TiDeleteOutline className='my-2' size={25} color='grey' style={{cursor: 'pointer'}} onClick={this.state.deleteTrack}/>}

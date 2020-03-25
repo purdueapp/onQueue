@@ -54,10 +54,10 @@ class Homepage extends Component {
       <Container fluid style={containerStyle}>
         <Row className='w-100'>
           <Col md={6} className='mx-auto'>
-            <h1 class='welcome-heading display-4 text-white'>onQueue</h1>
+            <h1 className='welcome-heading display-4 text-white'>onQueue</h1>
             <p>Make your Spotify queue public to you friends! <br /> Only works on Google Chrome and Firefox.</p>
-            <a href={loginURL} class='btn btn-success btn-pill align-self-center m-1'><i class='fa fa-spotify mr-2'></i>Host A Room</a>
-            {/*<a href='#rooms' class='btn btn-primary btn-pill align-self-center m-1'><i class='fa fa-spotify mr-2'></i>Join A Room</a> */}
+            <a href={loginURL} className='btn btn-success btn-pill align-self-center m-1'><i className='fa fa-spotify mr-2'></i>Host A Room</a>
+            {/*<a href='#rooms' className='btn btn-primary btn-pill align-self-center m-1'><i className='fa fa-spotify mr-2'></i>Join A Room</a> */}
           </Col>
         </Row>
         <div style={backgroundStyle} />

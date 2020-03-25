@@ -9,8 +9,8 @@ class Users extends Component {
     return <Container fluid className='mt-3'>
       <h3>Users</h3>
       <hr style={{ backgroundColor: 'gray' }} />
-      {this.props.users.map((item,key)=>
-            <User user={item}/>
+      {this.props.users.map((item, key)=>
+            <User user={item} key={key} />
             )}
     </Container>
   }
