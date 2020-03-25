@@ -70,9 +70,15 @@ class Search extends Component {
         id='query'
       />
 
+<<<<<<< HEAD
       {this.state.tracks.map((track, key) => {
         return (
           <Track track={track} key={key}/>
+=======
+      {this.state.tracks.map((track, id) => {
+        return (
+          <Track key={id} track={track} />
+>>>>>>> c6734c3913031c36a15ab313129f3569f6274da4
         )
       })}
     </Container>

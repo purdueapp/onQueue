@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Media from 'react-bootstrap/Media';
 import { MdPlaylistAdd } from 'react-icons/md';
+import { setNextTracks } from '../actions/queueActions';
 
 class Track extends Component {
   constructor(props) {
@@ -30,12 +31,18 @@ class Track extends Component {
   }
 
   playTrack() {
-    if (this.props.spotifyApi) {
-      this.props.spotifyApi.play({uris: [this.props.track.uri]}, (err, res) => {
+    if (this.props.spotifyApi && this.props.queue) {
+      let { nextTracks } = this.props.queue;
+      nextTracks.push(this.props.track);
+
+      this.props.setNextTracks(nextTracks);
+      /*
+      this.props.spotifyApi.play({uris: [this.props.track.uri, 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C']}, (err, res) => {
         if (err) {
           console.log(err);
         }
       });
+      */
     }
   }
 
@@ -72,7 +79,8 @@ class Track extends Component {
 
 const mapStateToProps = state => ({
   player: state.player,
-  spotifyApi: state.spotifyApi
+  spotifyApi: state.spotifyApi,
+  queue: state.queue
 })
 
-export default connect(mapStateToProps, null)(Track);
+export default connect(mapStateToProps, { setNextTracks })(Track);
