@@ -59,8 +59,8 @@ class Callback extends Component {
 };
 
 const mapStateToProps = state => ({
-  tokens: state.host.tokens,
-  host: state.host
+  tokens: state.spotify.tokens,
+  host: state.spotify
 })
 
 export default connect(mapStateToProps, { setTokens, getAccessToken })(Callback);
