@@ -11,8 +11,8 @@ let albumImage = {
 };
 
 function getTime(millis) {
-  var minutes = Math.floor(millis / 60000);
-  var seconds = Math.floor((millis % 60000) / 1000);
+  let minutes = Math.floor(millis / 60000);
+  let seconds = Math.floor((millis % 60000) / 1000);
   return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 }
 
