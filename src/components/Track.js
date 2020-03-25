@@ -30,8 +30,6 @@ class Track extends Component {
 
   onClick() {
     let { type } = this.props;
-    console.log(type)
-
 
     if (type === 'search') {
       let { nextTracks, setNextTracks } = this.props;

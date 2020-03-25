@@ -42,7 +42,7 @@ class Queue extends Component {
     if (history) {
       return (
         <Fragment>
-          {previousTracks.map((track, index) => {
+          {previousTracks.slice(0).reverse().map((track, index) => {
             return (
               <Track key={index} type="search" track={track} />
             )

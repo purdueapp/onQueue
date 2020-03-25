@@ -39,7 +39,6 @@ export const setPlayer = () => dispatch => {
     name: 'onQueue Player',
 
     getOAuthToken: cb => {
-      console.log(localStorage.getItem('refreshToken'));
       fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         headers: {

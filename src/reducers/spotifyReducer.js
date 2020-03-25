@@ -9,14 +9,14 @@ let initialCurrentTrack = {
   name: "Rylynn",         // Name of content
   is_playable: true,         // Flag indicating whether it can be played
   album: {
-    uri: 'spotify:album:0CLCgSt8wDFmoDpLLN09X2', // Spotify Album URI
-    name: 'Without Words: Genesis',
+    uri: 'spotify:album:5oaWyt3rCD0JTDhv6BbEaQ', // Spotify Album URI
+    name: 'Art of Motion',
     images: [
-      { url: "https://i.scdn.co/image/ab67616d0000b273ce92f72ec851a37549dea19b" }
+      { url: "https://i.scdn.co/image/ab67616d00001e0234ac7c39be02c2915857287c" }
     ]
   },
   artists: [
-    { uri: 'spotify:artist:xxxx', name: "Andy Mckee" }
+    { uri: 'spotify:artist:59T0qdTmDGZ1g0slfSbPfy', name: "Andy Mckee" }
   ]
 
 };
@@ -56,10 +56,9 @@ export default (state = initialState, action) => {
 
     case NEXT_TRACK:
       var { currentTrack, nextTracks, previousTracks } = state.trackWindow;
-
-      currentTrack = nextTracks.length > 0 ? nextTracks.shift() : initialCurrentTrack;
-
+  
       previousTracks.push(currentTrack);
+      currentTrack = nextTracks.length > 0 ? nextTracks.shift() : initialCurrentTrack;
       state.api.play({ uris: [currentTrack.uri, SIGNAL_TRACK] }, (err, res) => {
         if (err) {
           console.log(err);

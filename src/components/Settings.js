@@ -40,7 +40,7 @@ class Settings extends Component {
   }
 
   componentDidMount() {
-    this.props.spotifyApi.getMe((err, res) => {
+    this.props.api.getMe((err, res) => {
       if (err) {
         console.log(err);
         return;
@@ -140,9 +140,7 @@ class Settings extends Component {
 }
 
 const mapStateToProps = state => ({
-  playbackState: state.playbackState,
-  player: state.player,
-  spotifyApi: state.spotifyApi
+  api: state.spotify.api
 })
 
 export default connect(mapStateToProps, null)(Settings);

@@ -46,7 +46,7 @@ class Host extends Component {
     this.resize();
 
     this.interval = setInterval(() => {
-      let { player, api, playbackState, trackWindow, setPlaybackState } = this.props;
+      let { player, api, playbackState, trackWindow, setPlaybackState, nextTrack } = this.props;
       let { nextTracks } = trackWindow;
 
       if (!player || !player.getCurrentState || !playbackState || !playbackState.track_window) {
