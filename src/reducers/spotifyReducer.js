@@ -1,5 +1,13 @@
 import SpotifyWebApi from 'spotify-web-api-js';
-import { CLEAR_TOKENS, SET_PLAYER, SET_PLAYBACK_STATE, NEXT_TRACK, PREVIOUS_TRACK, SET_TOKENS, SET_NEXT_TRACKS, DEFAULT_TRACK, SIGNAL_TRACK } from '../actions/spotifyActions';
+import { CLEAR_TOKENS, SET_PLAYER, SET_PLAYBACK_STATE, NEXT_TRACK, PREVIOUS_TRACK, SET_TOKENS, SET_NEXT_TRACKS, DEFAULT_TRACK, SIGNAL_TRACK, QUEUE_TRACK, REORDER_NEXT_TRACKS, nextTrack } from '../actions/spotifyActions';
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
 
 let initialCurrentTrack = {
   uri: DEFAULT_TRACK, // Spotify URI
@@ -95,12 +103,30 @@ export default (state = initialState, action) => {
       else {
         return state;
       }
-    case SET_NEXT_TRACKS:
-      var { currentTrack, previousTracks } = state.trackWindow;
+    case QUEUE_TRACK:
+      var { currentTrack, nextTracks, previousTracks } = state.trackWindow;
+      if (nextTracks.filter(track => track.id === action.payload.id).length === 0) {
+        nextTracks.push(action.payload);
+        return Object.assign({}, state, {
+          trackWindow: {
+            nextTracks: nextTracks,
+            previousTracks: previousTracks,
+            currentTrack: currentTrack
+          }
+        });
+      }
+      return state
+    case REORDER_NEXT_TRACKS:
+      var { currentTrack, nextTracks, previousTracks } = state.trackWindow;
+      let { start, end } = action.payload;
+
+      if (start === end || start >= nextTracks.length && end >= nextTracks.length) {
+        return state;
+      }
 
       return Object.assign({}, state, {
         trackWindow: {
-          nextTracks: action.payload,
+          nextTracks: reorder(nextTracks, start, end),
           previousTracks: previousTracks,
           currentTrack: currentTrack
         }

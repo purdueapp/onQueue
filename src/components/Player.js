@@ -163,7 +163,7 @@ class Player extends Component {
         <input type="range" min="0" max="100" value={100 * position / duration}
           className="slider" id="myRange" onChange={handleChange} />
         <VolumeSlider />
-        <Background imageURL={lowQualityImageURL} />
+        <Background imageURL={imageURL} />
       </div>
     )
   }

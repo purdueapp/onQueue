@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 import Track from './Track';
 import { FaHistory } from 'react-icons/fa';
 import { MdQueueMusic } from 'react-icons/md';
-import { setNextTracks } from '../actions/spotifyActions';
+import { reorderNextTracks } from '../actions/spotifyActions';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const getItems = count =>
@@ -52,20 +52,13 @@ class Queue extends Component {
   }
 
   onDragEnd(result) {
-    let { nextTracks } = this.props.spotify.trackWindow;
-    let { setNextTracks } = this.props;
+    let { reorderNextTracks } = this.props;
 
     if (!result.destination || result.destination.index === result.source.index) {
       return;
     }
 
-    nextTracks = reorder(
-      nextTracks,
-      result.source.index,
-      result.destination.index
-    )
-
-    setNextTracks(nextTracks);
+    reorderNextTracks(result.source.index, result.destination.index);
   }
 
 
@@ -143,4 +136,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, { setNextTracks })(Queue);
+export default connect(mapStateToProps, { reorderNextTracks })(Queue);

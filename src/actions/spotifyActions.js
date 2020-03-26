@@ -8,6 +8,8 @@ export const SET_PLAYBACK_STATE = 'SET_STATE';
 
 export const NEXT_TRACK = 'NEXT_TRACK';
 export const PREVIOUS_TRACK = 'PREVIOUS_TRACK';
+export const QUEUE_TRACK = 'QUEUE_TRACK';
+export const REORDER_NEXT_TRACKS = 'REORDER_NEXT_TRACKS'
 export const SET_NEXT_TRACKS = 'SET_NEXT_TRACKS';
 
 export const SIGNAL_TRACK = 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C';
@@ -111,13 +113,30 @@ export const nextTrack = () => dispatch => {
 
 export const previousTrack = () => dispatch => {
   dispatch({
-    type: NEXT_TRACK
+    type: PREVIOUS_TRACK
   })
 }
 
+export const queueTrack = (track) => dispatch => {
+  dispatch({
+    type: QUEUE_TRACK,
+    payload: track
+  })
+}
+
+export const reorderNextTracks = (start, end) => dispatch => {
+  dispatch({
+    type: REORDER_NEXT_TRACKS,
+    payload: {
+      start: start,
+      end: end
+    }
+  })
+}
+/*
 export const setNextTracks = (nextTracks) => dispatch => {
   dispatch({
     type: SET_NEXT_TRACKS,
     payload: nextTracks
   })
-}
+}*/

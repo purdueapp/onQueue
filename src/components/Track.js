@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Media from 'react-bootstrap/Media';
 import { MdPlaylistAdd } from 'react-icons/md';
-import { setNextTracks } from '../actions/spotifyActions';
+import { queueTrack } from '../actions/spotifyActions';
 import { TiDeleteOutline } from 'react-icons/ti';
 
 class Track extends Component {
@@ -32,10 +32,9 @@ class Track extends Component {
     let { type } = this.props;
 
     if (type === 'search') {
-      let { nextTracks, setNextTracks } = this.props;
-      nextTracks.push(this.props.track);
+      let { nextTracks, queueTrack } = this.props;
   
-      setNextTracks(nextTracks);
+      queueTrack(this.props.track);
     }
   }
 
@@ -102,4 +101,4 @@ const mapStateToProps = (state, ownProps) => ({
   track: ownProps.track
 })
 
-export default connect(mapStateToProps, { setNextTracks })(Track);
+export default connect(mapStateToProps, { queueTrack })(Track);
