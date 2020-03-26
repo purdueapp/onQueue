@@ -8,7 +8,7 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
     */
-  font-family: Monaco, Montserrat, spotify-circular,spotify-circular-cyrillic,spotify-circular-arabic,spotify-circular-hebrew,Helvetica Neue,Helvetica,Arial,Hiragino Kaku Gothic Pro,Meiryo,MS Gothic,sans-serif;
+  font-family: Montserrat, Monaco, spotify-circular,spotify-circular-cyrillic,spotify-circular-arabic,spotify-circular-hebrew,Helvetica Neue,Helvetica,Arial,Hiragino Kaku Gothic Pro,Meiryo,MS Gothic,sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
     overflow: hidden;
@@ -16,10 +16,10 @@ body {
     margin: 0 auto;
     justify-content: center;
     color: white;
-    font-weight: 1500;    
+    font-weight: 1500;
 }
 
-html, body { margin: 0; height: 100%; width: 100%; overflow: hidden }
+html, body { margin: 0; height: 100%; width: 100%; overflow: hidden; background-color: #fff0 !important }
 
 .container-fluid {
   padding-right:0;
@@ -27,10 +27,6 @@ html, body { margin: 0; height: 100%; width: 100%; overflow: hidden }
   margin-right:auto;
   margin-left:auto
 }
-
-.full-width { padding-left: 0; padding-right: 0; }
-.full-width .row { margin-right: 0; margin-left: 0; }
-.full-width .col-md-12 { padding-left: 0; padding-right: 0; }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

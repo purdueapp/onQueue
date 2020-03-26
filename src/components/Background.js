@@ -1,29 +1,24 @@
 import React, { Component, Fragment } from 'react';
+import Blur from 'react-blur';
+import './Background.css';
 
 let backgroundStyle = {
-  backgroundPosition: 'center center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat',
-  filter: 'blur(1em)',
-  width: '100%',
-  height: '100%',
-  position: 'absolute',
-  transform: 'scale(4)',
-  zIndex: '-1',
-  transition: 'background ease 2s',
+  width: '100vw',
+  height: '100vh',
+  position: 'fixed',
+  transform: 'scale(1)',
+  zIndex: '-2',
+  left: '0vw',
+  top: '0vh',
+  filter: 'brightness(60%)',
+  overflow: 'hidden',
 };
 
 class Background extends Component {
   render() {
-    return <Fragment />
-    /*
     return (
-      <div style={{
-        ...backgroundStyle,
-        background: `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(${this.props.imageURL})`
-      }} />
+      <Blur style={backgroundStyle} img={this.props.imageURL} blurRadius={90} enableStyles />
     )
-    */
   }
 }
 

@@ -11,7 +11,7 @@ import { nextTrack, previousTrack, setPlayer, setPlaybackState, getAccessToken, 
 
 let containerStyle = {
   textAlign: 'center',
-  backgroundColor: '#191414',
+//  backgroundColor: '#19141488',
   color: 'white',
   display: 'flex',
   alignItems: 'center',
@@ -21,7 +21,8 @@ let containerStyle = {
   position: 'absolute',
   left: '50%',
   top: '50%',
-  transform: 'translate(-50%, -50%)'
+  transform: 'translate(-50%, -50%)',
+  opacity: 1
 };
 
 let sideBarStyle = {
