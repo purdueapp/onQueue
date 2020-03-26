@@ -1,3 +1,22 @@
+
+## Client Redux State 
+```json
+{
+  spotify: {
+    trackWindow: {
+      currentTrack: <WebPlaybackTrack>,
+      nextTracks: [<WebPlaybackTrack>, <WebPlaybackTrack>, ...],
+      previousTracks: [<WebPlaybackTrack>, <WebPlaybackTrack>, ...]
+    },
+    position: 0,
+    paused: false,
+    duration: 0,
+  }
+}
+
+```
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
