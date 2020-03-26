@@ -1,6 +1,6 @@
 
 ## Client Redux State 
-```json
+```js
 {
   spotify: {
     trackWindow: {
