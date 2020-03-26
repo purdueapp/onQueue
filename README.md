@@ -1,4 +1,3 @@
-
 ## Room State
 ```js
 {
@@ -22,4 +21,25 @@
   role: 'Admin',
   id: 'asdfaskdjkljs',
 }
+```
+
+## Host Redux State
+```js
+{
+  spotify: {
+    player: <SpotifyWebPlayer>,
+    trackWindow: {
+      nextTracks: [],
+      previousTracks: [],
+      currentTrack: initialCurrentTrack,
+    },
+    tokens: {
+      accessToken: <0Auth2AccessToken>,
+      refreshToken: <0Auth2RefreshToken>,
+    },
+    api: <OpenSourceSpotifyApi>,
+    playbackState: <SpotifyWebPlaybackState>
+  },
+  roomState: <RoomState>
+ }
 ```
