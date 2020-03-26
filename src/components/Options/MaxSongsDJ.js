@@ -17,7 +17,7 @@ class MaxSongsDJ extends Component{
               <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto' }}>Max Songs DJ Can Queue</p>
             </Col>
             <Col align = 'right' className = 'px-0'>
-              <NumericInput min={0} max={50} value={50}
+              <NumericInput min={0} max={50} value={25}
                 size={3}
                 style={{
                   input: {
