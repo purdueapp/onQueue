@@ -25,7 +25,7 @@ let containerStyle = {
 };
 
 let sideBarStyle = {
-  background: 'rgba(0, 0, 0, 0.5)',
+  background: 'rgba(0, 0, 0, 0.3)',
   width: '100%',
   minWidth: '24em'
 };
@@ -121,7 +121,7 @@ class Host extends Component {
     }
     else {
       return (
-        <Container className='p-0' fluid style={containerStyle}>
+        <Container className='p-0 m-0 w-100' fluid style={containerStyle}>
           <Navbar fixed='top' bg='clear' variant='dark'>
             <Nav className='mx-auto mt-3'>
 

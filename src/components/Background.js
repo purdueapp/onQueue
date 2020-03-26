@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 let backgroundStyle = {
   backgroundPosition: 'center center',
@@ -15,12 +15,15 @@ let backgroundStyle = {
 
 class Background extends Component {
   render() {
+    return <Fragment />
+    /*
     return (
       <div style={{
         ...backgroundStyle,
         background: `linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(${this.props.imageURL})`
       }} />
     )
+    */
   }
 }
 

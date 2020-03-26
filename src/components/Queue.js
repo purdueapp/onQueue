@@ -96,16 +96,18 @@ class Queue extends Component {
     }
 
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
-        <Droppable droppableId="list">
-          {provided => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              <TrackList tracks={nextTracks} />
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <div className="mb-5" style={{ overflowX: 'scroll', overflowY: 'scroll', height: '70vh'}}>
+        <DragDropContext onDragEnd={this.onDragEnd}>
+          <Droppable droppableId="list">
+            {provided => (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                <TrackList tracks={nextTracks} />
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
     )
   }
 
@@ -135,9 +137,10 @@ const mapStateToProps = state => {
     }
   })
   return {
-  spotify: state.spotify,
-  trackWindow: state.spotify.trackWindow,
-  //nextTracks: state.spotify.trackWindow.nextTracks
-}}
+    spotify: state.spotify,
+    trackWindow: state.spotify.trackWindow,
+    //nextTracks: state.spotify.trackWindow.nextTracks
+  }
+}
 
 export default connect(mapStateToProps, { setNextTracks })(Queue);
