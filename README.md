@@ -34,8 +34,8 @@
       currentTrack: initialCurrentTrack,
     },
     tokens: {
-      accessToken: <0Auth2AccessToken>,
-      refreshToken: <0Auth2RefreshToken>,
+      accessToken: <AuthAccessToken>,
+      refreshToken: <AuthRefreshToken>,
     },
     api: <OpenSourceSpotifyApi>,
     playbackState: <SpotifyWebPlaybackState>
