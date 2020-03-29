@@ -15,9 +15,9 @@ class Track extends Component {
 
     this.hoverOn = this.hoverOn.bind(this);
     this.hoverOff = this.hoverOff.bind(this);
-    this.onClick = this.onClick.bind(this);
     this.hoverIcon = this.hoverIcon.bind(this);
     this.deleteTrack = this.deleteTrack.bind(this);
+    this.addtoQueue = this.addtoQueue.bind(this);
   }
 
   hoverOn() {
@@ -28,7 +28,7 @@ class Track extends Component {
     this.setState({ hover: false });
   }
 
-  onClick() {
+  addtoQueue() {
     let { type } = this.props;
 
     if (type === 'search') {
@@ -69,7 +69,6 @@ class Track extends Component {
       <Media
         onMouseEnter={this.hoverOn}
         onMouseLeave={this.hoverOff}
-        onClick={this.onClick}
         className="px-3"
         style={{ background: hover ? '#AAAAAA20' : '#00000000' }}
       >
