@@ -89,7 +89,7 @@ class Queue extends Component {
     }
 
     return (
-      <div className="mb-5" style={{ overflowX: 'scroll', overflowY: 'scroll', height: '70vh'}}>
+      <div className="mb-5" style={{ background: '#ffffff00', overflowX: 'scroll', overflowY: 'scroll', height: '70vh'}}>
         <DragDropContext onDragEnd={this.onDragEnd}>
           <Droppable droppableId="list">
             {provided => (
@@ -107,7 +107,7 @@ class Queue extends Component {
   render() {
     return <Container fluid className='mt-3'>
       <div>
-        <h3 align='center' className='w-80 d-inline'>
+        <h3 align='center' className='w-80'>
           {this.state.history ? 'History' : 'Queue'}
           <span>
             &nbsp;

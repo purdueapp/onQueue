@@ -8,7 +8,7 @@ import './Player.css';
 
 let albumImage = {
   boxShadow: '0 15px 30px 0 rgba(0, 0, 0, 0.5), 0 20px 40px 0 rgba(0, 0, 0, 0.5)',
-  width: '100%',
+  width: '100%'
 };
 
 function getTime(millis) {
@@ -151,7 +151,7 @@ class Player extends Component {
     }
 
     return (
-      <div className="p-3">
+      <div className="p-3 mx-auto" style={{ maxWidth: '50vh', maxHeight: '50vh' }}>
         <img className='my-3' style={albumImage} src={imageURL} alt={`${trackName} Album Cover`} />
         <h3>{trackName}</h3>
         <h5 className='mb-3' style={{ color: 'lightGrey' }}>{artists}</h5>

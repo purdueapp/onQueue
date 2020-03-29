@@ -70,7 +70,7 @@ class Search extends Component {
         id='query'
       />
 
-      <div style={{ overflowY: 'scroll', display: 'inline-block'}}>
+      <div style={{ maxHeight: '60vh'}}>
       {this.state.tracks.map((track, key) => {
         return (
           <Track track={track} type="search" key={key}/>
