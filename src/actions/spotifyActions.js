@@ -13,7 +13,7 @@ export const REORDER_NEXT_TRACKS = 'REORDER_NEXT_TRACKS'
 export const SET_NEXT_TRACKS = 'SET_NEXT_TRACKS';
 
 export const SIGNAL_TRACK = 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C';
-export const DEFAULT_TRACK = 'spotify:track:6gQEzbiJgaTxi4NiVdKjdW'; // 'spotify:track:4XHBcO3pWqNodXN7NlAR7H'; //
+export const DEFAULT_TRACK = 'spotify:track:6gQEzbiJgaTxi4NiVdKjdW'; // 'spotify:track:4XHBcO3pWqNodXN7NlAR7H'; // 'spotify:track:0cijcj7lqB2ts4bJaYtzMi'; // 
 
 export const setTokens = (tokens) => dispatch => {
   dispatch({
@@ -133,6 +133,7 @@ export const reorderNextTracks = (start, end) => dispatch => {
     }
   })
 }
+
 /*
 export const setNextTracks = (nextTracks) => dispatch => {
   dispatch({

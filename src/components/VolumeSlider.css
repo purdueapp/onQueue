@@ -1,7 +1,7 @@
 .volumeSlider {
   -webkit-appearance: none;
   width: 40%;
-  height: 0.4em;
+  height: 0.35rem;
   border-radius: 5px;
   background: #aaaaaa;
   outline: none;

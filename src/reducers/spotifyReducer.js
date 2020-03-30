@@ -1,5 +1,5 @@
 import SpotifyWebApi from 'spotify-web-api-js';
-import { CLEAR_TOKENS, SET_PLAYER, SET_PLAYBACK_STATE, NEXT_TRACK, PREVIOUS_TRACK, SET_TOKENS, SET_NEXT_TRACKS, DEFAULT_TRACK, SIGNAL_TRACK, QUEUE_TRACK, REORDER_NEXT_TRACKS, nextTrack } from '../actions/spotifyActions';
+import { CLEAR_TOKENS, SET_PLAYER, SET_PLAYBACK_STATE, NEXT_TRACK, PREVIOUS_TRACK, SET_TOKENS, DEFAULT_TRACK, SIGNAL_TRACK, QUEUE_TRACK, REORDER_NEXT_TRACKS } from '../actions/spotifyActions';
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -26,7 +26,6 @@ let initialCurrentTrack = {
   artists: [
     { uri: 'spotify:artist:59T0qdTmDGZ1g0slfSbPfy', name: "Andy Mckee" }
   ]
-
 };
 
 let initialState = {
@@ -120,7 +119,7 @@ export default (state = initialState, action) => {
       var { currentTrack, nextTracks, previousTracks } = state.trackWindow;
       let { start, end } = action.payload;
 
-      if (start === end || start >= nextTracks.length && end >= nextTracks.length) {
+      if ((start === end) || (start >= nextTracks.length) || (end >= nextTracks.length)) {
         return state;
       }
 

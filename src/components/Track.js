@@ -32,8 +32,8 @@ class Track extends Component {
     let { type } = this.props;
 
     if (type === 'search') {
-      let { nextTracks, queueTrack } = this.props;
-  
+      let { queueTrack } = this.props;
+      
       queueTrack(this.props.track);
     }
   }

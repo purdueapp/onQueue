@@ -42,6 +42,7 @@ class VolumeSlider extends Component {
             <FaVolumeUp size='1.3rem' className='mx-2'/>
         )}
         </button>
+        
         <input type="range" min="0" max="100" value={mute ? 0 : volume} 
               className="volumeSlider" id="myRange" onChange={this.handleChange}/>
       </div>

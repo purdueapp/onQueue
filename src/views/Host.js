@@ -5,9 +5,8 @@ import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import Player from '../components/Player';
 import Sidebar from '../components/Sidebar';
 import Script from 'react-load-script';
-import { DEFAULT_TRACK, SIGNAL_TRACK } from '../actions/spotifyActions';
-
-import { nextTrack, previousTrack, setPlayer, setPlaybackState, getAccessToken, getRefreshToken, setTokens } from '../actions/spotifyActions';
+import { SIGNAL_TRACK, nextTrack, setPlayer, setPlaybackState, getAccessToken, getRefreshToken, setTokens } from '../actions/spotifyActions';
+import { setPlayerState } from '../actions/roomActions';
 
 let containerStyle = {
   textAlign: 'center',
@@ -47,8 +46,8 @@ class Host extends Component {
     this.resize();
 
     this.interval = setInterval(() => {
-      let { player, api, playbackState, trackWindow, setPlaybackState, nextTrack } = this.props;
-      let { nextTracks } = trackWindow;
+      let { player, playbackState, setPlaybackState, nextTrack, setPlayerState } = this.props;
+      let { trackWindow } = this.props.spotify;
 
       if (!player || !player.getCurrentState || !playbackState || !playbackState.track_window) {
         return;
@@ -64,6 +63,14 @@ class Host extends Component {
         setPlaybackState(playbackState);
       }
 
+      let playerState = {
+        trackWindow: trackWindow,
+        duration: playbackState.duration,
+        position: playbackState.position,
+        paused: playbackState.paused,
+      }
+
+      setPlayerState(playerState);
     }, 1000);
   }
 
@@ -144,11 +151,11 @@ class Host extends Component {
 };
 
 const mapStateToProps = state => ({
+  spotify: state.spotify,
   playbackState: state.spotify.playbackState,
   tokens: state.spotify.tokens,
   player: state.spotify.player,
   api: state.spotify.api,
-  trackWindow: state.spotify.trackWindow
 })
 
 const mapDispatchToProps = {
@@ -157,7 +164,8 @@ const mapDispatchToProps = {
   getRefreshToken,
   setTokens,
   setPlayer,
-  nextTrack
+  nextTrack,
+  setPlayerState
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Host);
