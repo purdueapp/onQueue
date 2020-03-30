@@ -11,6 +11,7 @@ let backgroundStyle = {
   left: '0vw',
   top: '0vh',
   filter: 'brightness(60%)',
+  background: 'black',
   overflow: 'hidden',
 };
 

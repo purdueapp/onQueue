@@ -131,8 +131,8 @@ export default (state = initialState, action) => {
         }
       });
     case SET_PLAYER:
-      state.player = action.payload;
-      state.player.addListener('ready', ({ device_id }) => {
+      let player = action.payload;
+      player.addListener('ready', ({ device_id }) => {
         //setDevice(device_id, localStorage.getItem('accessToken'));
         state.api.play({
           uris: [DEFAULT_TRACK, SIGNAL_TRACK],
@@ -144,7 +144,9 @@ export default (state = initialState, action) => {
         });
         console.log('Ready with Device ID', device_id);
       });
-      return state;
+      return Object.assign({}, state, {
+        player: player
+      });
     case SET_PLAYBACK_STATE:
       return Object.assign({}, state, {
         playbackState: action.payload,

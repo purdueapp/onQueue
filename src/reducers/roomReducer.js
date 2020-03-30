@@ -71,7 +71,10 @@ export default (state = initialState, action) => {
       });
     case SET_SETTINGS:
       return Object.assign({}, state, {
-        settings: action.payload
+        settings: {
+          ...state.settings,
+          ...action.payload
+        }
       })
     default:
       return state;
