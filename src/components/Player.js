@@ -134,7 +134,8 @@ const mapStateToProps = state => ({
   player: state.spotify.player,
   playbackState: state.spotify.playbackState,
   trackWindow: state.spotify.trackWindow,
-  room: state.room
+  room: state.room,
+  socket: state.socket
 })
 
 export default connect(mapStateToProps, { nextTrack, previousTrack, setPlayerState })(Player);

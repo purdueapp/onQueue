@@ -50,13 +50,14 @@ class Callback extends Component {
       return <div />
     }
     
-    return <Redirect to={`/host/tobi`} />
+    return <Redirect to={`/host`} />
   }
 };
 
 const mapStateToProps = state => ({
   tokens: state.spotify.tokens,
-  spotify: state.spotify
+  spotify: state.spotify,
+  socket: state.socket
 })
 
 export default connect(mapStateToProps, { setTokens, getAccessToken })(Callback);

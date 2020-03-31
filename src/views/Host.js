@@ -6,11 +6,12 @@ import Player from '../components/Player';
 import Sidebar from '../components/Sidebar';
 import Script from 'react-load-script';
 import { SIGNAL_TRACK, nextTrack, setPlayer, setPlaybackState, getAccessToken, getRefreshToken, setTokens } from '../actions/spotifyActions';
+import { setupHostSocket, setupUserSocket } from '../actions/socketActions';
 import { setPlayerState } from '../actions/roomActions';
 
 let containerStyle = {
   textAlign: 'center',
-//  backgroundColor: '#19141488',
+  //  backgroundColor: '#19141488',
   color: 'white',
   display: 'flex',
   alignItems: 'center',
@@ -44,9 +45,29 @@ class Host extends Component {
   componentDidMount() {
     window.addEventListener("resize", this.resize.bind(this));
     this.resize();
+    let { socket, spotify, setupHostSocket, setupUserSocket } = this.props;
+
+    setupHostSocket(socket);
+    setupUserSocket(socket);
+
+    socket.connect();
+    spotify.api.setAccessToken(this.props.getAccessToken());
+    spotify.api.getMe((err, res) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+
+      socket.emit('create room', {
+        host: res,
+        private: false
+      })
+      console.log('creating room');
+    })
+
 
     this.interval = setInterval(() => {
-      let { player, playbackState, setPlaybackState, nextTrack, setPlayerState } = this.props;
+      let { socket, player, playbackState, setPlaybackState, nextTrack, setPlayerState } = this.props;
       let { trackWindow } = this.props.spotify;
 
       if (!player || !player.getCurrentState || !playbackState || !playbackState.track_window) {
@@ -71,11 +92,14 @@ class Host extends Component {
       }
 
       setPlayerState(playerState);
+      socket.emit('update', playerState);
     }, 1000);
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
+    let { socket } = this.props;
+    socket.close();
   }
 
   resize() {
@@ -89,6 +113,7 @@ class Host extends Component {
     if (this.props.tokens.accessToken !== undefined) {
       window.onSpotifyWebPlaybackSDKReady = () => {
         this.props.setPlayer();
+
       };
 
       return (
@@ -110,43 +135,38 @@ class Host extends Component {
   }
 
   render() {
-    if (this.state.mobile) {
-      return (
-        <Container className='p-0' fluid style={containerStyle}>
-          <Navbar fixed='top' bg='clear' variant='dark'>
-            <Nav className='mx-auto mt-3'>
+    let { mobile } = this.state;
 
-            </Nav>
-          </Navbar>
-          <Row className='w-100 h-100'>
-            <Col md={12} className='m-0 px-3 py-4 h-100' style={sideBarStyle}>
-              <Sidebar />
-            </Col>
-          </Row>
-          {this.script()}
-        </Container>
-      )
-    }
-    else {
-      return (
-        <Container className='p-0 m-0 w-100' fluid style={containerStyle}>
-          <Navbar fixed='top' bg='clear' variant='dark'>
-            <Nav className='mx-auto mt-3'>
+    return (
+      <Container className='p-0 m-0 w-100' fluid style={containerStyle}>
+        <Navbar fixed='top' bg='clear' variant='dark'>
+          <Nav className='mx-auto mt-3'>
 
-            </Nav>
-          </Navbar>
-          <Row className='w-100 h-100'>
-            <Col lg={4} md={6} sm={8} className='mx-auto my-auto'>
-              <Player />
-            </Col>
-            <Col lg={2} md={3} sm={4} className='m-0 px-5 py-4 h-100' style={sideBarStyle}>
-              <Sidebar />
-            </Col>
-          </Row>
-          {this.script()}
-        </Container>
-      )
-    }
+          </Nav>
+        </Navbar>
+        <Row className='w-100 h-100'>
+          {mobile ?
+            (
+              <Col md={12} className='m-0 px-3 py-4 h-100' style={sideBarStyle}>
+                <Sidebar />
+              </Col>
+            )
+            :
+            (
+              <>
+                <Col lg={4} md={6} sm={8} className='mx-auto my-auto'>
+                  <Player />
+                </Col>
+                <Col lg={2} md={3} sm={4} className='m-0 px-5 py-4 h-100' style={sideBarStyle}>
+                  <Sidebar />
+                </Col>
+              </>
+            )
+          }
+        </Row>
+        {this.script()}
+      </Container>
+    )
   }
 };
 
@@ -156,6 +176,7 @@ const mapStateToProps = state => ({
   tokens: state.spotify.tokens,
   player: state.spotify.player,
   api: state.spotify.api,
+  socket: state.socket
 })
 
 const mapDispatchToProps = {
@@ -165,7 +186,9 @@ const mapDispatchToProps = {
   setTokens,
   setPlayer,
   nextTrack,
-  setPlayerState
+  setPlayerState,
+  setupHostSocket,
+  setupUserSocket
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Host);

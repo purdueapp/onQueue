@@ -35,7 +35,7 @@ let initialState = {
   host: {},
   settings: {
     volume: 0.5
-  }
+  },
 }
 
 export default (state = initialState, action) => {
