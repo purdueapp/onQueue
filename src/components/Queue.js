@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 import Track from './Track';
 import { FaHistory } from 'react-icons/fa';
 import { MdQueueMusic } from 'react-icons/md';
-import { reorderNextTracks } from '../actions/spotifyActions';
+import { reorder } from '../actions/roomActions';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const TrackList = React.memo(function TrackList({ tracks }) {
@@ -37,16 +37,14 @@ class Queue extends Component {
   }
 
   onDragEnd(result) {
+    let { reorder } = this.props;
+
     if (!result.destination || result.destination.index === result.source.index) {
       return;
     }
 
     let { socket } = this.props;
-    socket.emit('command', {
-      type: 'reorder',
-      start: result.source.index,
-      end: result.destination.index
-    })
+    reorder(result.destination.index, result.source.index);
   }
 
   historyClicked() {
@@ -115,4 +113,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect(mapStateToProps, { reorderNextTracks })(Queue);
+export default connect(mapStateToProps, { reorder })(Queue);

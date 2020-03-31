@@ -42,5 +42,79 @@ export const setSettings = (settings) => dispatch => {
 }
 
 export const play = () => dispatch => {
+  dispatch({
+    type: SOCKET_EMIT,
+    payload: {
+      eventName: 'command',
+      data: {
+        type: 'play'
+      }
+    }
+  })
+}
+
+export const pause = () => dispatch => {
+  dispatch({
+    type: SOCKET_EMIT,
+    payload: {
+      eventName: 'command',
+      data: {
+        type: 'pause'
+      }
+    }
+  })
+}
+
+export const next = () => dispatch => {
+  dispatch({
+    type: SOCKET_EMIT,
+    payload: {
+      eventName: 'command',
+      data: {
+        type: 'next'
+      }
+    }
+  })
+}
+
+export const previous = () => dispatch => {
+  dispatch({
+    type: SOCKET_EMIT,
+    payload: {
+      eventName: 'command',
+      data: {
+        type: 'previous'
+      }
+    }
+  })
+}
+
+export const reorder = (start, end) => dispatch => {
+  dispatch({
+    type: SOCKET_EMIT,
+    payload: {
+      eventName: 'command',
+      data: {
+        type: 'reorder',
+        start: start,
+        end: end
+      }
+    }
+  })
+}
+
+export const seek = (position) => dispatch => {
+  dispatch({
+    type: SOCKET_EMIT,
+    payload: {
+      eventName: 'command',
+      data: {
+        type: 'seek',
+        position: position
+      }
+    }
+  })}
+
+export const queue = (track) => dispatch => {
   
 }

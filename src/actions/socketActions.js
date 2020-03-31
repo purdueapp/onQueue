@@ -23,26 +23,31 @@ export const setupUserSocket = (socket) => dispatch => {
           type: SET_ROOM_STATE,
           payload: data.room
         })
+        break;
       case 'playerState':
         dispatch({
           type: SET_PLAYER_STATE,
           payload: data.playerState
         })
+        break;
       case 'trackWindow':
         dispatch({
           type: SET_TRACK_WINDOW,
           paylaod: data.trackWindow
         })
+        break;
       case 'members':
         dispatch({
           type: SET_MEMBERS,
           payload: data.members
         })
+        break;
       case 'settings':
         dispatch({
           type: SET_SETTINGS,
           payload: data.settings
         })
+        break;
     }
   })
 }
@@ -96,7 +101,6 @@ export const setupHostSocket = (socket) => dispatch => {
           payload: data.track
         })
         break;
-
     }
   });
 }

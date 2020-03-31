@@ -7,7 +7,7 @@ import Sidebar from '../components/Sidebar';
 import Script from 'react-load-script';
 import { SIGNAL_TRACK, nextTrack, setPlayer, setPlaybackState, getAccessToken, getRefreshToken, setTokens } from '../actions/spotifyActions';
 import { setupHostSocket, setupUserSocket } from '../actions/socketActions';
-import { setPlayerState } from '../actions/roomActions';
+import { setPlayerState, play } from '../actions/roomActions';
 
 let containerStyle = {
   textAlign: 'center',
@@ -45,22 +45,23 @@ class Host extends Component {
   componentDidMount() {
     window.addEventListener("resize", this.resize.bind(this));
     this.resize();
-    let { socket, spotify, setupHostSocket, setupUserSocket } = this.props;
+    let { socket, spotify, setupHostSocket, setupUserSocket, getAccessToken } = this.props;
 
     setupHostSocket(socket);
     setupUserSocket(socket);
 
     socket.connect();
-    spotify.api.setAccessToken(this.props.getAccessToken());
-    spotify.api.getMe((err, res) => {
+    spotify.api.setAccessToken(getAccessToken());
+    spotify.api.getMe((err, user) => {
       if (err) {
         console.log(err);
         return;
       }
 
       socket.emit('create room', {
-        host: res,
+        host: user,
         private: false,
+        accessToken: getAccessToken()
       })
       console.log('creating room');
     })
@@ -91,8 +92,12 @@ class Host extends Component {
         paused: playbackState.paused,
       }
 
-      setPlayerState(playerState);
-      socket.emit('update', playerState);
+      if (playerState !== this.props.room.playerState) {
+        socket.emit('update', {
+          type: 'playerState',
+          playerState: playerState
+        });
+      }
     }, 1000);
   }
 
@@ -172,6 +177,7 @@ class Host extends Component {
 
 const mapStateToProps = state => ({
   spotify: state.spotify,
+  room: state.room,
   playbackState: state.spotify.playbackState,
   tokens: state.spotify.tokens,
   player: state.spotify.player,

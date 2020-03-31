@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { FaPlay, FaBackward, FaForward, FaPause } from 'react-icons/fa';
 import Background from './Background';
 import VolumeSlider from '../components/VolumeSlider';
-import { nextTrack, previousTrack } from '../actions/spotifyActions';
+import { play, pause, next, previous, seek } from '../actions/roomActions';
 import { setPlayerState } from '../actions/roomActions';
 import './Player.css';
 
@@ -55,65 +55,31 @@ class Player extends Component {
     }
 
     this.state = playerState;
-    this.play = this.play.bind(this);
-    this.pause = this.pause.bind(this);
-    this.nextTrack = this.nextTrack.bind(this);
-    this.previousTrack = this.previousTrack.bind(this);
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
-  play() {
-    let { socket } = this.props;
-    socket.emit('command', {
-      type: 'play'
-    })
-  }
-
-  pause() {
-    let { socket } = this.props;
-    socket.emit('command', {
-      type: 'pause'
-    })
-  }
-
-  nextTrack() {
-    let { socket } = this.props;
-    socket.emit('command', {
-      type: 'next'
-    })
-  }
-
-  previousTrack() {
-    let { socket } = this.props;
-    socket.emit('command', {
-      type: 'previous'
-    })
-  }
-
   render() {
     let { trackWindow, paused, duration, position } = this.props.room.playerState;
+    let { play, pause, next, previous } = this.props;
     let { currentTrack } = trackWindow;
-  
+
     let artists = currentTrack.artists.map(artist => artist.name).join(', ');
     let imageURL = currentTrack.album.images[0].url;
     let trackName = currentTrack.name;
 
     const handleChange = (event) => {
-      let { setPlayerState } = this.props;
+      let { setPlayerState, seek } = this.props;
       let newPosition = event.target.value;
-      let { player } = this.props;
-      if (player) {
-        setPlayerState({ position: duration * newPosition / 100 });
 
-        clearTimeout(this.timeout);
+      setPlayerState({ position: duration * newPosition / 100 });
 
-        this.timeout = setTimeout(() => {
-          player.seek(newPosition * duration / 100);
-        }, 500);
-      }
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        seek(newPosition * duration / 100);
+      }, 500);
     }
 
     return (
@@ -123,9 +89,13 @@ class Player extends Component {
         <h5 className='mb-3' style={{ color: 'lightGrey' }}>{artists}</h5>
 
         <h5 style={{ float: 'left' }}>{getTime(position)}</h5>
-        <FaBackward size='1.4em' className='mb-1' onClick={this.previousTrack} />
-        {paused ? < FaPlay size='1.4em' className='mx-4 mb-1' onClick={this.play} /> : <FaPause size='1.4em' className='mx-4 mb-1' onClick={this.pause} />}
-        <FaForward size='1.4em' className='mb-1' onClick={this.nextTrack} />
+        <FaBackward size='1.4em' className='mb-1' onClick={previous} />
+        { paused ?
+          < FaPlay size='1.4em' className='mx-4 mb-1' onClick={play} />
+          :
+          <FaPause size='1.4em' className='mx-4 mb-1' onClick={pause} />
+        }
+        <FaForward size='1.4em' className='mb-1' onClick={next} />
         <h5 style={{ float: 'right' }}>{getTime(duration)}</h5>
 
         <input type="range" min="0" max="100" value={100 * position / duration}
@@ -146,4 +116,13 @@ const mapStateToProps = state => ({
   socket: state.socket
 })
 
-export default connect(mapStateToProps, { nextTrack, previousTrack, setPlayerState })(Player);
+const mapDispatchToProps = {
+  play,
+  pause,
+  next,
+  previous,
+  seek,
+  setPlayerState
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Player);
