@@ -8,6 +8,7 @@
   },
   duration: 0,
   position: 0,
+  volume: 0.5,
   paused: false,
   members: [<User>, <User>, ...],
   host: <SpotifyUser>

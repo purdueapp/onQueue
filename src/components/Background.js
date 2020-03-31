@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import Blur from 'react-blur';
 import './Background.css';
 
@@ -11,6 +11,7 @@ let backgroundStyle = {
   left: '0vw',
   top: '0vh',
   filter: 'brightness(60%)',
+  background: 'black',
   overflow: 'hidden',
 };
 

@@ -10,7 +10,7 @@ import Settings from '../components/Settings';
 import Player from '../components/Player';
 
 let settingsDiv = {
-  backgroundColor: '#FFFFFF20',
+  backgroundColor: '#FFFFFF30',
   borderRadius: '25px',
   alignItems: 'center',
   justifyContent: 'center',

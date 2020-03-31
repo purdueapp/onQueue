@@ -7,20 +7,6 @@ import { MdQueueMusic } from 'react-icons/md';
 import { reorderNextTracks } from '../actions/spotifyActions';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const getItems = count =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `item-${k}`,
-    content: `item ${k}`
-  }));
-
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
 const TrackList = React.memo(function TrackList({ tracks }) {
   return tracks.map((track, index) => (
     <Draggable draggableId={track.id} index={index} key={track.id}>
@@ -42,8 +28,7 @@ class Queue extends Component {
     super(props);
 
     this.state = {
-      history: false,
-      items: getItems(3)
+      history: false
     }
 
     this.historyClicked = this.historyClicked.bind(this);
@@ -69,7 +54,7 @@ class Queue extends Component {
   }
 
   renderTracks() {
-    let { nextTracks, previousTracks } = this.props.spotify.trackWindow;
+    let { nextTracks, previousTracks } = this.props.room.playerState.trackWindow;
     let { history } = this.state;
 
     if (!nextTracks || !previousTracks) {
@@ -89,7 +74,7 @@ class Queue extends Component {
     }
 
     return (
-      <div className="mb-5" style={{ background: '#ffffff00', overflowX: 'scroll', overflowY: 'scroll', height: '70vh'}}>
+      <div className="mb-5" style={{ background: '#ffffff00', overflowX: 'scroll', overflowY: 'scroll', height: '70vh' }}>
         <DragDropContext onDragEnd={this.onDragEnd}>
           <Droppable droppableId="list">
             {provided => (
@@ -122,18 +107,9 @@ class Queue extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  state.spotify.trackWindow.nextTracks = state.spotify.trackWindow.nextTracks.map((track, index) => {
-    return {
-      index: index.toString(),
-      ...track
-    }
-  })
-  return {
-    spotify: state.spotify,
-    trackWindow: state.spotify.trackWindow,
-    //nextTracks: state.spotify.trackWindow.nextTracks
-  }
-}
+const mapStateToProps = state => ({
+  room: state.room
+})
+
 
 export default connect(mapStateToProps, { reorderNextTracks })(Queue);
