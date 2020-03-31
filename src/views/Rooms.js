@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Card, CardColumns, CardDeck } from 'react-bootstrap';
+import { Button, Card, CardColumns } from 'react-bootstrap';
 import bg from '../images/bg.jpg';
 import { FaArrowLeft } from 'react-icons/fa';
 
