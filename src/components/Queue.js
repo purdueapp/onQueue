@@ -37,15 +37,17 @@ class Queue extends Component {
   }
 
   onDragEnd(result) {
-    let { reorderNextTracks } = this.props;
-
     if (!result.destination || result.destination.index === result.source.index) {
       return;
     }
 
-    reorderNextTracks(result.source.index, result.destination.index);
+    let { socket } = this.props;
+    socket.emit('command', {
+      type: 'reorder',
+      start: result.source.index,
+      end: result.destination.index
+    })
   }
-
 
   historyClicked() {
     this.setState(state => ({
@@ -108,7 +110,8 @@ class Queue extends Component {
 }
 
 const mapStateToProps = state => ({
-  room: state.room
+  room: state.room,
+  socket: state.socket
 })
 
 

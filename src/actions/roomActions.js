@@ -1,3 +1,5 @@
+import { SOCKET_EMIT } from './socketActions';
+
 export const SET_ROOM_STATE = 'SET_ROOM_STATE';
 export const INCREMENT_POSITION = 'INCREMENT_POSITION';
 export const SET_PLAYER_STATE = 'SET_PLAYER_STATE';
@@ -37,4 +39,8 @@ export const setSettings = (settings) => dispatch => {
     type: SET_SETTINGS,
     payload: settings
   })
+}
+
+export const play = () => dispatch => {
+  
 }

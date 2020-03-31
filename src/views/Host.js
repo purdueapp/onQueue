@@ -60,7 +60,7 @@ class Host extends Component {
 
       socket.emit('create room', {
         host: res,
-        private: false
+        private: false,
       })
       console.log('creating room');
     })

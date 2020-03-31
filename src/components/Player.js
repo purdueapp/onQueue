@@ -55,34 +55,42 @@ class Player extends Component {
     }
 
     this.state = playerState;
+    this.play = this.play.bind(this);
+    this.pause = this.pause.bind(this);
+    this.nextTrack = this.nextTrack.bind(this);
+    this.previousTrack = this.previousTrack.bind(this);
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
-  play = () => {
-    let { player } = this.props;
-    if (player) {
-      player.resume();
-    }
+  play() {
+    let { socket } = this.props;
+    socket.emit('command', {
+      type: 'play'
+    })
   }
 
-  pause = () => {
-    let { player } = this.props;
-    if (player) {
-      player.pause();
-    }
+  pause() {
+    let { socket } = this.props;
+    socket.emit('command', {
+      type: 'pause'
+    })
   }
 
-  nextTrack = () => {
-    let { nextTrack } = this.props;
-    nextTrack();
+  nextTrack() {
+    let { socket } = this.props;
+    socket.emit('command', {
+      type: 'next'
+    })
   }
 
-  previousTrack = () => {
-    let { previousTrack } = this.props;
-    previousTrack();
+  previousTrack() {
+    let { socket } = this.props;
+    socket.emit('command', {
+      type: 'previous'
+    })
   }
 
   render() {

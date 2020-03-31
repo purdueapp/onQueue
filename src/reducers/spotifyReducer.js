@@ -149,22 +149,19 @@ export default (state = initialState, action) => {
         player: player
       });
     case RESUME_PLAYER:
-      if (!state.player) {
-        return;
+      if (state.player) {
+        state.player.resume();
       }
-      state.player.resume();
       return state;
     case PAUSE_PLAYER:
-      if (!state.player) {
-        return;
+      if (state.player) {
+        state.player.pause();
       }
-      state.player.pause();
       return state;
     case SEEK_PLAYER:
-      if (!state.player) {
-        return;
+      if (state.player) {
+        state.player.seek(action.payload);
       }
-      state.player.seek(action.payload);
       return state;
     case SET_PLAYBACK_STATE:
       return Object.assign({}, state, {

@@ -29,17 +29,25 @@ class Track extends Component {
   }
 
   addtoQueue() {
-    let { type } = this.props;
+    let { type, socket, track } = this.props;
 
     if (type === 'search') {
       let { queueTrack } = this.props;
       
-      queueTrack(this.props.track);
+      socket.emit('command', {
+        type: 'queue',
+        track: track
+      })
     }
   }
 
-  deleteTrack(){
+  deleteTrack(index) {
+    let { socket } = this.props;
 
+    socket.emit('command', {
+      type: 'remove',
+      index: index
+    })
   }
 
   hoverIcon() {
@@ -95,6 +103,7 @@ class Track extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   nextTracks: state.spotify.trackWindow.nextTracks,
+  socket: state.socket,
   type: ownProps.type,
   key: ownProps.key,
   track: ownProps.track

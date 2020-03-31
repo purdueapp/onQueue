@@ -48,9 +48,9 @@ export const setupUserSocket = (socket) => dispatch => {
 }
 
 export const setupHostSocket = (socket) => dispatch => {
-  socket.on('event', (data) => {
+  socket.on('command', (data) => {
     console.log('socket handle event')
-    switch (data.event) {
+    switch (data.type) {
       case 'next':
         dispatch({
           type: NEXT_TRACK

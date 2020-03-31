@@ -1,7 +1,8 @@
 import io from 'socket.io-client';
 import { SOCKET_EMIT } from '../actions/socketActions';
 
-let initialState = io('http://data.cs.purdue.edu:7374');
+let initialState = io('http://on-queue.herokuapp.com/');
+// http://data.cs.purdue.edu:7373
 
 export default (state = initialState, action) => {
   switch (action.type) {
