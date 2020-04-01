@@ -119,7 +119,6 @@ export default (state = initialState, action) => {
     case REORDER_NEXT_TRACKS:
       var { nextTracks } = state.trackWindow;
       let { start, end } = action.payload;
-      console.log(`start: ${start} end: ${end}`);
 
       if ((start === end) || (start >= nextTracks.length) || (end >= nextTracks.length)) {
         return state;
@@ -133,15 +132,11 @@ export default (state = initialState, action) => {
       });
     case REMOVE_TRACK:
       var { nextTracks } = state.trackWindow;
-      let track = action.payload;
-      let index = nextTrack.indexOf(track);
-      console.log(track)
-      console.log(index)
       
       return Object.assign({}, state, {
         trackWindow: {
           ...state.trackWindow,
-          nextTracks: nextTracks.splice(index, 1)
+          nextTracks: nextTracks.filter(track => track.id !== action.payload.id)
         }
       })
     case SET_PLAYER:

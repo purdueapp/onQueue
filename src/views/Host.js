@@ -45,7 +45,7 @@ class Host extends Component {
   componentDidMount() {
     window.addEventListener("resize", this.resize.bind(this));
     this.resize();
-    let { socket, spotify, setupHostSocket, setupUserSocket, getAccessToken } = this.props;
+    let { socket, spotify, setupHostSocket, setupUserSocket, getAccessToken, room } = this.props;
 
     setupHostSocket(socket);
     setupUserSocket(socket);
@@ -61,7 +61,8 @@ class Host extends Component {
       socket.emit('create room', {
         host: user,
         private: false,
-        accessToken: getAccessToken()
+        accessToken: getAccessToken(),
+        playerState: room.playerState
       })
       console.log('creating room');
     })

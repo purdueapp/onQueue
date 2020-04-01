@@ -16,7 +16,6 @@ export const socketEmit = (eventName, data) => dispatch => {
 
 export const setupUserSocket = (socket) => dispatch => {
   socket.on('update', (data) => {
-    console.log('socket update')
     switch (data.type) {
       case 'room':
         dispatch({

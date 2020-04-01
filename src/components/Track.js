@@ -36,10 +36,10 @@ class Track extends Component {
     }
   }
 
-  deleteTrack(index) {
+  deleteTrack() {
     let { remove, track } = this.props;
 
-    remove(index);
+    remove(track);
   }
 
   hoverIcon() {
