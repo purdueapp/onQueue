@@ -18,7 +18,7 @@ export const PAUSE_PLAYER = 'PAUSE_PLAYER';
 export const REMOVE_TRACK = 'REMOVE_TRACK';
 
 export const SIGNAL_TRACK = 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C';
-export const DEFAULT_TRACK = 'spotify:track:0cijcj7lqB2ts4bJaYtzMi'; //  'spotify:track:6gQEzbiJgaTxi4NiVdKjdW'; //
+export const DEFAULT_TRACK =  'spotify:track:6gQEzbiJgaTxi4NiVdKjdW'; //'spotify:track:0cijcj7lqB2ts4bJaYtzMi'; // 
 
 export const setTokens = (tokens) => dispatch => {
   dispatch({
