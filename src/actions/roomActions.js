@@ -14,6 +14,13 @@ export const setRoomState = (state) => dispatch => {
   })
 }
 
+export const setTrackWindow = (state) => dispatch => {
+  dispatch({
+    type: SET_TRACK_WINDOW,
+    payload: state
+  })
+}
+
 export const incrementPosition = () => dispatch => {
   dispatch({
     type: INCREMENT_POSITION
@@ -129,14 +136,14 @@ export const queue = (track) => dispatch => {
   })
 }
 
-export const remove = (index) => dispatch => {
+export const remove = (track) => dispatch => {
   dispatch({
     type: SOCKET_EMIT,
     payload: {
       eventName: 'command',
       data: {
         type: 'remove',
-        index: index
+        track: track
       }
     }
   })

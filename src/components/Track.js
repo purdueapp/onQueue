@@ -37,7 +37,7 @@ class Track extends Component {
   }
 
   deleteTrack(index) {
-    let { remove } = this.props;
+    let { remove, track } = this.props;
 
     remove(index);
   }
@@ -56,7 +56,7 @@ class Track extends Component {
     }
     else if (type === 'nextTrack') {
       return (
-        <TiDeleteOutline className='my-2' size={25} color='grey' style={{cursor: 'pointer'}} onClick={this.state.deleteTrack}/>
+        <TiDeleteOutline className='my-2' size={25} color='grey' style={{cursor: 'pointer'}} onClick={this.deleteTrack}/>
       )
     }
   }

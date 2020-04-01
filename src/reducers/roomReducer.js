@@ -62,7 +62,10 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {
         playerState: {
           ...state.playerState,
-          trackWindow: action.payload,
+          trackWindow: {
+            ...state.playerState.trackWindow,
+            ...action.payload
+          },
         }
       })
     case SET_MEMBERS:

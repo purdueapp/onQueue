@@ -4,8 +4,16 @@ import { Container } from 'react-bootstrap';
 import Track from './Track';
 import { FaHistory } from 'react-icons/fa';
 import { MdQueueMusic } from 'react-icons/md';
-import { reorder } from '../actions/roomActions';
+import { reorder, setTrackWindow } from '../actions/roomActions';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
+const reorderAlgo = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
 
 const TrackList = React.memo(function TrackList({ tracks }) {
   return tracks.map((track, index) => (
@@ -36,14 +44,17 @@ class Queue extends Component {
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
-  onDragEnd(result) {
-    let { reorder } = this.props;
+  async onDragEnd(result) {
+    let { reorder, room, setTrackWindow } = this.props;
 
     if (!result.destination || result.destination.index === result.source.index) {
       return;
     }
 
     reorder(result.source.index, result.destination.index);
+    setTrackWindow({
+      nextTracks: reorderAlgo(room.playerState.trackWindow.nextTracks, result.source.index, result.destination.index)
+    })
   }
 
   historyClicked() {
@@ -111,5 +122,9 @@ const mapStateToProps = state => ({
   socket: state.socket
 })
 
+const mapDispatchToProps = {
+  reorder,
+  setTrackWindow
+}
 
-export default connect(mapStateToProps, { reorder })(Queue);
+export default connect(mapStateToProps, mapDispatchToProps)(Queue);
