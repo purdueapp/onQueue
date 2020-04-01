@@ -25,7 +25,7 @@ class Code extends Component {
             </p>
             <div className='p-2' style={{ background: 'white' }}>
             <QRCode 
-              value={`${window.location.hostname}/${this.props.hostID}`} 
+              value={`www.${window.location.hostname}/${this.props.hostID}`} 
               size={150}
             />
             </div>
