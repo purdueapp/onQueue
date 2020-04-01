@@ -135,6 +135,8 @@ export default (state = initialState, action) => {
       var { nextTracks } = state.trackWindow;
       let track = action.payload;
       let index = nextTrack.indexOf(track);
+      console.log(track)
+      console.log(index)
       
       return Object.assign({}, state, {
         trackWindow: {

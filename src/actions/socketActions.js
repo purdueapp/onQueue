@@ -104,7 +104,7 @@ export const setupHostSocket = (socket) => dispatch => {
       case 'remove':
         dispatch({
           type: REMOVE_TRACK,
-          payload: data.index
+          payload: data.track
         })
         break;
     }
