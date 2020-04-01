@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Media from 'react-bootstrap/Media';
 import { MdPlaylistAdd } from 'react-icons/md';
-import { queueTrack } from '../actions/spotifyActions';
+import { queue, remove } from '../actions/roomActions';
 import { TiDeleteOutline } from 'react-icons/ti';
 
 class Track extends Component {
@@ -29,25 +29,17 @@ class Track extends Component {
   }
 
   addtoQueue() {
-    let { type, socket, track } = this.props;
+    let { type, queue, track } = this.props;
 
     if (type === 'search') {
-      let { queueTrack } = this.props;
-      
-      socket.emit('command', {
-        type: 'queue',
-        track: track
-      })
+      queue(track);
     }
   }
 
   deleteTrack(index) {
-    let { socket } = this.props;
+    let { remove } = this.props;
 
-    socket.emit('command', {
-      type: 'remove',
-      index: index
-    })
+    remove(index);
   }
 
   hoverIcon() {
@@ -109,4 +101,9 @@ const mapStateToProps = (state, ownProps) => ({
   track: ownProps.track
 })
 
-export default connect(mapStateToProps, { queueTrack })(Track);
+const mapDispatchToProps = {
+  queue,
+  remove
+}
+
+export default connect(mapStateToProps, mapDispatchToProps )(Track);

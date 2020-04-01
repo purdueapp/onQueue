@@ -43,8 +43,7 @@ class Queue extends Component {
       return;
     }
 
-    let { socket } = this.props;
-    reorder(result.destination.index, result.source.index);
+    reorder(result.source.index, result.destination.index);
   }
 
   historyClicked() {

@@ -113,8 +113,31 @@ export const seek = (position) => dispatch => {
         position: position
       }
     }
-  })}
+  })
+}
 
 export const queue = (track) => dispatch => {
-  
+  dispatch({
+    type: SOCKET_EMIT,
+    payload: {
+      eventName: 'command',
+      data: {
+        type: 'queue',
+        track: track
+      }
+    }
+  })
+}
+
+export const remove = (index) => dispatch => {
+  dispatch({
+    type: SOCKET_EMIT,
+    payload: {
+      eventName: 'command',
+      data: {
+        type: 'remove',
+        index: index
+      }
+    }
+  })
 }

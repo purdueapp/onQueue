@@ -86,6 +86,7 @@ export const setupHostSocket = (socket) => dispatch => {
         break;
 
       case 'reorder':
+        console.log(data);
         dispatch({
           type: REORDER_NEXT_TRACKS,
           payload: {

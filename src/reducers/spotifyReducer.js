@@ -119,6 +119,7 @@ export default (state = initialState, action) => {
     case REORDER_NEXT_TRACKS:
       var { currentTrack, nextTracks, previousTracks } = state.trackWindow;
       let { start, end } = action.payload;
+      console.log(`start: ${start} end: ${end}`);
 
       if ((start === end) || (start >= nextTracks.length) || (end >= nextTracks.length)) {
         return state;

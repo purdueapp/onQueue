@@ -86,10 +86,13 @@ class Host extends Component {
       }
 
       let playerState = {
-        trackWindow: trackWindow,
         duration: playbackState.duration,
         position: playbackState.position,
         paused: playbackState.paused,
+      }
+
+      if (trackWindow !== this.props.room.playerState.trackWindow) {
+        playerState.trackWindow = trackWindow;
       }
 
       if (playerState !== this.props.room.playerState) {
