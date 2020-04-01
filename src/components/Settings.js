@@ -31,27 +31,6 @@ let closeRoom = {
 class Settings extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      hostDisplayName: 'Tobi',
-      hostID: 'tobi',
-      hostImage: 'https://i.scdn.co/image/ab67616d0000b273e56c05d7ef8ffbd828d0bd40'
-    }
-  }
-
-  componentDidMount() {
-    this.props.api.getMe((err, res) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-
-      this.setState({
-        hostDisplayName: res.display_name,
-        hostID: res.id,
-        hostImage: res.images[0].url
-      });
-    })
   }
 
   submitlogout = () => {
@@ -95,6 +74,7 @@ class Settings extends Component {
   }
 
   render() {
+    let { host } = this.props.room;
 
     return <Container fluid className='mt-3'>
       <h3>Settings</h3>
@@ -108,14 +88,14 @@ class Settings extends Component {
       */}
         <Col className='px-0 py-0' align='left' >
           <p className='mt-0 py-3' style={{ whiteSpace: 'nowrap', overflow: 'auto' }}>
-            <b>Host:  </b> {this.state.hostDisplayName}
+            <b>Host:  </b> {host.display_name}
           </p>
         </Col>
         <Col className='px-0 py-1' align='right'>
           <img height={60} width={60} style={{
             borderRadius: "1px",
           }}
-            src={this.state.hostImage}
+            src={host.images[0].url}
             alt="profile pic" />
         </Col>
       </Row>
@@ -123,7 +103,7 @@ class Settings extends Component {
       <NewUserType />
       <MaxSongsDJ />
       <MaxSongsQueue />
-      <Code hostID={this.state.hostID} />
+      <Code hostID={host.id} />
       <button className="btn-pill btn-sm" type="button" align='left'
         style={logout}
         onClick={this.submitlogout}>
@@ -140,7 +120,8 @@ class Settings extends Component {
 }
 
 const mapStateToProps = state => ({
-  api: state.spotify.api
+  api: state.spotify.api,
+  room: state.room
 })
 
 export default connect(mapStateToProps, null)(Settings);
