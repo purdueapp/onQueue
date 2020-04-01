@@ -7,7 +7,6 @@ filter: blur(1em);
 width: 100vw;
 height: 100vh;
 position: fixed;
-transform: scale(1);
 z-index: -2;
 left: 0vw;
 top: 0vh;
