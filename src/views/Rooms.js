@@ -20,7 +20,7 @@ class Rooms extends Component {
         </Button>
 
         <ListGroup style={listContainer}>
-          <Room host="tobi" count={0} maxCount={1} queueLength={1} />
+          <Room host="tobi" count={0} queueLength={1} />
           <Room host="jiena76" />
           <Room host="vevian" />
           <Room host="youngsosick" />
