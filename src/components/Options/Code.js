@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { FaCopy } from 'react-icons/fa';
 import { StyleSheet, css } from 'aphrodite';
@@ -7,7 +7,6 @@ let QRCode = require('qrcode.react');
 
 export default function Code(props) {
   const [copySuccess, setCopySuccess] = useState('');
-  const textAreaRef = useRef(null);
 
   function copyToClipboard(e) {
     let dummy = document.createElement('input');
