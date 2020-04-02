@@ -8,7 +8,7 @@ let QRCode = require('qrcode.react');
 export default function Code(props) {
   const [copySuccess, setCopySuccess] = useState('');
   let { hostID } = props;
-  let url = `www.${window.location.hostname}/${hostID}`;
+  let url = `http://${window.location.hostname}/${hostID}`;
 
   function copyToClipboard(e) {
     let dummy = document.createElement('input');

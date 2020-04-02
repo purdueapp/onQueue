@@ -72,7 +72,7 @@ class Settings extends Component {
   render() {
     let { host } = this.props.room;
 
-    return <Container fluid className='mt-3' style={{ overflow: 'auto', marginLeft:'-15px', paddingTop:'5px', width:'320px', maxHeight:'700px'}}>
+    return <Container fluid className='mt-3' style={{ overflow: 'auto', marginLeft:'-15px', paddingTop:'5px', width:'100%', maxHeight:'700px'}}>
       <Container>
       <h3>Settings</h3>
       <hr style={{ backgroundColor: 'gray' }} />
