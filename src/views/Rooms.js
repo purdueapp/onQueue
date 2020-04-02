@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import { Button, ListGroup } from 'react-bootstrap';
 import bg from '../images/bg.jpg';
 import { FaArrowLeft } from 'react-icons/fa';
 import Room from '../components/Room';
@@ -32,7 +32,6 @@ class Rooms extends Component {
         <Button variant="link" style={back} href="/" >
           <FaArrowLeft /> Back
         </Button>
-
         <div className="list-group" style={listContainer}>
           {rooms.map((room, index) => <Room key={index} room={room} />)}
         </div>

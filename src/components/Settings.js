@@ -14,17 +14,17 @@ let logout = {
   color: "#fff",
   background: "#6C757D",
   borderColor: "#6C757D",
-  position: "fixed",
-  bottom: "10%",
-  right: "19%"
+  position: "relative",
+  top:"80px",
+  right: "70px"
 }
 let closeRoom = {
   color: "#fff",
   background: "#6C757D",
   borderColor: "#6C757D",
-  position: "fixed",
-  bottom: "10%",
-  right: "3%"
+  position: "relative",
+  top:"80px",
+  left: "70px"
 
 }
 
