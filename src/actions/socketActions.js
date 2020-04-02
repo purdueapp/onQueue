@@ -47,6 +47,8 @@ export const setupUserSocket = (socket) => dispatch => {
           payload: data.settings
         })
         break;
+      default:
+        console.log(data.type + ' missed')
     }
   })
 }
@@ -106,6 +108,8 @@ export const setupHostSocket = (socket) => dispatch => {
           payload: data.track
         })
         break;
+      default:
+        console.log(data.type + ' missed')
     }
   });
 }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import RoomType from './Options/RoomType';
@@ -29,10 +28,6 @@ let closeRoom = {
 }
 
 class Settings extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   submitlogout = () => {
     confirmAlert({
       title: 'Confirm to logout',

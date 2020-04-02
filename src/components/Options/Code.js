@@ -7,6 +7,8 @@ let QRCode = require('qrcode.react');
 
 export default function Code(props) {
   const [copySuccess, setCopySuccess] = useState('');
+  let { hostID } = props;
+  let url = `www.${window.location.hostname}/${hostID}`;
 
   function copyToClipboard(e) {
     let dummy = document.createElement('input');
@@ -20,31 +22,34 @@ export default function Code(props) {
     setCopySuccess('Copied!');
   };
 
-  return(
+  return (
     <Row>
-        <Col className='px-0 ' align='left'>
-          <div style={container}>
-            <p>
-              Host ID: <b>{props.hostID}</b>
+      <Col className='px-0 ' align='left'>
+        <div style={container}>
+          <p>
+            Host ID: <b>{hostID}</b>
+          </p>
+          {
+            document.queryCommandSupported('copy') &&
+            <div>
+              <button onClick={copyToClipboard} className={css(styles.iconOnly)}><FaCopy /></button>
+              {copySuccess}
+            </div>
+          }
+        </div>
+        <div>
+          <p>
+            QR Code
             </p>
-            {
-              document.queryCommandSupported('copy') &&
-              <div>
-                <button onClick={copyToClipboard} className={css(styles.iconOnly)}><FaCopy /></button> 
-                {copySuccess}
-              </div>
-            }
-          </div>
-          <div>
-            <p>
-              QR Code
-            </p>
-            <QRCode 
-              value={window.location.href} 
-              size={50}
+          <div className='p-2' style={{ background: 'white' }}>
+            <QRCode
+              value={url}
+              size={150}
             />
           </div>
-        </Col>
+
+        </div>
+      </Col>
     </Row>
   )
 };
@@ -60,47 +65,9 @@ const styles = StyleSheet.create({
     border: 'none',
     transition: "all 0.2s",
     opacity: '1.0',
-  
+
     ":hover": {
       opacity: '0.7',
     },
   },
 });
-
-/*
-import React, { Component } from 'react';
-import { Row, Col } from 'react-bootstrap';
-
-let QRCode = require('qrcode.react');
-
-class Code extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    console.log(`${window.location.hostname}/${this.props.hostID}`)
-    return(
-      <Row>
-          <Col className = 'px-0 '  align='left'>
-            <p>
-              Host ID: <b>{this.props.hostID}</b>
-            </p>
-            <p>
-              QR Code
-            </p>
-            <div className='p-2' style={{ background: 'white' }}>
-            <QRCode 
-              value={`www.${window.location.hostname}/${this.props.hostID}`} 
-              size={150}
-            />
-            </div>
-
-          </Col>
-      </Row>
-    ) 
-    }
-}
-
-export default Code;
-*/

@@ -1,5 +1,4 @@
 import qs from 'qs';
-import io from 'socket.io-client';
 
 export const SET_TOKENS = 'SET_TOKENS';
 export const CLEAR_TOKENS = 'CLEAR_TOKENS';
@@ -138,15 +137,3 @@ export const reorderNextTracks = (start, end) => dispatch => {
     }
   })
 }
-
-export const setHostSocket = () => dispatch => {
-  let socket = io();
-}
-
-/*
-export const setNextTracks = (nextTracks) => dispatch => {
-  dispatch({
-    type: SET_NEXT_TRACKS,
-    payload: nextTracks
-  })
-}*/

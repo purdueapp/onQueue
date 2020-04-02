@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, ListGroup } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import bg from '../images/bg.jpg';
 import { FaArrowLeft } from 'react-icons/fa';
 import Room from '../components/Room';

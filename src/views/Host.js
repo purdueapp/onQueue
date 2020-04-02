@@ -7,7 +7,7 @@ import Sidebar from '../components/Sidebar';
 import Script from 'react-load-script';
 import { SIGNAL_TRACK, nextTrack, setPlayer, setPlaybackState, getAccessToken, getRefreshToken, setTokens } from '../actions/spotifyActions';
 import { setupHostSocket, setupUserSocket } from '../actions/socketActions';
-import { setPlayerState, play, setHost } from '../actions/roomActions';
+import { setPlayerState, setHost } from '../actions/roomActions';
 
 let containerStyle = {
   textAlign: 'center',
@@ -71,7 +71,7 @@ class Host extends Component {
 
 
     this.interval = setInterval(() => {
-      let { socket, player, playbackState, setPlaybackState, nextTrack, setPlayerState } = this.props;
+      let { socket, player, playbackState, setPlaybackState, nextTrack } = this.props;
       let { trackWindow } = this.props.spotify;
 
       if (!player || !player.getCurrentState || !playbackState || !playbackState.track_window) {
