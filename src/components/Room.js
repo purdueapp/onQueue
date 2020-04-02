@@ -1,18 +1,39 @@
 import React from 'react';
-import { Button, Card, CardColumns } from 'react-bootstrap';
+import { FaMusic, FaUserFriends } from 'react-icons/fa';
 
-const Rooms = () => {
+const Rooms = (props) => {
+  let { host, count, maxCount, queueLength } = props;
+
+  if ( count >= maxCount  || !count || !maxCount ){
+    return(
+      <button type="button" className="list-group-item list-group-item-action" disabled style={styles}>
+      <b>{host ? host : "host ID"}</b>
+      <div>
+        <FaUserFriends style={{ marginRight: '.5vw' }} />
+        {count ? count : 0}/{maxCount ? maxCount : 0}
+        <FaMusic style={{ margin: '0 .5vw 0 1vw' }} />
+        {queueLength ? queueLength : 0}
+      </div>
+    </button>
+    )
+  }
+
   return(
-    <Card className="Rooms" bg="light" style={{ width: '15rem' }}>
-      <Card.Body>
-        <Card.Title>tobi's Queue</Card.Title>
-          <Card.Text>
-            Description
-          </Card.Text>
-        <Button variant="success" href="host/tobi">Enter Room</Button>
-      </Card.Body>
-    </Card>
+    <button type="button" className="list-group-item list-group-item-action" style={styles}>
+      <b>{host ? host : "host"}</b>
+      <div>
+        <FaUserFriends style={{ marginRight: '.5vw' }} />
+        {count ? count : 0}/{maxCount ? maxCount : 0}
+        <FaMusic style={{ margin: '0 .5vw 0 1vw' }} />
+        {queueLength ? queueLength : 0}
+      </div>
+    </button>
   );
 }
 
 export default Rooms;
+
+let styles = {
+  display: 'flex',
+  justifyContent: 'space-between',
+};
