@@ -41,7 +41,7 @@ export default function Code(props) {
           <p>
             QR Code
             </p>
-          <div className='p-2' style={{ background: 'white' }}>
+          <div className='p-2' style={{ background: 'white', height: '150px', width: '150px'}}>
             <QRCode
               value={url}
               size={130}

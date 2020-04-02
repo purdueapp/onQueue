@@ -14,7 +14,7 @@ let logout = {
   background: "#6C757D",
   borderColor: "#6C757D",
   position: "relative",
-  top:"60px",
+  top:"35px",
   right: "60px"
 }
 let closeRoom = {
@@ -22,7 +22,7 @@ let closeRoom = {
   background: "#6C757D",
   borderColor: "#6C757D",
   position: "relative",
-  top:"60px",
+  top:"35px",
   left: "60px"
 
 }
@@ -72,7 +72,7 @@ class Settings extends Component {
   render() {
     let { host } = this.props.room;
 
-    return <Container fluid className='mt-3' style={{ overflow: 'auto', paddingTop:'5px', width:'300px', maxHeight:'700px'}}>
+    return <Container fluid className='mt-3' style={{ overflow: 'auto', marginLeft:'-15px', paddingTop:'5px', width:'320px', maxHeight:'700px'}}>
       <Container>
       <h3>Settings</h3>
       <hr style={{ backgroundColor: 'gray' }} />
