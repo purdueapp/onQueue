@@ -1,12 +1,13 @@
 import React from 'react';
+import { ListGroupItem } from 'react-bootstrap';
 import { FaMusic, FaUserFriends } from 'react-icons/fa';
 
 const Rooms = (props) => {
   let { host, count, maxCount, queueLength } = props;
 
-  if ( count >= maxCount  || !count || !maxCount ){
+  if ( count >= maxCount || !maxCount ){
     return(
-      <button type="button" className="list-group-item list-group-item-action" disabled style={styles}>
+      <ListGroupItem disabled style={styles}>
       <b>{host ? host : "host ID"}</b>
       <div>
         <FaUserFriends style={{ marginRight: '.5vw' }} />
@@ -14,12 +15,12 @@ const Rooms = (props) => {
         <FaMusic style={{ margin: '0 .5vw 0 1vw' }} />
         {queueLength ? queueLength : 0}
       </div>
-    </button>
+    </ListGroupItem>
     )
   }
 
   return(
-    <button type="button" className="list-group-item list-group-item-action" style={styles}>
+    <ListGroupItem action variant="success" href={`/host/${host}`} style={styles}>
       <b>{host ? host : "host"}</b>
       <div>
         <FaUserFriends style={{ marginRight: '.5vw' }} />
@@ -27,7 +28,7 @@ const Rooms = (props) => {
         <FaMusic style={{ margin: '0 .5vw 0 1vw' }} />
         {queueLength ? queueLength : 0}
       </div>
-    </button>
+    </ListGroupItem>
   );
 }
 

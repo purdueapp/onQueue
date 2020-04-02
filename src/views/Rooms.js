@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import { Button, ListGroup } from 'react-bootstrap';
 import bg from '../images/bg.jpg';
 import { FaArrowLeft } from 'react-icons/fa';
 import Room from '../components/Room';
@@ -19,14 +19,14 @@ class Rooms extends Component {
           <FaArrowLeft /> Back
         </Button>
 
-        <div className="list-group" style={listContainer}>
-          <Room host="tobi" />
+        <ListGroup style={listContainer}>
+          <Room host="tobi" count={0} maxCount={1} queueLength={1} />
           <Room host="jiena76" />
           <Room host="vevian" />
           <Room host="youngsosick" />
           <Room host="erik" />
           <Room host="keeran" />
-        </div>
+        </ListGroup>
 
         <div style={backgroundStyle} />
       </div>
