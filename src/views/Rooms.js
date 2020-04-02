@@ -1,86 +1,41 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, Card, CardColumns } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import bg from '../images/bg.jpg';
 import { FaArrowLeft } from 'react-icons/fa';
+import Room from '../components/Room';
 
 class Rooms extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {}
+    this.state = {
+      rooms: []
+    }
   };
 
+  componentDidMount() {
+    let { socket } = this.props;
+
+    socket.emit('rooms');
+    socket.on('rooms', (rooms) => {
+      this.setState({
+        rooms: rooms
+      })
+    })
+  }
+
   render() {
+    let { rooms } = this.state;
     return (
       <div style={containerStyle}>
         <Button variant="link" style={back} href="/" >
           <FaArrowLeft /> Back
         </Button>
 
-        <CardColumns style={{ width: 'min-content' }}>
-
-          <Card bg="light" style={{ width: '15rem' }}>
-            <Card.Body>
-              <Card.Title>tobi's Queue</Card.Title>
-              <Card.Text>
-                Description
-              </Card.Text>
-              <Button variant="success" href="host/tobi">Enter Room</Button>
-            </Card.Body>
-          </Card>
-  
-          <Card bg="light" style={{ width: '15rem' }}>
-            <Card.Body>
-              <Card.Title>jiena76's Queue</Card.Title>
-              <Card.Text>
-                Description
-              </Card.Text>
-              <Button variant="success" href="host/jiena76">Enter Room</Button>
-            </Card.Body>
-          </Card>
-  
-          <Card bg="light" style={{ width: '15rem' }}>
-            <Card.Body>
-              <Card.Title>vivian's Queue</Card.Title>
-              <Card.Text>
-                Description
-              </Card.Text>
-              <Button variant="success">Enter Room</Button>
-            </Card.Body>
-          </Card>
-  
-          <Card bg="light" style={{ width: '15rem' }}>
-            <Card.Body>
-              <Card.Title>youngsik's Queue</Card.Title>
-              <Card.Text>
-                Description
-              </Card.Text>
-              <Button variant="success">Enter Room</Button>
-            </Card.Body>
-          </Card>
-
-          <Card bg="light" style={{ width: '15rem' }}>
-            <Card.Body>
-              <Card.Title>eric's Queue</Card.Title>
-              <Card.Text>
-                Description
-              </Card.Text>
-              <Button variant="success">Enter Room</Button>
-            </Card.Body>
-          </Card>
-
-          <Card bg="light" style={{ width: '15rem' }}>
-            <Card.Body>
-              <Card.Title>kiran's Queue</Card.Title>
-              <Card.Text>
-                Description
-              </Card.Text>
-              <Button variant="success">Enter Room</Button>
-            </Card.Body>
-          </Card>
-          
-        </CardColumns>
+        <div className="list-group" style={listContainer}>
+          {rooms.map((room, index) => <Room key={index} room={room} />)}
+        </div>
 
         <div style={backgroundStyle} />
       </div>
@@ -88,7 +43,15 @@ class Rooms extends Component {
   }
 };
 
-export default connect()(Rooms);
+const mapStateToProps = state => ({
+  socket: state.socket
+})
+
+export default connect(mapStateToProps, {})(Rooms);
+
+let listContainer = {
+  minWidth: '50vw',
+};
 
 let back = {
   color: 'white',

@@ -98,7 +98,7 @@ class Player extends Component {
         <FaForward size='1.4em' className='mb-1' onClick={next} />
         <h5 style={{ float: 'right' }}>{getTime(duration)}</h5>
 
-        <input type="range" min="0" max="100" value={100 * position / duration}
+        <input type="range" min="0" max="100" value={(100 * position / duration) ? (100 * position / duration) : 0}
           className="slider" id="myRange" onChange={handleChange} />
         <VolumeSlider />
         <Background imageURL={imageURL} />
