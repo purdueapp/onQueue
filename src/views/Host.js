@@ -69,7 +69,6 @@ class Host extends Component {
       console.log('creating room');
     })
 
-
     this.interval = setInterval(() => {
       let { socket, player, playbackState, setPlaybackState, nextTrack } = this.props;
       let { trackWindow } = this.props.spotify;

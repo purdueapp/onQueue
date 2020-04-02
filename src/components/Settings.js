@@ -92,7 +92,7 @@ class Settings extends Component {
           <img height={60} width={60} style={{
             borderRadius: "1px",
           }}
-            src={host.images[0].url}
+            src={host.images ? host.images[0].url : ''}
             alt="profile pic" />
         </Col>
       </Row>
