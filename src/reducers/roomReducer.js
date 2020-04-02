@@ -1,4 +1,4 @@
-import { SET_ROOM_STATE, SET_PLAYER_STATE, SET_MEMBERS, SET_SETTINGS, SET_TRACK_WINDOW } from '../actions/roomActions';
+import { SET_HOST, SET_ROOM_STATE, SET_PLAYER_STATE, SET_MEMBERS, SET_SETTINGS, SET_TRACK_WINDOW } from '../actions/roomActions';
 import { DEFAULT_TRACK } from '../actions/spotifyActions';
 
 let initialCurrentTrack = {
@@ -35,7 +35,7 @@ let initialState = {
   host: {},
   settings: {
     volume: 0.5
-  }
+  },
 }
 
 export default (state = initialState, action) => {
@@ -62,7 +62,10 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {
         playerState: {
           ...state.playerState,
-          trackWindow: action.payload,
+          trackWindow: {
+            ...state.playerState.trackWindow,
+            ...action.payload
+          },
         }
       })
     case SET_MEMBERS:
@@ -76,6 +79,10 @@ export default (state = initialState, action) => {
           ...action.payload
         }
       })
+    case SET_HOST:
+      return Object.assign({}, state, {
+        host: action.payload
+      });
     default:
       return state;
   }

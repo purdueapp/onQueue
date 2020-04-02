@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import Media from 'react-bootstrap/Media';
 import { MdPlaylistAdd } from 'react-icons/md';
-import { queueTrack } from '../actions/spotifyActions';
+import { queue, remove } from '../actions/roomActions';
 import { TiDeleteOutline } from 'react-icons/ti';
 
 class Track extends Component {
@@ -29,17 +29,17 @@ class Track extends Component {
   }
 
   addtoQueue() {
-    let { type } = this.props;
+    let { type, queue, track } = this.props;
 
     if (type === 'search') {
-      let { queueTrack } = this.props;
-      
-      queueTrack(this.props.track);
+      queue(track);
     }
   }
 
-  deleteTrack(){
+  deleteTrack() {
+    let { remove, track } = this.props;
 
+    remove(track);
   }
 
   hoverIcon() {
@@ -56,7 +56,7 @@ class Track extends Component {
     }
     else if (type === 'nextTrack') {
       return (
-        <TiDeleteOutline className='my-2' size={25} color='grey' style={{cursor: 'pointer'}} onClick={this.state.deleteTrack}/>
+        <TiDeleteOutline className='my-2' size={25} color='grey' style={{cursor: 'pointer'}} onClick={this.deleteTrack}/>
       )
     }
   }
@@ -95,9 +95,15 @@ class Track extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   nextTracks: state.spotify.trackWindow.nextTracks,
+  socket: state.socket,
   type: ownProps.type,
   key: ownProps.key,
   track: ownProps.track
 })
 
-export default connect(mapStateToProps, { queueTrack })(Track);
+const mapDispatchToProps = {
+  queue,
+  remove
+}
+
+export default connect(mapStateToProps, mapDispatchToProps )(Track);

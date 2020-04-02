@@ -10,7 +10,7 @@ import Settings from '../components/Settings';
 import Player from '../components/Player';
 
 let settingsDiv = {
-  backgroundColor: '#FFFFFF30',
+  backgroundColor: '#FFFFFF40',
   borderRadius: '25px',
   alignItems: 'center',
   justifyContent: 'center',
@@ -47,7 +47,7 @@ class Sidebar extends Component {
   }
 
   render() {
-    let { nextTracks } = this.props.trackWindow;
+    let { nextTracks } = this.props.room.playerState.trackWindow;
     return (
       <Fragment>
         <h6>Queued Songs: {nextTracks.length}</h6>
@@ -65,7 +65,7 @@ class Sidebar extends Component {
 }
 
 const mapStateToProps = state => ({
-  trackWindow: state.spotify.trackWindow
+  room: state.room
 })
 
 export default connect(mapStateToProps)(Sidebar);

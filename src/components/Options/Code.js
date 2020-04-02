@@ -83,6 +83,7 @@ class Code extends Component {
   }
 
   render() {
+    console.log(`${window.location.hostname}/${this.props.hostID}`)
     return(
       <Row>
           <Col className = 'px-0 '  align='left'>
@@ -92,10 +93,13 @@ class Code extends Component {
             <p>
               QR Code
             </p>
+            <div className='p-2' style={{ background: 'white' }}>
             <QRCode 
-              value={window.location.href} 
-              size={50}
+              value={`www.${window.location.hostname}/${this.props.hostID}`} 
+              size={150}
             />
+            </div>
+
           </Col>
       </Row>
     ) 

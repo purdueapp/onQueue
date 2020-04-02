@@ -35,11 +35,12 @@
     "react-scripts": "^3.3.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "socket.io-client": "^2.3.0",
     "spotify-web-api-js": "^1.2.0",
     "spotify-web-api-node": "^4.0.0"
   },
   "scripts": {
-    "start": "PORT=7373 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

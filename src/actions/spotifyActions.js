@@ -1,4 +1,5 @@
 import qs from 'qs';
+import io from 'socket.io-client';
 
 export const SET_TOKENS = 'SET_TOKENS';
 export const CLEAR_TOKENS = 'CLEAR_TOKENS';
@@ -11,9 +12,13 @@ export const PREVIOUS_TRACK = 'PREVIOUS_TRACK';
 export const QUEUE_TRACK = 'QUEUE_TRACK';
 export const REORDER_NEXT_TRACKS = 'REORDER_NEXT_TRACKS'
 export const SET_NEXT_TRACKS = 'SET_NEXT_TRACKS';
+export const RESUME_PLAYER = 'RESUME_PLAYER';
+export const SEEK_PLAYER = 'SEEK_PLAYER';
+export const PAUSE_PLAYER = 'PAUSE_PLAYER';
+export const REMOVE_TRACK = 'REMOVE_TRACK';
 
 export const SIGNAL_TRACK = 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C';
-export const DEFAULT_TRACK = 'spotify:track:6gQEzbiJgaTxi4NiVdKjdW'; // 'spotify:track:4XHBcO3pWqNodXN7NlAR7H'; // 'spotify:track:0cijcj7lqB2ts4bJaYtzMi'; // 
+export const DEFAULT_TRACK =  'spotify:track:6gQEzbiJgaTxi4NiVdKjdW'; //'spotify:track:0cijcj7lqB2ts4bJaYtzMi'; // 
 
 export const setTokens = (tokens) => dispatch => {
   dispatch({
@@ -67,7 +72,7 @@ export const setPlayer = () => dispatch => {
           cb(tokens.accessToken);
         })
     },
-    volume: 0.5
+    volume: 0.5 // 0.5
   });
 
   // Error handling
@@ -132,6 +137,10 @@ export const reorderNextTracks = (start, end) => dispatch => {
       end: end
     }
   })
+}
+
+export const setHostSocket = () => dispatch => {
+  let socket = io();
 }
 
 /*

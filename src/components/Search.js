@@ -18,21 +18,28 @@ class Search extends Component {
     this.handleChangeQuery = this.handleChangeQuery.bind(this);
   }
 
-  searchTracks(query) {
-    let { api } = this.props;
-    if (!api.searchTracks) {
-      return;
-    }
-
-    api.searchTracks(query, (err, res) => {
+  componentDidMount() {
+    let { socket } = this.props;
+    socket.on('search', (data) => {
       this.setState({
-        tracks: res.tracks.items
-      })
+        tracks: data
+      });
     })
+    this.searchTracks('housefires');
   }
 
-  componentDidMount() {
-    this.searchTracks('housefires');
+  componentWillUnmount() {
+    let { socket } = this.props;
+
+    socket.removeAllListeners('search');
+  }
+
+  searchTracks(query) {
+    let { socket } = this.props;
+
+    socket.emit('search', {
+      query: query
+    })
   }
 
   handleChangeQuery(event) {
@@ -84,7 +91,7 @@ class Search extends Component {
 
 
 const mapStateToProps = state => ({
-  api: state.spotify.api
+  socket: state.socket
 })
 
 export default connect(mapStateToProps, { getAccessToken })(Search);

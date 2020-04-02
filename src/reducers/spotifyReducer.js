@@ -1,5 +1,6 @@
 import SpotifyWebApi from 'spotify-web-api-js';
-import { CLEAR_TOKENS, SET_PLAYER, SET_PLAYBACK_STATE, NEXT_TRACK, PREVIOUS_TRACK, SET_TOKENS, DEFAULT_TRACK, SIGNAL_TRACK, QUEUE_TRACK, REORDER_NEXT_TRACKS } from '../actions/spotifyActions';
+import { REMOVE_TRACK, RESUME_PLAYER, PAUSE_PLAYER, SEEK_PLAYER, CLEAR_TOKENS, SET_PLAYER, SET_PLAYBACK_STATE, NEXT_TRACK, PREVIOUS_TRACK, SET_TOKENS, DEFAULT_TRACK, SIGNAL_TRACK, QUEUE_TRACK, REORDER_NEXT_TRACKS, nextTrack } from '../actions/spotifyActions';
+import io from 'socket.io-client';
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -46,12 +47,12 @@ let initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_TOKENS:
+      state.api.setAccessToken(action.payload.accessToken);
       localStorage.setItem('accessToken', action.payload.accessToken);
       localStorage.setItem('refreshToken', action.payload.refreshToken);
 
       state.tokens.accessToken = action.payload.accessToken;
       state.tokens.refreshToken = action.payload.refreshToken;
-      state.api.setAccessToken(action.payload.accessToken);
       return state;
 
     case CLEAR_TOKENS:
@@ -63,7 +64,7 @@ export default (state = initialState, action) => {
 
     case NEXT_TRACK:
       var { currentTrack, nextTracks, previousTracks } = state.trackWindow;
-  
+
       previousTracks.push(currentTrack);
       currentTrack = nextTracks.length > 0 ? nextTracks.shift() : initialCurrentTrack;
       state.api.play({ uris: [currentTrack.uri, SIGNAL_TRACK] }, (err, res) => {
@@ -116,7 +117,7 @@ export default (state = initialState, action) => {
       }
       return state
     case REORDER_NEXT_TRACKS:
-      var { currentTrack, nextTracks, previousTracks } = state.trackWindow;
+      var { nextTracks } = state.trackWindow;
       let { start, end } = action.payload;
 
       if ((start === end) || (start >= nextTracks.length) || (end >= nextTracks.length)) {
@@ -125,11 +126,19 @@ export default (state = initialState, action) => {
 
       return Object.assign({}, state, {
         trackWindow: {
-          nextTracks: reorder(nextTracks, start, end),
-          previousTracks: previousTracks,
-          currentTrack: currentTrack
+          ...state.trackWindow,
+          nextTracks: reorder(nextTracks, start, end)
         }
       });
+    case REMOVE_TRACK:
+      var { nextTracks } = state.trackWindow;
+      
+      return Object.assign({}, state, {
+        trackWindow: {
+          ...state.trackWindow,
+          nextTracks: nextTracks.filter(track => track.id !== action.payload.id)
+        }
+      })
     case SET_PLAYER:
       let player = action.payload;
       player.addListener('ready', ({ device_id }) => {
@@ -147,6 +156,21 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {
         player: player
       });
+    case RESUME_PLAYER:
+      if (state.player) {
+        state.player.resume();
+      }
+      return state;
+    case PAUSE_PLAYER:
+      if (state.player) {
+        state.player.pause();
+      }
+      return state;
+    case SEEK_PLAYER:
+      if (state.player) {
+        state.player.seek(action.payload);
+      }
+      return state;
     case SET_PLAYBACK_STATE:
       return Object.assign({}, state, {
         playbackState: action.payload,

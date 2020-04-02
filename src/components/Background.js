@@ -6,7 +6,6 @@ let backgroundStyle = {
   width: '100vw',
   height: '100vh',
   position: 'fixed',
-  transform: 'scale(1)',
   zIndex: '-2',
   left: '0vw',
   top: '0vh',
