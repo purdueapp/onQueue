@@ -50,7 +50,7 @@ class Sidebar extends Component {
     let { nextTracks } = this.props.room.playerState.trackWindow;
     return (
       <Fragment>
-        <h6>Queued Songs: {nextTracks.length}</h6>
+        {/*<h6>Queued Songs: {nextTracks.length}</h6>*/}
         <div style={settingsDiv} className='p-1 mb-3'>
           <MdFormatListNumbered size='1.3em' className='mx-2' onClick={() => { this.setState({ tab: 'queue' }) }} />
           <MdSearch size='1.3rem' className='mx-2' onClick={() => { this.setState({ tab: 'search' }) }} />
