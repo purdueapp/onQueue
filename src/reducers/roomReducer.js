@@ -1,4 +1,4 @@
-import { SET_ROOM_STATE, SET_PLAYER_STATE, SET_MEMBERS, SET_SETTINGS, SET_TRACK_WINDOW } from '../actions/roomActions';
+import { SET_HOST, SET_ROOM_STATE, SET_PLAYER_STATE, SET_MEMBERS, SET_SETTINGS, SET_TRACK_WINDOW } from '../actions/roomActions';
 import { DEFAULT_TRACK } from '../actions/spotifyActions';
 
 let initialCurrentTrack = {
@@ -79,6 +79,10 @@ export default (state = initialState, action) => {
           ...action.payload
         }
       })
+    case SET_HOST:
+      return Object.assign({}, state, {
+        host: action.payload
+      });
     default:
       return state;
   }

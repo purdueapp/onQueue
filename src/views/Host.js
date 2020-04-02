@@ -7,7 +7,7 @@ import Sidebar from '../components/Sidebar';
 import Script from 'react-load-script';
 import { SIGNAL_TRACK, nextTrack, setPlayer, setPlaybackState, getAccessToken, getRefreshToken, setTokens } from '../actions/spotifyActions';
 import { setupHostSocket, setupUserSocket } from '../actions/socketActions';
-import { setPlayerState, play } from '../actions/roomActions';
+import { setPlayerState, play, setHost } from '../actions/roomActions';
 
 let containerStyle = {
   textAlign: 'center',
@@ -45,7 +45,7 @@ class Host extends Component {
   componentDidMount() {
     window.addEventListener("resize", this.resize.bind(this));
     this.resize();
-    let { socket, spotify, setupHostSocket, setupUserSocket, getAccessToken, room } = this.props;
+    let { setHost, socket, spotify, setupHostSocket, setupUserSocket, getAccessToken, room } = this.props;
 
     setupHostSocket(socket);
     setupUserSocket(socket);
@@ -57,6 +57,8 @@ class Host extends Component {
         console.log(err);
         return;
       }
+
+      setHost(user);
 
       socket.emit('create room', {
         host: user,
@@ -198,7 +200,8 @@ const mapDispatchToProps = {
   nextTrack,
   setPlayerState,
   setupHostSocket,
-  setupUserSocket
+  setupUserSocket,
+  setHost
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Host);

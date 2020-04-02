@@ -6,6 +6,7 @@ export const SET_PLAYER_STATE = 'SET_PLAYER_STATE';
 export const SET_MEMBERS = 'SET_MEMBERS';
 export const SET_SETTINGS = 'SET_SETTINGS';
 export const SET_TRACK_WINDOW = 'SET_TRACK_WINDOW';
+export const SET_HOST = 'SET_HOST';
 
 export const setRoomState = (state) => dispatch => {
   dispatch({
@@ -45,6 +46,13 @@ export const setSettings = (settings) => dispatch => {
   dispatch({
     type: SET_SETTINGS,
     payload: settings
+  })
+}
+
+export const setHost = (host) => dispatch => {
+  dispatch({
+    type: SET_HOST,
+    payload: host
   })
 }
 

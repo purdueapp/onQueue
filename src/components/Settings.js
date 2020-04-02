@@ -75,6 +75,7 @@ class Settings extends Component {
 
   render() {
     let { host } = this.props.room;
+    console.log(host);
 
     return <Container fluid className='mt-3'>
       <h3>Settings</h3>
