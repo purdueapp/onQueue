@@ -14,20 +14,21 @@ let logout = {
   background: "#6C757D",
   borderColor: "#6C757D",
   position: "relative",
-  top:"80px",
-  right: "70px"
+  top:"60px",
+  right: "60px"
 }
 let closeRoom = {
   color: "#fff",
   background: "#6C757D",
   borderColor: "#6C757D",
   position: "relative",
-  top:"80px",
-  left: "70px"
+  top:"60px",
+  left: "60px"
 
 }
 
 class Settings extends Component {
+
   submitlogout = () => {
     confirmAlert({
       title: 'Confirm to logout',
@@ -71,7 +72,8 @@ class Settings extends Component {
   render() {
     let { host } = this.props.room;
 
-    return <Container fluid className='mt-3'>
+    return <Container fluid className='mt-3' style={{ overflow: 'auto', paddingTop:'5px', width:'300px', maxHeight:'700px'}}>
+      <Container>
       <h3>Settings</h3>
       <hr style={{ backgroundColor: 'gray' }} />
       <Row>
@@ -109,7 +111,7 @@ class Settings extends Component {
         onClick={this.submitCloseRoom}>
         Close Room
       </button>
-
+      </Container>
     </Container>
   }
 }
