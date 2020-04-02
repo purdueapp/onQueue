@@ -7,9 +7,6 @@ let QRCode = require('qrcode.react');
 class Code extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-    }
   }
 
   render() {
