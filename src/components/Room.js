@@ -1,37 +1,38 @@
 import React from 'react';
+import { ListGroupItem } from 'react-bootstrap';
 import { FaMusic, FaUserFriends } from 'react-icons/fa';
 
-const Rooms = (props) => {
-  let { host, count, maxCount, queueLength } = props;
+const Room = (props) => {
+  let { host, count, queueLength } = props;
 
-  if ( count >= maxCount  || !count || !maxCount ){
-    return(
-      <button type="button" className="list-group-item list-group-item-action" disabled style={styles}>
-      <b>{host ? host : "host ID"}</b>
-      <div>
-        <FaUserFriends style={{ marginRight: '.5vw' }} />
-        {count ? count : 0}/{maxCount ? maxCount : 0}
-        <FaMusic style={{ margin: '0 .5vw 0 1vw' }} />
-        {queueLength ? queueLength : 0}
-      </div>
-    </button>
-    )
-  }
+  // if ( count >= maxCount || !maxCount ){
+  //   return(
+  //     <ListGroupItem disabled style={styles}>
+  //     <b>{host ? host : "host ID"}</b>
+  //     <div>
+  //       <FaUserFriends style={{ marginRight: '.5vw' }} />
+  //       {count ? count : 0}
+  //       <FaMusic style={{ margin: '0 .5vw 0 1vw' }} />
+  //       {queueLength ? queueLength : 0}
+  //     </div>
+  //   </ListGroupItem>
+  //   )
+  // }
 
   return(
-    <button type="button" className="list-group-item list-group-item-action" style={styles}>
+    <ListGroupItem action variant="success" href={`/host/${host}`} style={styles}>
       <b>{host ? host : "host"}</b>
       <div>
         <FaUserFriends style={{ marginRight: '.5vw' }} />
-        {count ? count : 0}/{maxCount ? maxCount : 0}
+        {count ? count : 0}
         <FaMusic style={{ margin: '0 .5vw 0 1vw' }} />
         {queueLength ? queueLength : 0}
       </div>
-    </button>
+    </ListGroupItem>
   );
 }
 
-export default Rooms;
+export default Room;
 
 let styles = {
   display: 'flex',
