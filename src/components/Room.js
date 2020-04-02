@@ -2,7 +2,7 @@ import React from 'react';
 import { ListGroupItem } from 'react-bootstrap';
 import { FaMusic, FaUserFriends } from 'react-icons/fa';
 
-const Rooms = (props) => {
+export default Rooms = (props) => {
   let { host, count, maxCount, queueLength } = props;
 
   if ( count >= maxCount || !maxCount ){
@@ -31,8 +31,6 @@ const Rooms = (props) => {
     </ListGroupItem>
   );
 }
-
-export default Rooms;
 
 let styles = {
   display: 'flex',
