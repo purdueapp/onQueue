@@ -8,7 +8,7 @@
   opacity: 0.7;
   -webkit-transition: .2s;
   transition: opacity .2s;
-  margin-right: 3rem;
+  margin-right: 1rem;
 }
 
 .volumeSlider::-webkit-slider-thumb:hover {

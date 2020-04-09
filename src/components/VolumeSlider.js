@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {FaVolumeUp, FaVolumeMute} from 'react-icons/fa';
 import './VolumeSlider.css';
+import RepeatButton from './RepeatButton';
  
 class VolumeSlider extends Component {
   constructor(props, context) {
@@ -30,6 +31,10 @@ class VolumeSlider extends Component {
       mute: !this.state.mute
     })
   }
+
+  repeat = () => {
+
+  }
  
   render() {
     let { volume, mute } = this.state;
@@ -45,6 +50,7 @@ class VolumeSlider extends Component {
         
         <input type="range" min="0" max="100" value={mute ? 0 : volume} 
               className="volumeSlider" id="myRange" onChange={this.handleChange}/>
+        <RepeatButton/>
       </div>
     )
   }

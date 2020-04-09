@@ -1,0 +1,14 @@
+.repeatButton {
+    border: none;
+    background: transparent;
+    color: white;
+    opacity: 1;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    margin-left: -1rem;
+  }
+  
+  .repeatButton:hover {
+    opacity: 0.8;
+  }
+  
