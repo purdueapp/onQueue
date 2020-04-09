@@ -56,7 +56,21 @@ class Track extends Component {
     }
     else if (type === 'nextTrack') {
       return (
-        <TiDeleteOutline className='my-2' size={25} color='grey' style={{cursor: 'pointer'}} onClick={this.deleteTrack}/>
+          <TiDeleteOutline className='my-2' size={25} color='grey' style={{cursor: 'pointer'}} onClick={this.deleteTrack}/>
+      )
+    }
+  }
+
+  userQueued(){
+    let { hover } = this.state;
+    let { type } = this.props;
+
+    if (!hover) {
+      return <Fragment />
+    }
+    if (type === 'nextTrack') {
+      return (
+           <span style={{ color: 'grey', overflow: 'auto', whiteSpace: 'nowrap', fontSize: '14px' }}>Queued by: User1</span>
       )
     }
   }
@@ -82,9 +96,8 @@ class Track extends Component {
         <Media.Body>
           <p className='mt-1 text-center' style={{ overflow: 'auto' }}>
             {track.name}<br />
-            <span style={{ color: 'grey', overflow: 'auto' }}>{track.artists.map(artist => artist.name).join(', ')}</span>
-            {/* this.state.hover && <span style={{ color: 'grey', overflow: 'auto' }}>Queued by: User1</span> */}
-
+            <span style={{ color: 'grey', overflow: 'auto', display: 'block' }}>{track.artists.map(artist => artist.name).join(', ')}</span>
+            {this.userQueued()}
           </p>
         </Media.Body>
         {this.hoverIcon()}
