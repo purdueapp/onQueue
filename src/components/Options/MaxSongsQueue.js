@@ -9,10 +9,18 @@ class MaxSongsQueue extends Component {
     this.state = {
       max: "no limit"
     }
-
-    this.handleEvent = this.handleEvent.bind(this);
   }
-  
+
+  handleEvent = (e) => {
+    let { socket } = this.props;
+    socket.emit('update', {
+      type: 'settings',
+      settings: {
+        queueLimit: e
+      }
+    })
+  }
+
   render() {
     return (
       <Row className='my-2'>
@@ -28,6 +36,17 @@ class MaxSongsQueue extends Component {
     )
   }
 }
+  
+const mapStateToProps = state => ({
+  room: state.room,
+  socket: state.socket
+})
+
+const mapDispatchToProps = {
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MaxSongsQueue);
+
 
 let style = {
   span: {
@@ -47,13 +66,3 @@ let style = {
     borderTopColor: '#dddddd'
   }
 };
-
-const mapStateToProps = state => ({
-  room: state.room,
-  socket: state.socket
-})
-
-const mapDispatchToProps = {
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MaxSongsQueue);
