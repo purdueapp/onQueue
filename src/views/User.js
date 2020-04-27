@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import Player from '../components/Player';
+import Background from '../components/Background';
 import Sidebar from '../components/Sidebar';
 import { setupUserSocket } from '../actions/socketActions';
 import { setPlayerState } from '../actions/roomActions';
@@ -46,7 +47,8 @@ class User extends Component {
     setupUserSocket(socket);
     socket.connect();
     socket.emit('join room', {
-      roomID: roomID
+      roomID: roomID,
+      // password: 'get a password'
     })
   }
 
@@ -92,6 +94,8 @@ class User extends Component {
             )
           }
         </Row>
+        <Background />
+
       </Container>
     )
   }

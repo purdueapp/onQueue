@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Container, Row, Col, Navbar, Nav } from 'react-bootstrap';
 import Player from '../components/Player';
+import Background from '../components/Background';
 import Sidebar from '../components/Sidebar';
 import Script from 'react-load-script';
 import { SIGNAL_TRACK, nextTrack, setPlayer, setPlaybackState, getAccessToken, getRefreshToken, setTokens } from '../actions/spotifyActions';
@@ -174,6 +175,8 @@ class Host extends Component {
             )
           }
         </Row>
+        <Background />
+
         {this.script()}
       </Container>
     )

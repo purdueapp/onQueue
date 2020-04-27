@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FaPlay, FaBackward, FaForward, FaPause } from 'react-icons/fa';
-import Background from './Background';
 import VolumeSlider from '../components/VolumeSlider';
 import { play, pause, next, previous, seek } from '../actions/roomActions';
 import { setPlayerState } from '../actions/roomActions';
@@ -101,7 +100,6 @@ class Player extends Component {
         <input type="range" min="0" max="100" value={(100 * position / duration) ? (100 * position / duration) : 0}
           className="slider" id="myRange" onChange={handleChange} />
         <VolumeSlider />
-        <Background imageURL={imageURL} />
       </div>
     )
   }
