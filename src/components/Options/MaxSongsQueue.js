@@ -12,9 +12,7 @@ class MaxSongsQueue extends Component {
 
     this.handleEvent = this.handleEvent.bind(this);
   }
-
-L
-
+  
   render() {
     return (
       <Row className='my-2'>
@@ -24,31 +22,31 @@ L
         <Col align='right' className='pl-0'>
           <NumericInput min={3} max={200} value={this.props.room.settings.queueLimit} onChange={this.handleEvent}
             size={3}
-            style={{
-              span: {
-                color: '#6C757D'
-              },
-              input: {
-                borderRadius: '4px 2px 2px 4px',
-                borderColor: "#6C757D",
-                color: '#fff',
-                class: "w3-input w3-border w3-round-large",
-                background: "#6C757D"
-              },
-              arrowUp: {
-                borderBottomColor: '#dddddd'
-              },
-              arrowDown: {
-                borderTopColor: '#dddddd'
-              }
-            }} />
+            style={style} />
         </Col>
       </Row>
     )
-
   }
-
 }
+
+let style = {
+  span: {
+    color: '#6C757D'
+  },
+  input: {
+    borderRadius: '4px 2px 2px 4px',
+    borderColor: "#6C757D",
+    color: '#fff',
+    class: "w3-input w3-border w3-round-large",
+    background: "#6C757D"
+  },
+  arrowUp: {
+    borderBottomColor: '#dddddd'
+  },
+  arrowDown: {
+    borderTopColor: '#dddddd'
+  }
+};
 
 const mapStateToProps = state => ({
   room: state.room,
