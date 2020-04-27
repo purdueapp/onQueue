@@ -1,10 +1,52 @@
 import React, { Component } from 'react';
 import bg from '../images/bg.jpg'
 import { uri } from 'react-querystring-router';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import { FaSpotify } from 'react-icons/fa';
 
 const { stringifyParams } = uri;
+
+let scope = 'user-read-private user-read-email streaming user-modify-playback-state';
+let redirectURI = `${window.location.origin}/callback`;
+let loginURL = 'https://accounts.spotify.com/authorize' +
+stringifyParams({
+    response_type: 'code',
+    client_id: process.env.REACT_APP_CLIENT_ID,
+    scope: scope,
+    redirect_uri: redirectURI,
+    state: 'state123'
+  });
+  
+  class Homepage extends Component {
+    render() {
+      return (
+        <Container fluid style={containerStyle}>
+        <Row className='w-100'>
+          <Col md={6} className='mx-auto'>
+            <h1 className='welcome-heading display-4 text-white'>onQueue</h1>
+            <p>Make your Spotify queue public to you friends! <br /> Only works on Google Chrome and Firefox.</p>
+              <FaSpotify className='mr-2' style={{color: '#1db954'}}/>Host a Room:
+            <div>
+              <ButtonGroup className="m-1">
+                <Button href={loginURL} variant="success">Private</Button>
+                <Button href={loginURL} variant="success">Public</Button>
+              </ButtonGroup>
+            </div>
+            or
+            <div>
+              <Button href='rooms' variant="primary" className="m-1">Join A Room</Button>
+            </div>
+            {/* <a href={loginURL} className='btn btn-success btn-pill align-self-center m-1'><FaSpotify className='mr-2' />Host A Room</a>
+            <a href='rooms' className='btn btn-primary btn-pill align-self-center m-1'>Join A Room</a> */}
+          </Col>
+        </Row>
+        <div style={backgroundStyle} />
+      </Container>
+    )
+  }
+}
+
+export default Homepage;
 
 let backgroundStyle = {
   background: 'linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(' + bg + ')',
@@ -37,34 +79,3 @@ let containerStyle = {
   top: '50%',
   transform: 'translate(-50%, -50%)'
 }
-
-let scope = 'user-read-private user-read-email streaming user-modify-playback-state';
-let redirectURI = `${window.location.origin}/callback`;
-let loginURL = 'https://accounts.spotify.com/authorize' +
-  stringifyParams({
-    response_type: 'code',
-    client_id: process.env.REACT_APP_CLIENT_ID,
-    scope: scope,
-    redirect_uri: redirectURI,
-    state: 'state123'
-  });
-
-class Homepage extends Component {
-  render() {
-    return (
-      <Container fluid style={containerStyle}>
-        <Row className='w-100'>
-          <Col md={6} className='mx-auto'>
-            <h1 className='welcome-heading display-4 text-white'>onQueue</h1>
-            <p>Make your Spotify queue public to you friends! <br /> Only works on Google Chrome and Firefox.</p>
-            <a href={loginURL} className='btn btn-success btn-pill align-self-center m-1'><FaSpotify className='mr-2' />Host A Room</a>
-            <a href='rooms' className='btn btn-primary btn-pill align-self-center m-1'>Join A Room</a>
-          </Col>
-        </Row>
-        <div style={backgroundStyle} />
-      </Container>
-    )
-  }
-}
-
-export default Homepage;
