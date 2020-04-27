@@ -32,7 +32,7 @@ class VolumeSlider extends Component {
     })
   }
 
-  repeat = () => {
+  repeat() {
 
   }
  

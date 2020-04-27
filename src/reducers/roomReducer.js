@@ -30,11 +30,13 @@ let initialState = {
     duration: 0,
     position: 0,
     paused: false,
+    volume: 0,
   },
   members: [],
   host: {},
   settings: {
-    volume: 0.5
+    queueLimit: 100,
+    private: false,
   },
 }
 

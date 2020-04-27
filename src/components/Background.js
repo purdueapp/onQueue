@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Blur from 'react-blur';
 import './Background.css';
 
@@ -16,10 +17,16 @@ let backgroundStyle = {
 
 class Background extends Component {
   render() {
+    let url = this.props.room.playerState.trackWindow.currentTrack.album.images[0].url;
+
     return (
-      <Blur style={backgroundStyle} img={this.props.imageURL} blurRadius={90} enableStyles />
+      <Blur style={backgroundStyle} img={url} blurRadius={90} enableStyles />
     )
   }
 }
 
-export default Background;
+let mapStateToProps = state => ({
+  room: state.room
+})
+
+export default connect(mapStateToProps)(Background);
