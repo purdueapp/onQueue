@@ -12,10 +12,10 @@ class NewUserType extends Component{
     render(){
         return(
         <Row className = 'my-2'>
-            <Col className = 'px-0' align='left'>
+            <Col align='left' className='pr-0'>
                 <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto' }}>New User Role</p>
             </Col>
-            <Col className = 'px-0' align='right'>
+            <Col className ='pl-0' align='right'>
             <ButtonGroup aria-label="user types">
                 <Button variant="secondary" size='sm' onClick={() => {this.setState({ type: 'Admin'})}}>Admin</Button>
                     <Button variant="secondary" size='sm' onClick={() => {this.setState({ type: 'DJ'})}}>DJ</Button>

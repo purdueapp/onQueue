@@ -6,7 +6,7 @@ import propTypes from "prop-types";
 class Users extends Component {
 
   render() {
-    return <Container fluid className='mt-3'>
+    return <Container fluid className='mt-3 px-2'>
       <h3>Users</h3>
       <hr style={{ backgroundColor: 'gray' }} />
       {this.props.users.map((item, key)=>

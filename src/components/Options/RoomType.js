@@ -12,10 +12,10 @@ class RoomType extends Component{
     render(){
         return(
             <Row className = 'my-2'>
-                <Col className = 'px-0' align='left'>
-                    <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto' }}>Room Type</p>
+                <Col align='left'>
+                    <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto', fontSize:'10' }}>Room Type</p>
                 </Col>
-                <Col className = 'px-0' align='right'>
+                <Col align='right'>
                     <ButtonGroup aria-label="Room types">
                         <Button variant="secondary" size='sm' onClick={() => {this.setState({ type: 'Public'})}}>Public</Button>
                         <Button variant="secondary" size='sm' onClick={() => {this.setState({ type: 'Private'})}}> Private</Button>

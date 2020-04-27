@@ -24,7 +24,7 @@ export default function Code(props) {
 
   return (
     <Row>
-      <Col className='px-0 ' align='left'>
+      <Col align='left'>
         <div style={container}>
           <p>
             Host ID: <b>{hostID}</b>
@@ -37,7 +37,7 @@ export default function Code(props) {
             </div>
           }
         </div>
-        <div>
+        <div >
           <p>
             QR Code
             </p>

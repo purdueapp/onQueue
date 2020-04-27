@@ -6,6 +6,7 @@ import { FaHistory } from 'react-icons/fa';
 import { MdQueueMusic } from 'react-icons/md';
 import { reorder, setTrackWindow } from '../actions/roomActions';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import './Scroll.css';
 
 const reorderAlgo = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -84,7 +85,7 @@ class Queue extends Component {
     }
 
     return (
-      <div className="mb-5" style={{ background: '#ffffff00', overflowX: 'scroll', overflowY: 'scroll', height: '70vh' }}>
+      <div className="mb-5" id="style-1" style={{ background: '#ffffff00', overflowY: 'scroll', height: '70vh'}}>
         <DragDropContext onDragEnd={this.onDragEnd}>
           <Droppable droppableId="list">
             {provided => (
@@ -100,7 +101,7 @@ class Queue extends Component {
   }
 
   render() {
-    return <Container fluid className='mt-3'>
+    return <Container fluid className='mt-3 px-2'>
       <div>
         <h3 align='center' className='w-80'>
           {this.state.history ? 'History' : 'Queue'}

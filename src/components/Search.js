@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Container, FormControl } from 'react-bootstrap';
 import { getAccessToken } from '../actions/spotifyActions';
 import Track from './Track';
+import "./Scroll.css";
 
 class Search extends Component {
   constructor(props) {
@@ -64,20 +65,20 @@ class Search extends Component {
   render() {
     let { query } = this.state;
 
-    return <Container fluid className='mt-3'>
+    return <Container fluid className='mt-3 px-2' >
       <h3>Search</h3>
 
       <FormControl
         placeholder="Search For Tracks To Add Here"
         name="searchInput"
         value={query}
-        className="mb-3"
+        className="mb-3 mx-1"
         style={{ backgroundColor: 'inherit', borderRadius: '1em', height: '2em', color: 'white' }}
         onChange={this.handleChangeQuery}
         id='query'
       />
 
-      <div style={{ maxHeight: '60vh'}}>
+      <div id="style-1" style={{ maxHeight: '70vh', overflowY: 'scroll'}}>
       {this.state.tracks.map((track, key) => {
         return (
           <Track track={track} type="search" key={key}/>

@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Media from 'react-bootstrap/Media';
 import { MdPlaylistAdd } from 'react-icons/md';
 import { queue, remove } from '../actions/roomActions';
 import { TiDeleteOutline } from 'react-icons/ti';
+import LikeButton from './LikeButton';
 
 class Track extends Component {
   constructor(props) {
@@ -46,17 +48,27 @@ class Track extends Component {
     let { hover } = this.state;
     let { type } = this.props;
 
-    if (!hover) {
+   /* if (!hover) {
       return <Fragment />
-    }
+    }*/
     if (type === 'search') {
+      if (!hover) {
+        return (
+          <MdPlaylistAdd size={25} className='my-2 mx-0' align='center' style={{opacity:"0"}}/>
+        )
+      }
       return (
-        <MdPlaylistAdd size={25} className='my-2' align='center' onClick={this.addtoQueue} />
+        <MdPlaylistAdd size={25} className='my-2 mx-0' align='center' onClick={this.addtoQueue} style={{opacity:".8"}}/>
       )
     }
     else if (type === 'nextTrack') {
+      if (!hover) {
+        return (
+          <TiDeleteOutline className='my-1' size={25} color='grey' style={{cursor: 'pointer', opacity:"0"}}/>
+        )
+      }
       return (
-          <TiDeleteOutline className='my-2' size={25} color='grey' style={{cursor: 'pointer'}} onClick={this.deleteTrack}/>
+          <TiDeleteOutline className='my-1' size={25} color='grey' style={{cursor: 'pointer', opacity:".8"}} onClick={this.deleteTrack}/>
       )
     }
   }
@@ -75,6 +87,16 @@ class Track extends Component {
     }
   }
 
+  likeSong(){
+    let { type } = this.props;
+
+   if (type === 'nextTrack') {
+      return (
+        <LikeButton className='my-1'/>
+      )
+    }
+  }
+
   render() {
     let { track } = this.props;
     let { hover } = this.state;
@@ -83,7 +105,7 @@ class Track extends Component {
       <Media
         onMouseEnter={this.hoverOn}
         onMouseLeave={this.hoverOff}
-        className="px-3"
+        className="pl-2"
         style={{ background: hover ? '#AAAAAA20' : '#00000000' }}
       >
         <img
@@ -94,13 +116,17 @@ class Track extends Component {
           alt="Generic placeholder"
         />
         <Media.Body>
+
           <p className='mt-1 text-center' style={{ overflow: 'auto' }}>
             {track.name}<br />
             <span style={{ color: 'grey', overflow: 'auto', display: 'block' }}>{track.artists.map(artist => artist.name).join(', ')}</span>
             {this.userQueued()}
           </p>
+
         </Media.Body>
+        {this.likeSong()}
         {this.hoverIcon()}
+        
       </Media >
     )
   }

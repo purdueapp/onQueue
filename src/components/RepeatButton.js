@@ -24,7 +24,7 @@ class RepeatButton extends Component {
     let {repeat} = this.state;
     return (
         <button className="repeatButton" onClick={this.handleClick}>
-            {(repeat == 1) ? (
+            {(repeat === 1) ? (
                 <MdRepeatOne size='1.3em' className='mx-2'/>
             ) : (
                 <MdRepeat size='1.3em' className='mx-2' />

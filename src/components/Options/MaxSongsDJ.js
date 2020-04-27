@@ -13,10 +13,10 @@ class MaxSongsDJ extends Component{
     render(){
         return(
         <Row className = 'my-2'>
-            <Col align ='left' className = 'px-0'>
+            <Col align ='left' className="pr-0">
               <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto' }}>Max Songs DJ Can Queue</p>
             </Col>
-            <Col align = 'right' className = 'px-0'>
+            <Col align = 'right' className='pl-0'>
               <NumericInput min={0} max={50} value={25}
                 size={3}
                 style={{
