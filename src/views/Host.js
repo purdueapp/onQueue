@@ -62,7 +62,7 @@ class Host extends Component {
 
       socket.emit('create room', {
         host: user,
-        private: false,
+        private: true,
         accessToken: getAccessToken(),
         playerState: room.playerState
       })
