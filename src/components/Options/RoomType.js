@@ -3,34 +3,30 @@ import {Col, Row, ToggleButtonGroup, ToggleButton, Button, ButtonGroup} from 're
 import { connect } from 'react-redux';
 
 class RoomType extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {}
-  }
 
-  handleEvent = (e) => {
+  handleChange = (value) => {
     let { socket } = this.props;
     socket.emit('update', {
       type: 'settings',
       settings: {
-        private: false
+        private: value
       }
     })
   }
 
   render(){
-    let { room } = this.props;
-    console.log(room);
+    let isPrivate = this.props.room.settings.private;
+
     return(
       <Row className = 'my-2'>
         <Col align='left'>
           <p className='mt-1' style={{whiteSpace: 'nowrap', overflow: 'auto', fontSize:'10' }}>Room Type</p>
         </Col>
         <Col align='right'>
-          {/* <ToggleButtonGroup aria-label="Room types" type="radio" defaultValue={"private"}>
-              <ToggleButton value="public" variant="secondary" size='sm' onClick={() => {this.setState({ type: 'Public'})}}>Public</ToggleButton>
-              <ToggleButton value="private" variant="secondary" size='sm' onClick={() => {this.setState({ type: 'Private'})}}> Private</ToggleButton>
-          </ToggleButtonGroup> */}
+          <ToggleButtonGroup aria-label="Room types" type="radio" name="options" defaultValue={isPrivate} onChange={this.handleChange}>
+              <ToggleButton value={false} variant="secondary" size='sm'>Public</ToggleButton>
+              <ToggleButton value={true} variant="secondary" size='sm'> Private</ToggleButton>
+          </ToggleButtonGroup>
         </Col>        
       </Row>
     )
