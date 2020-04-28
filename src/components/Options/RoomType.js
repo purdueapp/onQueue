@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Col, Row, ToggleButtonGroup, ToggleButton, Button, ButtonGroup} from 'react-bootstrap';
+import {Col, Row, ToggleButtonGroup, ToggleButton} from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 class RoomType extends Component{
