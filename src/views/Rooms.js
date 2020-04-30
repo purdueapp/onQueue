@@ -27,6 +27,7 @@ class Rooms extends Component {
 
   render() {
     let { rooms } = this.state;
+    console.log(rooms);
     
     return (
       <div style={containerStyle}>

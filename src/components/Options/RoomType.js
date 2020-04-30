@@ -15,14 +15,13 @@ class RoomType extends Component{
     let { socket } = this.props;
     socket.emit('update', {
       type: 'settings',
-      settings: {
-        isPrivate: value
-      }
+      private: value
     })
   }
 
   render(){
     let isPrivate = this.props.room.settings.private;
+    console.log(this.props.room);
 
     return(
       <Row className = 'my-2'>
