@@ -4,6 +4,7 @@ import { FaMusic, FaUserFriends } from 'react-icons/fa';
 
 const Room = (props) => {
   let { host, members } = props.room;
+  console.log(props.room);
 
   return (
     <ListGroupItem action href={`${host.id}`} style={styles}>
