@@ -6,7 +6,13 @@ import { connect } from 'react-redux';
 class RoomType extends Component{
 
   handleChange = (value) => {
-    let { socket } = this.props;
+
+    let isPrivate = this.props.room.settings.private;
+
+    console.log("From:" + isPrivate);
+    console.log("To:" + value);
+
+     let { socket } = this.props;
     socket.emit('update', {
       type: 'settings',
       settings: {

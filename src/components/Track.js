@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Media from 'react-bootstrap/Media';
 import { MdPlaylistAdd } from 'react-icons/md';
@@ -82,7 +81,7 @@ class Track extends Component {
     }
     if (type === 'nextTrack') {
       return (
-           <span style={{ color: 'grey', overflow: 'auto', whiteSpace: 'nowrap', fontSize: '14px' }}>Queued by: User1</span>
+           <span style={{ color: 'grey', overflow: 'auto', whiteSpace: 'nowrap', fontSize: '14px' }}>{this.props.queuedBy}</span>
       )
     }
   }
