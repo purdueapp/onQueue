@@ -10,8 +10,8 @@ class Users extends Component {
       <h3>Users</h3>
       <hr style={{ backgroundColor: 'gray' }} />
       {this.props.users.map((item, key)=>
-            <User user={item} key={key} />
-            )}
+        <User user={item} key={key} />
+      )}
     </Container>
   }
 }
@@ -20,20 +20,20 @@ Users.propTypes = {
 }
 
 Users.defaultProps = {
-users:[
-  {
-  name: 'vivian',
-  type: 'Admin'
-  },
-  {
-  name:'tobi',
-  type:'DJ'
-  },
-  {
-  name:'youngsik',
-  type:'Listener'
-  }
-]
+  users:[
+    {
+      name: 'vivian',
+      type: 'Admin'
+    },
+    {
+      name:'tobi',
+      type:'DJ'
+    },
+    {
+      name:'youngsik',
+      type:'Listener'
+    }
+  ]
 };
 
 export default (Users);
