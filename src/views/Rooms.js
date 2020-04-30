@@ -33,7 +33,7 @@ class Rooms extends Component {
           <FaArrowLeft /> Back
         </Button>
         <div className="list-group" style={listContainer}>
-          {rooms.map((room, index) => <Room key={index} room={room} />)}
+          {rooms.filter((room) => !room.isPrivate).map((room, index) => <Room key={index} room={room} />)}
         </div>
 
         <div style={backgroundStyle} />

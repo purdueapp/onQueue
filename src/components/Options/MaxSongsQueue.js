@@ -13,8 +13,6 @@ class MaxSongsQueue extends Component {
     this.handleEvent = this.handleEvent.bind(this);
   }
 
-L
-
   render() {
     return (
       <Row className='my-2'>
