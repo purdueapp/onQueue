@@ -16,7 +16,7 @@ class RoomType extends Component{
     socket.emit('update', {
       type: 'settings',
       settings: {
-        private: value
+        isPrivate: value
       }
     })
   }
