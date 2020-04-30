@@ -36,7 +36,7 @@ let initialState = {
   members: [],
   host: {},
   settings: {
-    djLimit:25,
+    djLimit: 25,
     queueLimit: 100,
     isPrivate: false,
   },

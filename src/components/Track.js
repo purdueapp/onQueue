@@ -30,10 +30,12 @@ class Track extends Component {
   }
 
   addtoQueue() {
-    let { type, queue, track } = this.props;
+    let { type, queue, track, room } = this.props;
 
     if (type === 'search') {
-      queue(track);
+      if (room.playerState.trackWindow.nextTracks.length < room.settings.queueLimit) {
+        queue(track);
+      }
     }
     //find user name this.props.user.displayName
     console.log("user " + this.props.user);
@@ -141,6 +143,7 @@ const mapStateToProps = (state, ownProps) => ({
   key: ownProps.key,
   track: ownProps.track,
   user: state.user,
+  room: state.room
 })
 
 const mapDispatchToProps = {
