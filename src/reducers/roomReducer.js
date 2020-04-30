@@ -36,7 +36,7 @@ let initialState = {
   host: {},
   settings: {
     queueLimit: 100,
-    private: false,
+    private: true,
   },
 }
 
