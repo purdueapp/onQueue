@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import Media from 'react-bootstrap/Media';
 import { MdPlaylistAdd } from 'react-icons/md';

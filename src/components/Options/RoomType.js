@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import {Col, Row, ToggleButtonGroup, ToggleButton} from 'react-bootstrap';
 import { connect } from 'react-redux';
@@ -5,11 +6,17 @@ import { connect } from 'react-redux';
 class RoomType extends Component{
 
   handleChange = (value) => {
+
+    let isPrivate = this.props.room.settings.private;
+
+    console.log("From:" + isPrivate);
+    console.log("To:" + value);
+
     let { socket } = this.props;
     socket.emit('update', {
       type: 'settings',
       settings: {
-        private: value
+        isPrivate: value
       }
     })
   }
