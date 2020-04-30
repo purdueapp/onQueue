@@ -55,7 +55,7 @@ class Sidebar extends Component {
           <MdFormatListNumbered size='1.3em' className='mx-2' onClick={() => { this.setState({ tab: 'queue' }) }} />
           <MdSearch size='1.3rem' className='mx-2' onClick={() => { this.setState({ tab: 'search' }) }} />
           <FaQrcode size='1.3rem' className='mx-2' onClick={() => { this.setState({ tab: 'qrcode' }) }} />
-          <FaUsers size='1.3rem' className='mx-2' onClick={() => { this.setState({ tab: 'users' }) }} />
+         {/*} <FaUsers size='1.3rem' className='mx-2' onClick={() => { this.setState({ tab: 'users' }) }} />*/}
           <MdSettings size='1.3rem' className='mx-2' onClick={() => { this.setState({ tab: 'settings' }) }} />
         </div>
         {this.content()}

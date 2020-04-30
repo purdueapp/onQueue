@@ -39,9 +39,6 @@ class Settings extends Component {
     });
   };
 
-  logout = () => {
-
-  }
 
   submitCloseRoom = () => {
     confirmAlert({
@@ -91,8 +88,8 @@ class Settings extends Component {
             </Col>
           </Row>
           <RoomType />
-          <NewUserType />
-          <MaxSongsDJ />
+         {/*} <NewUserType />
+          <MaxSongsDJ />*/}
           <MaxSongsQueue />
           <Code hostID={host.id} />
           <Row>

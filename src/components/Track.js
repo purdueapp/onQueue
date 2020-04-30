@@ -35,6 +35,9 @@ class Track extends Component {
     if (type === 'search') {
       queue(track);
     }
+    //find user name this.props.user.displayName
+    console.log("user " + this.props.user);
+    //add to track 
   }
 
   deleteTrack() {
@@ -119,11 +122,11 @@ class Track extends Component {
           <p className='mt-1 text-center' style={{ overflow: 'auto' }}>
             {track.name}<br />
             <span style={{ color: 'grey', overflow: 'auto', display: 'block' }}>{track.artists.map(artist => artist.name).join(', ')}</span>
-            {this.userQueued()}
+    {/*{this.userQueued()}*/}
           </p>
 
         </Media.Body>
-        {this.likeSong()}
+        {/*{this.likeSong()}*/}
         {this.hoverIcon()}
         
       </Media >
@@ -136,7 +139,8 @@ const mapStateToProps = (state, ownProps) => ({
   socket: state.socket,
   type: ownProps.type,
   key: ownProps.key,
-  track: ownProps.track
+  track: ownProps.track,
+  user: state.user,
 })
 
 const mapDispatchToProps = {

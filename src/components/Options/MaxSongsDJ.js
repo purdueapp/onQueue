@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {Col, Row} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import NumericInput from 'react-numeric-input';
@@ -21,7 +21,8 @@ class MaxSongsDJ extends Component{
           })
     }
 
-    render(){
+    maxInput(){
+      //if(this.props.user.role === 'Admin'){
         return(
         <Row className = 'my-2'>
             <Col align ='left' className="pr-0">
@@ -36,12 +37,25 @@ class MaxSongsDJ extends Component{
             </Col>
         </Row>
         )
+      /*}else{
+        return <Fragment/>
+      }*/
+
+    }
+
+    render(){
+      return(
+        <div>
+          {this.maxInput()}
+        </div>
+      )
     }
     
 }
 const mapStateToProps = state => ({
   room: state.room,
-  socket: state.socket
+  socket: state.socket,
+  user: state.user,
 })
 
 const mapDispatchToProps = {

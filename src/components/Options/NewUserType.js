@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {Col, Row, Button, ButtonGroup} from 'react-bootstrap';
 import { connect } from 'react-redux';
 
@@ -23,9 +23,9 @@ class NewUserType extends Component{
         
     }
 
-    render(){
-        let role = this.props.room.settings.defaultRole;
-
+    newType(){
+      let role = this.props.room.settings.defaultRole;
+      //if(this.props.user.role === 'Admin'){
         return(
         <Row className = 'my-2'>
             <Col align='left' className='pr-0'>
@@ -40,12 +40,27 @@ class NewUserType extends Component{
             </Col>
         </Row>
         )
+      /*}else{
+        return <Fragment/>
+      }*/
+
+    }
+
+    render(){
+
+        return(
+          <div>
+            {this.newType()}
+          </div>
+        )
+
     }
     
 }
 const mapStateToProps = state => ({
     room: state.room,
-    socket: state.socket
+    socket: state.socket,
+    user: state.user,
   })
   
 export default connect(mapStateToProps, null)(NewUserType);
