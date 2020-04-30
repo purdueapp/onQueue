@@ -7,28 +7,6 @@ import Sidebar from '../components/Sidebar';
 import { setupUserSocket } from '../actions/socketActions';
 import { setPlayerState } from '../actions/roomActions';
 
-let containerStyle = {
-  textAlign: 'center',
-  //  backgroundColor: '#19141488',
-  color: 'white',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '100%',
-  width: '100%',
-  position: 'absolute',
-  left: '50%',
-  top: '50%',
-  transform: 'translate(-50%, -50%)',
-  opacity: 1
-};
-
-let sideBarStyle = {
-  background: 'rgba(0, 0, 0, 0.3)',
-  width: '100%',
-  minWidth: '24em'
-};
-
 class User extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +15,7 @@ class User extends Component {
       mobile: window.innerWidth <= 768,
     }
   };
-
+  
   componentDidMount() {
     window.addEventListener("resize", this.resize.bind(this));
     this.resize();
@@ -56,17 +34,17 @@ class User extends Component {
     let { socket } = this.props;
     socket.close();
   }
-
+  
   resize() {
     let currentMobile = (window.innerWidth <= 768);
     if (currentMobile !== this.state.hidePlayer) {
       this.setState({ mobile: currentMobile });
     }
   }
-
+  
   render() {
     let { mobile } = this.state;
-
+    
     return (
       <Container className='p-0 m-0 w-100' fluid style={containerStyle}>
         <Navbar fixed='top' bg='clear' variant='dark'>
@@ -95,7 +73,6 @@ class User extends Component {
           }
         </Row>
         <Background />
-
       </Container>
     )
   }
@@ -111,3 +88,25 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(User);
+
+let containerStyle = {
+  textAlign: 'center',
+  //  backgroundColor: '#19141488',
+  color: 'white',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100%',
+  width: '100%',
+  position: 'absolute',
+  left: '50%',
+  top: '50%',
+  transform: 'translate(-50%, -50%)',
+  opacity: 1
+};
+
+let sideBarStyle = {
+  background: 'rgba(0, 0, 0, 0.3)',
+  width: '100%',
+  minWidth: '24em'
+};

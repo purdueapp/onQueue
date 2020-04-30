@@ -10,28 +10,6 @@ import { SIGNAL_TRACK, nextTrack, repeatTrack, setPlayer, setPlaybackState, getA
 import { setupHostSocket, setupUserSocket } from '../actions/socketActions';
 import { setPlayerState, setHost } from '../actions/roomActions';
 
-let containerStyle = {
-  textAlign: 'center',
-  //  backgroundColor: '#19141488',
-  color: 'white',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '100%',
-  width: '100%',
-  position: 'absolute',
-  left: '50%',
-  top: '50%',
-  transform: 'translate(-50%, -50%)',
-  opacity: 1
-};
-
-let sideBarStyle = {
-  background: 'rgba(0, 0, 0, 0.3)',
-  width: '100%',
-  minWidth: '24em'
-};
-
 class Host extends Component {
   constructor(props) {
     super(props);
@@ -39,18 +17,18 @@ class Host extends Component {
       accessToken: null,
       mobile: window.innerWidth <= 768,
     }
-
+    
     this.script = this.script.bind(this);
   };
-
+  
   componentDidMount() {
     window.addEventListener("resize", this.resize.bind(this));
     this.resize();
     let { setHost, socket, spotify, setupHostSocket, setupUserSocket, getAccessToken, room } = this.props;
-
+    
     setupHostSocket(socket);
     setupUserSocket(socket);
-
+    
     socket.connect();
     spotify.api.setAccessToken(getAccessToken());
     spotify.api.getMe((err, user) => {
@@ -58,9 +36,9 @@ class Host extends Component {
         console.log(err);
         return;
       }
-
+      
       setHost(user);
-
+      
       socket.emit('create room', {
         host: user,
         private: false,
@@ -69,15 +47,15 @@ class Host extends Component {
       })
       console.log('creating room');
     })
-
+    
     this.interval = setInterval(() => {
       let { socket, player, playbackState, setPlaybackState, nextTrack, room, repeatTrack } = this.props;
       let { trackWindow } = this.props.spotify;
-
+      
       if (!player || !player.getCurrentState || !playbackState || !playbackState.track_window) {
         return;
       }
-
+      
       if (playbackState.track_window.current_track.uri === SIGNAL_TRACK ||
         playbackState.track_window.next_tracks.length !== 1) {
         if (room.playerState.repeat) {
@@ -124,37 +102,39 @@ class Host extends Component {
       this.setState({ mobile: currentMobile });
     }
   }
-
+  
   script() {
     if (this.props.tokens.accessToken !== undefined) {
       window.onSpotifyWebPlaybackSDKReady = () => {
         this.props.setPlayer();
-
+        
       };
-
+      
       return (
         <Script url="https://sdk.scdn.co/spotify-player.js" />
-      )
-    }
-    else {
-      if (this.props.getAccessToken() !== undefined && this.props.getAccessToken() !== "undefined") {
-        this.props.setTokens({
-          accessToken: this.props.getAccessToken(),
-          refreshToken: this.props.getRefreshToken()
-        });
-        return <Fragment />
+        )
       }
       else {
-        return <Redirect to='/' />
+        if (this.props.getAccessToken() !== undefined && this.props.getAccessToken() !== "undefined") {
+          this.props.setTokens({
+            accessToken: this.props.getAccessToken(),
+            refreshToken: this.props.getRefreshToken()
+          });
+          return <Fragment />
+        }
+        else {
+          return <Redirect to='/' />
+        }
       }
     }
-  }
-
-  render() {
-    let { mobile } = this.state;
-
-    return (
-      <Container className='p-0 m-0 w-100' fluid style={containerStyle}>
+    
+    render() {
+      let { mobile } = this.state;
+      
+      
+      
+      return (
+        <Container className='p-0 m-0 w-100' fluid style={containerStyle}>
         <Navbar fixed='top' bg='clear' variant='dark'>
           <Nav className='mx-auto mt-3'>
 
@@ -213,3 +193,25 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Host);
+
+let containerStyle = {
+  textAlign: 'center',
+  //  backgroundColor: '#19141488',
+  color: 'white',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100%',
+  width: '100%',
+  position: 'absolute',
+  left: '50%',
+  top: '50%',
+  transform: 'translate(-50%, -50%)',
+  opacity: 1
+};
+
+let sideBarStyle = {
+  background: 'rgba(0, 0, 0, 0.3)',
+  width: '100%',
+  minWidth: '24em'
+};
