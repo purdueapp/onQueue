@@ -12,7 +12,7 @@ class RoomType extends Component{
     console.log("From:" + isPrivate);
     console.log("To:" + value);
 
-     let { socket } = this.props;
+    let { socket } = this.props;
     socket.emit('update', {
       type: 'settings',
       settings: {

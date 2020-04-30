@@ -3,11 +3,7 @@ import { ListGroupItem } from 'react-bootstrap';
 import { FaMusic, FaUserFriends } from 'react-icons/fa';
 
 const Room = (props) => {
-  let { host, members, isPrivate } = props.room;
-
-  if ( isPrivate ){
-    return;
-  }
+  let { host, members } = props.room;
 
   return (
     <ListGroupItem action href={`${host.id}`} style={styles}>
