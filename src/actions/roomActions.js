@@ -131,6 +131,32 @@ export const seek = (position) => dispatch => {
   })
 }
 
+export const setRepeat = (repeat) => dispatch => {
+  dispatch({
+    type: SOCKET_EMIT,
+    payload: {
+      eventName: 'command',
+      data: {
+        type: 'repeat',
+        repeat: repeat
+      }
+    }
+  })
+}
+
+export const setVolume = (volume) => dispatch => {
+  dispatch({
+    type: SOCKET_EMIT,
+    payload: {
+      eventName: 'command',
+      data: {
+        type: 'volume',
+        volume: volume
+      }
+    }
+  })
+}
+
 export const queue = (track) => dispatch => {
   dispatch({
     type: SOCKET_EMIT,

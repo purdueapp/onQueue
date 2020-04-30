@@ -2,53 +2,50 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {FaVolumeUp, FaVolumeMute} from 'react-icons/fa';
 import './VolumeSlider.css';
+import { setVolume, setPlayerState } from '../actions/roomActions';
 import RepeatButton from './RepeatButton';
  
 class VolumeSlider extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.state = {
-      volume: 50,
-      mute: false
-    }
+  constructor(props) {
+    super(props);
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
- 
+
   handleChange = (event) => {
+    let { setVolume, setPlayerState } = this.props;
     let volume = event.target.value;
-    this.props.player.setVolume((volume / 100.0));
-    this.setState({
-      volume: event.target.value,
-      mute: false
+    setPlayerState({
+      volume: volume / 100
     })
+
+    setVolume((volume / 100.0));
   }
   
   handleClick = () => {
-    let { volume, mute } = this.state;
-    mute = !mute;
+//    let { volume } = this.props.room.playerState;
+    let { setVolume } = this.props;
 
-    this.props.player.setVolume((mute ? 0.0 : volume / 100.0));
-    this.setState({
-      mute: !this.state.mute
+    setVolume(0);
+    setPlayerState({
+      volume: 0
     })
-  }
-
-  repeat() {
-
   }
  
   render() {
-    let { volume, mute } = this.state;
+    let { volume } = this.props.room.playerState;
     return (
       <div className="volumeContainer">
         <button className="volumeButton" onClick={this.handleClick}>
-        {(mute || volume === 0) ? (
+        {(volume === 0) ? (
             <FaVolumeMute size='1.3rem' className='mx-2'/>
         ) : (
             <FaVolumeUp size='1.3rem' className='mx-2'/>
         )}
         </button>
         
-        <input type="range" min="0" max="100" value={mute ? 0 : volume} 
+        <input type="range" min="0" max="100" value={volume * 100} 
               className="volumeSlider" id="myRange" onChange={this.handleChange}/>
         <RepeatButton/>
       </div>
@@ -58,6 +55,7 @@ class VolumeSlider extends Component {
 
 const mapStateToProps = state => ({
   player: state.spotify.player,
+  room: state.room
 })
 
-export default connect(mapStateToProps, null)(VolumeSlider);
+export default connect(mapStateToProps, { setVolume, setPlayerState })(VolumeSlider);

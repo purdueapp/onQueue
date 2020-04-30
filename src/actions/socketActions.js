@@ -1,4 +1,4 @@
-import { NEXT_TRACK, PREVIOUS_TRACK, PAUSE_PLAYER, RESUME_PLAYER, SEEK_PLAYER, REORDER_NEXT_TRACKS, QUEUE_TRACK, REMOVE_TRACK } from '../actions/spotifyActions';
+import { NEXT_TRACK, PREVIOUS_TRACK, PAUSE_PLAYER, RESUME_PLAYER, SEEK_PLAYER, REORDER_NEXT_TRACKS, QUEUE_TRACK, REMOVE_TRACK, SET_VOLUME } from '../actions/spotifyActions';
 import { SET_PLAYER_STATE, SET_TRACK_WINDOW, SET_SETTINGS, SET_MEMBERS, SET_ROOM_STATE } from './roomActions';
 
 export const SOCKET_EMIT = 'SOCKET_EMIT';
@@ -48,7 +48,7 @@ export const setupUserSocket = (socket) => dispatch => {
         })
         break;
       default:
-        console.log(data.type + ' missed')
+        console.log(data.type + ' missed user')
     }
   })
 }
@@ -108,8 +108,28 @@ export const setupHostSocket = (socket) => dispatch => {
           payload: data.track
         })
         break;
+      case 'repeat':
+        socket.emit('update', {
+          type: 'playerState',
+          playerState: {
+            repeat: data.repeat
+          }
+        });
+        break;
+      case 'volume':
+        socket.emit('update', {
+          type: 'playerState',
+          playerState: {
+            volume: data.volume
+          }
+        });
+        dispatch({
+          type: SET_VOLUME,
+          payload: data.volume
+        })
+        break;
       default:
-        console.log(data.type + ' missed')
+        console.log(data.type + ' missed host')
     }
   });
 }

@@ -1,5 +1,5 @@
 import SpotifyWebApi from 'spotify-web-api-js';
-import { REMOVE_TRACK, RESUME_PLAYER, PAUSE_PLAYER, SEEK_PLAYER, CLEAR_TOKENS, SET_PLAYER, SET_PLAYBACK_STATE, NEXT_TRACK, PREVIOUS_TRACK, SET_TOKENS, DEFAULT_TRACK, SIGNAL_TRACK, QUEUE_TRACK, REORDER_NEXT_TRACKS, nextTrack } from '../actions/spotifyActions';
+import { REMOVE_TRACK, RESUME_PLAYER, PAUSE_PLAYER, SEEK_PLAYER, CLEAR_TOKENS, SET_PLAYER, SET_PLAYBACK_STATE, NEXT_TRACK, PREVIOUS_TRACK, SET_TOKENS, DEFAULT_TRACK, SIGNAL_TRACK, QUEUE_TRACK, REORDER_NEXT_TRACKS, SET_VOLUME, REPEAT_TRACK } from '../actions/spotifyActions';
 import io from 'socket.io-client';
 
 const reorder = (list, startIndex, endIndex) => {
@@ -80,6 +80,15 @@ export default (state = initialState, action) => {
           currentTrack: currentTrack
         }
       });
+
+    case REPEAT_TRACK:
+      var { currentTrack } = state.trackWindow;
+      state.api.play({ uris: [currentTrack.uri, SIGNAL_TRACK] }, (err, res) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+      return state;
 
     case PREVIOUS_TRACK:
       var { currentTrack, nextTracks, previousTracks } = state.trackWindow;
@@ -170,11 +179,14 @@ export default (state = initialState, action) => {
       if (state.player) {
         state.player.seek(action.payload);
       }
-      return state;
+      return state;      
     case SET_PLAYBACK_STATE:
       return Object.assign({}, state, {
         playbackState: action.payload,
       });
+    case SET_VOLUME:
+      state.player.setVolume(action.payload);
+      return state;
     default:
       return state;
   }

@@ -15,6 +15,8 @@ export const RESUME_PLAYER = 'RESUME_PLAYER';
 export const SEEK_PLAYER = 'SEEK_PLAYER';
 export const PAUSE_PLAYER = 'PAUSE_PLAYER';
 export const REMOVE_TRACK = 'REMOVE_TRACK';
+export const SET_VOLUME = 'SET_VOLUME';
+export const REPEAT_TRACK = 'REPEAT_TRACK';
 
 export const SIGNAL_TRACK = 'spotify:track:7cvTBgG2OFDvY2pIl3WN9C';
 export const DEFAULT_TRACK =  'spotify:track:6gQEzbiJgaTxi4NiVdKjdW'; //'spotify:track:0cijcj7lqB2ts4bJaYtzMi'; // 
@@ -112,6 +114,12 @@ export const setPlaybackState = (state) => dispatch => {
 export const nextTrack = () => dispatch => {
   dispatch({
     type: NEXT_TRACK
+  })
+}
+
+export const repeatTrack = () => dispatch => {
+  dispatch({
+    type: REPEAT_TRACK
   })
 }
 

@@ -1,31 +1,34 @@
 import './RepeatButton.css';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import {MdRepeat, MdRepeatOne} from 'react-icons/md';
- 
+import {MdRepeat, MdRepeatOne, MdTransferWithinAStation} from 'react-icons/md';
+//import { setPlayerState } from '../actions/spotifyActions';
+import { setRepeat } from '../actions/roomActions';
+import { FaRProject } from 'react-icons/fa';
+
 class RepeatButton extends Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
       repeat: false
     }
+
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick = () => {
-    let { repeat } = this.state;
-    repeat = !repeat;
-    this.setState({
-        repeat: !this.state.repeat
-      })
+  handleClick() {
+    let { setRepeat } = this.props;
+    let { repeat } = this.props.room.playerState;
 
+    setRepeat(!repeat);
   }
  
   render() {
-    let {repeat} = this.state;
+    let { repeat } = this.props.room.playerState;
     return (
         <button className="repeatButton" onClick={this.handleClick}>
-            {(repeat === 1) ? (
-                <MdRepeatOne size='1.3em' className='mx-2'/>
+            {repeat ? (
+                <MdRepeat size='1.3em' className='mx-2' style={{ color: '#00e859'}} />
             ) : (
                 <MdRepeat size='1.3em' className='mx-2' />
             )}
@@ -36,6 +39,7 @@ class RepeatButton extends Component {
 
 const mapStateToProps = state => ({
   player: state.spotify.player,
+  room: state.room
 })
 
-export default connect(mapStateToProps, null)(RepeatButton);
+export default connect(mapStateToProps, { setRepeat })(RepeatButton);

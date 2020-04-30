@@ -6,7 +6,7 @@ import Player from '../components/Player';
 import Background from '../components/Background';
 import Sidebar from '../components/Sidebar';
 import Script from 'react-load-script';
-import { SIGNAL_TRACK, nextTrack, setPlayer, setPlaybackState, getAccessToken, getRefreshToken, setTokens } from '../actions/spotifyActions';
+import { SIGNAL_TRACK, nextTrack, repeatTrack, setPlayer, setPlaybackState, getAccessToken, getRefreshToken, setTokens } from '../actions/spotifyActions';
 import { setupHostSocket, setupUserSocket } from '../actions/socketActions';
 import { setPlayerState, setHost } from '../actions/roomActions';
 
@@ -71,7 +71,7 @@ class Host extends Component {
     })
 
     this.interval = setInterval(() => {
-      let { socket, player, playbackState, setPlaybackState, nextTrack } = this.props;
+      let { socket, player, playbackState, setPlaybackState, nextTrack, room, repeatTrack } = this.props;
       let { trackWindow } = this.props.spotify;
 
       if (!player || !player.getCurrentState || !playbackState || !playbackState.track_window) {
@@ -80,7 +80,12 @@ class Host extends Component {
 
       if (playbackState.track_window.current_track.uri === SIGNAL_TRACK ||
         playbackState.track_window.next_tracks.length !== 1) {
-        nextTrack();
+        if (room.playerState.repeat) {
+          repeatTrack();
+        }
+        else {
+          nextTrack();
+        }
       }
 
       if (!playbackState.paused) {
@@ -203,7 +208,8 @@ const mapDispatchToProps = {
   setPlayerState,
   setupHostSocket,
   setupUserSocket,
-  setHost
+  setHost,
+  repeatTrack,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Host);
